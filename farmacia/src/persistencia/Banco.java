@@ -11,20 +11,19 @@ import java.sql.SQLException;
 /**
  *
  * @author Viotti
+ * @author Alvaro Pereira do Nascimento
  */
 public class Banco {
-    public static String usuario, senha, servidor,
-                         bd;
+    public static String usuario, senha, servidor,bd;
     public static int porta;
-    public static java.sql.Connection conexao 
-                            = null;
+    public static java.sql.Connection conexao = null;
     //essa rotina é executada quando a classe
     //é carregada na memoria
     static {
         usuario = "root";
         senha = "";
         servidor = "localhost";
-        bd = "locadora";
+        bd = "farmacia";
         porta = 3306;
     }
     

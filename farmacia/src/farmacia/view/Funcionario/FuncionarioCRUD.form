@@ -38,6 +38,7 @@
                                   <Component id="LabelDataAdmissao" min="-2" max="-2" attributes="0"/>
                                   <Component id="LabelNomeUsuario" min="-2" max="-2" attributes="0"/>
                                   <Component id="LabelNome" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LabelSenha" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -47,6 +48,7 @@
                                   </Group>
                                   <Component id="jFormattedDataAdimissao" min="-2" pref="79" max="-2" attributes="0"/>
                                   <Component id="TextFieldSalario" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Component id="PasswordFieldSenha" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -95,12 +97,17 @@
                   <Component id="TextFieldSalario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LabelSalario" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LabelSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="PasswordFieldSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="RadioButtonFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="RadioButtonGerente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ButtonCadastra" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -185,6 +192,16 @@
     <Component class="javax.swing.JRadioButton" name="RadioButtonGerente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Gerente"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LabelSenha">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Senha:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="PasswordFieldSenha">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
       </Properties>
     </Component>
   </SubComponents>

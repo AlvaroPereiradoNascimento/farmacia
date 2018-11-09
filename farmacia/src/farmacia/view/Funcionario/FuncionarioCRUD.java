@@ -13,12 +13,12 @@ import java.util.Date;
  *
  * @author Alvaro Pereira do Nascimento
  */
-public class FuncionárioCRUD extends javax.swing.JFrame {
+public class FuncionarioCRUD extends javax.swing.JFrame {
 
     /**
      * Creates new form FuncionárioCRUD
      */
-    public FuncionárioCRUD() {
+    public FuncionarioCRUD() {
         initComponents();
     }
 
@@ -46,6 +46,8 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
         ButtonConsulta = new javax.swing.JButton();
         RadioButtonFuncionario = new javax.swing.JRadioButton();
         RadioButtonGerente = new javax.swing.JRadioButton();
+        LabelSenha = new javax.swing.JLabel();
+        PasswordFieldSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +93,10 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
 
         RadioButtonGerente.setText("Gerente");
 
+        LabelSenha.setText("Senha:");
+
+        PasswordFieldSenha.setText("jPasswordField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,14 +111,16 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
                                     .addComponent(LabelSalario)
                                     .addComponent(LabelDataAdmissao)
                                     .addComponent(LabelNomeUsuario)
-                                    .addComponent(LabelNome))
+                                    .addComponent(LabelNome)
+                                    .addComponent(LabelSenha))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(TextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                                         .addComponent(TextFieldNomeUsuario))
                                     .addComponent(jFormattedDataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(53, 53, 53)
                                 .addComponent(RadioButtonFuncionario)
@@ -148,11 +156,15 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelSalario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelSenha)
+                    .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RadioButtonFuncionario)
                     .addComponent(RadioButtonGerente))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonCadastra)
                     .addComponent(ButtonAlterar)
@@ -197,20 +209,20 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionárioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionárioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionárioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionárioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FuncionárioCRUD().setVisible(true);
+                new FuncionarioCRUD().setVisible(true);
             }
         });
     }
@@ -224,6 +236,8 @@ public class FuncionárioCRUD extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNome;
     private javax.swing.JLabel LabelNomeUsuario;
     private javax.swing.JLabel LabelSalario;
+    private javax.swing.JLabel LabelSenha;
+    private javax.swing.JPasswordField PasswordFieldSenha;
     private javax.swing.JRadioButton RadioButtonFuncionario;
     private javax.swing.JRadioButton RadioButtonGerente;
     private javax.swing.JTextField TextFieldNome;
