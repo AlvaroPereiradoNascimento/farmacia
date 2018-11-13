@@ -6,6 +6,8 @@
 
 package farmacia.forms;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alvaro Pereira do Nascimento
@@ -28,8 +30,6 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        LabelID = new javax.swing.JLabel();
-        TextFieldID = new javax.swing.JTextField();
         TextFieldNome = new javax.swing.JTextField();
         LabelNome = new javax.swing.JLabel();
         TextFieldTelefone = new javax.swing.JTextField();
@@ -46,16 +46,9 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         ButtonAltera = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
+        ButtonLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        LabelID.setText("ID:");
-
-        TextFieldID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldIDActionPerformed(evt);
-            }
-        });
 
         TextFieldNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +99,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         });
 
         ButtonCadastra.setText("Cadastra");
+        ButtonCadastra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCadastraActionPerformed(evt);
+            }
+        });
 
         ButtonAltera.setText("Altera");
 
@@ -113,25 +111,25 @@ public class FormClienteCRUD extends javax.swing.JFrame {
 
         ButtonConsulta.setText("Consulta");
 
+        ButtonLimpar.setText("Limpar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelEmail)
                             .addComponent(LabelTelefone3)
-                            .addComponent(LabelID)
                             .addComponent(LabelTelefone4)
                             .addComponent(LabelNome)
                             .addComponent(LabelTelefone)
                             .addComponent(LabelDtNasc))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldEmail)
@@ -146,17 +144,15 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ButtonConsulta)
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ButtonLimpar)
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelID)
-                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNome)
                     .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -180,21 +176,18 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelTelefone4)
                     .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonCadastra)
                     .addComponent(ButtonAltera)
                     .addComponent(jButton1)
-                    .addComponent(ButtonConsulta))
+                    .addComponent(ButtonConsulta)
+                    .addComponent(ButtonLimpar))
                 .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldIDActionPerformed
 
     private void TextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNomeActionPerformed
         // TODO add your handling code here:
@@ -220,6 +213,17 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldCPFActionPerformed
 
+    private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
+        // TODO add your handling code here:
+        if(!verificarCampoVazio()){
+            limpar();
+            
+        }else{
+            //AKI SALVAREMOS NO BANCO
+        }
+    }//GEN-LAST:event_ButtonCadastraActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -259,9 +263,9 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JButton ButtonAltera;
     private javax.swing.JButton ButtonCadastra;
     private javax.swing.JButton ButtonConsulta;
+    private javax.swing.JButton ButtonLimpar;
     private javax.swing.JLabel LabelDtNasc;
     private javax.swing.JLabel LabelEmail;
-    private javax.swing.JLabel LabelID;
     private javax.swing.JLabel LabelNome;
     private javax.swing.JLabel LabelTelefone;
     private javax.swing.JLabel LabelTelefone3;
@@ -269,10 +273,47 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldCPF;
     private javax.swing.JTextField TextFieldDtNasc;
     private javax.swing.JTextField TextFieldEmail;
-    private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldRG;
     private javax.swing.JTextField TextFieldTelefone;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
+
+    private boolean verificarCampoVazio() {
+        if(TextFieldNome.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo nome invalido");
+            return false;   
+        }
+        if(TextFieldCPF.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo CPF invalido");
+            return false;   
+        }
+        if(TextFieldDtNasc.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo data de nascimento invalido");
+            return false;   
+        }
+        if(TextFieldEmail.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo e-mail invalido");
+            return false;   
+        }
+        if(TextFieldRG.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo RG invalido");
+            return false;   
+        }
+        if(TextFieldTelefone.getText() == ""){
+            JOptionPane.showMessageDialog(this, "Campo Telefone invalido");
+            return false;   
+        }
+        
+        
+        
+        return true;
+    }
+    
+    private void limpar(){
+        TextFieldNome.setText(null);
+        //fazer com todos 
+    }
+    
+    
 }
