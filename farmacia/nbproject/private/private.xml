@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aluno/Documents/farmacia/src/farmacia/Farmacia.java</file>
-            <file>file:/C:/Users/aluno/Documents/farmacia/src/farmacia/Funcionario.java</file>
-            <file>file:/C:/Users/aluno/Documents/farmacia/src/farmacia/Gerente.java</file>
-            <file>file:/C:/Users/aluno/Documents/farmacia/src/farmacia/Atendente.java</file>
-            <file>file:/C:/Users/aluno/Documents/farmacia/src/farmacia/forms/FormClienteCRUD.java</file>
+            <file>file:/C:/Users/aluno/Documents/NetBeansProjects/farmacia/farmacia/src/farmacia/view/Funcionario/Caixa/Consulta.java</file>
+            <file>file:/C:/Users/aluno/Documents/NetBeansProjects/farmacia/farmacia/src/farmacia/view/Funcionario/Caixa/Pagamento.java</file>
+            <file>file:/C:/Users/aluno/Documents/NetBeansProjects/farmacia/farmacia/src/farmacia/view/Funcionario/Caixa/Caixa.java</file>
         </group>
     </open-files>
 </project-private>

@@ -16,7 +16,7 @@ import java.util.Date;
 public class Funcionario {
      private String nome, NomeUsuario;
      Date dataAdmissao;
-    private double salario;
+     private double salario;
 
     public Funcionario(String nome, String NomeUsuario, Date dataAdmissao, double salario) {
         this.nome = nome;
