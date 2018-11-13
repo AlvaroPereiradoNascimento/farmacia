@@ -6,6 +6,8 @@
 
 package farmacia.forms;
 
+import farmacia.CpfCnpjUtils;
+import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,6 +114,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         ButtonConsulta.setText("Consulta");
 
         ButtonLimpar.setText("Limpar");
+        ButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,13 +222,28 @@ public class FormClienteCRUD extends javax.swing.JFrame {
 
     private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
         // TODO add your handling code here:
+        /**
+         * Verificação de dados do funcionário para cadastro.
+         * @author Hugo Barros
+         * @implemented Alvaro Pereira do Nascimento
+         */
         if(!verificarCampoVazio()){
             limpar();
             
         }else{
-            //AKI SALVAREMOS NO BANCO
+            //efetuar salvamento no banco de dados.
+            if (!CpfCnpjUtils.isValid(TextFieldCPF.getText())){
+                JOptionPane.showMessageDialog(this.TextFieldCPF,"CPF não é Verdadeiro","CPF errado",ERROR);
+                TextFieldCPF.setFocusable(rootPaneCheckingEnabled);
+            } else {
+                
+            }
         }
     }//GEN-LAST:event_ButtonCadastraActionPerformed
+
+    private void ButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLimparActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ButtonLimparActionPerformed
 
     
     /**
@@ -252,10 +274,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormClienteCRUD().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FormClienteCRUD().setVisible(true);
         });
     }
 
@@ -279,6 +299,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 
+        /**
+         * Verificação de dados do Cliente para cadastro.
+         * @author Hugo Barros
+         * @edited Alvaro Pereira do Nascimento
+         */
     private boolean verificarCampoVazio() {
         if(TextFieldNome.getText() == ""){
             JOptionPane.showMessageDialog(this, "Campo nome invalido");
@@ -309,11 +334,23 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         
         return true;
     }
-    
+    /**
+         * limpa todos do campos do Cliente.
+         * @author Hugo Barros
+         * @edited Alvaro Pereira do Nascimento
+         */
     private void limpar(){
         TextFieldNome.setText(null);
-        //fazer com todos 
+        TextFieldCPF.setText(null);
+        TextFieldDtNasc.setText(null);
+        TextFieldEmail.setText(null);
+        TextFieldRG.setText(null);
+        TextFieldTelefone.setText(null); 
     }
+    
+    
+    
+
     
     
 }
