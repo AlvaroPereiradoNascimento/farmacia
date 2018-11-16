@@ -35,8 +35,8 @@ fk_prod int,
 fk_func int,
 fk_cli int,
 valor varchar(255),
-foreign key fk_func REFERENCES funcionarios(id),
-foreign key fk_cli REFERENCES clientes(id),
-foreign key fk_prod REFERENCES produtos(id)
+foreign key (fk_func) REFERENCES funcionarios(id),
+foreign key (fk_cli) REFERENCES clientes(id),
+foreign key (fk_prod) REFERENCES produtos(id)
 );
 
