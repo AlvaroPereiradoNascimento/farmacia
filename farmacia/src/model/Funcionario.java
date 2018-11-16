@@ -17,6 +17,7 @@ import java.util.Objects;
 
 
 public class Funcionario {
+     private int id; 
      private String nome, NomeUsuario;
      Date dataAdmissao;
     private double salario;
@@ -25,14 +26,18 @@ public class Funcionario {
 
 /**
  *  Constrtutor de funcionário na qual criará outras subclasses de funcionários
+ * @param id
  * @param nome
  * @param NomeUsuario
  * @param salario
  * @param senha 
  * 
  */
-     
-    public Funcionario(String nome, String NomeUsuario, double salario, String senha) {
+    public Funcionario(){
+        
+    }
+    public Funcionario(int id, String nome, String NomeUsuario, double salario, String senha) {
+        this.id = id;
         this.nome = nome;
         this.NomeUsuario = NomeUsuario;
         this.salario = salario;
@@ -122,6 +127,20 @@ public class Funcionario {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

@@ -10,17 +10,18 @@ package model;
  *
  * @author Alvaro Pereira do Nascimento
  */
-
-
 import java.util.Date;
 
 
 public class ClienteCpf {
-    int telefone,cpf,id;
-    String nome,rg,email;
+    int id;
+    String nome,rg,email,telefone,cpf;
     Date datanasc;
 
-    public ClienteCpf(int telefone, int cpf, int id, String nome, String rg, String email, Date datanasc) {
+    public ClienteCpf(String telefone, String cpf, 
+            int id, String nome, String rg, 
+            String email, Date datanasc) {
+        
         this.telefone = telefone;
         this.cpf = cpf;
         this.id = id;
@@ -30,20 +31,23 @@ public class ClienteCpf {
         this.datanasc = datanasc;
     }
     
+    public ClienteCpf(){
+        
+    }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

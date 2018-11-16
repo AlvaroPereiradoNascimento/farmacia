@@ -12,8 +12,8 @@ import java.util.Date;
 public class Gerente extends Funcionario{
     private int qtdDesocntos,QtdCaixasFechados,QtdCaixasabertos;
 
-    public Gerente(String nome, String NomeUsuario, double salario, String senha) {
-        super(nome, NomeUsuario, salario, senha);
+    public Gerente() {
+        super();
     }
 
 

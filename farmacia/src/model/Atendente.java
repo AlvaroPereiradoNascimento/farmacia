@@ -17,13 +17,10 @@ public class Atendente extends Funcionario {
      
     private int qtdCaixasAbertos;
 
-    public Atendente( String nome, String NomeUsuario, double salario, String senha) {
-        super(nome, NomeUsuario, salario, senha);
+    public Atendente() {
+        
     }
-
-
-
-
+    
     public int getQtdCaixasAbertos() {
         return qtdCaixasAbertos;
     }
