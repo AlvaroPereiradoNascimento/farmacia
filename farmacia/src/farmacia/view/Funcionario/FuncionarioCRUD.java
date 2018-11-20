@@ -7,6 +7,8 @@
 package farmacia.view.Funcionario;
 import model.Funcionario;
 import java.util.Date;
+import java.lang.String;
+import java.util.Random;
 
 
 /**
@@ -48,6 +50,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         RadioButtonGerente = new javax.swing.JRadioButton();
         LabelSenha = new javax.swing.JLabel();
         PasswordFieldSenha = new javax.swing.JPasswordField();
+        btnRandom = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,45 +101,62 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
         PasswordFieldSenha.setText("jPasswordField1");
 
+        btnRandom.setText("( )");
+        btnRandom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRandomMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setText("Random");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(ButtonCadastra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ButtonAlterar)
+                .addGap(18, 18, 18)
+                .addComponent(ButtonExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonConsulta)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LabelSalario)
+                            .addComponent(LabelDataAdmissao)
+                            .addComponent(LabelNomeUsuario)
+                            .addComponent(LabelNome)
+                            .addComponent(LabelSenha))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(LabelSalario)
-                                    .addComponent(LabelDataAdmissao)
-                                    .addComponent(LabelNomeUsuario)
-                                    .addComponent(LabelNome)
-                                    .addComponent(LabelSenha))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(TextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                                         .addComponent(TextFieldNomeUsuario))
-                                    .addComponent(jFormattedDataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jFormattedDataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(RadioButtonFuncionario)
-                                .addGap(18, 18, 18)
-                                .addComponent(RadioButtonGerente))))
+                                .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(RadioButtonFuncionario)
                         .addGap(18, 18, 18)
-                        .addComponent(ButtonCadastra)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ButtonAlterar)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ButtonConsulta)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(RadioButtonGerente)))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRandom)
+                    .addComponent(jLabel1))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,17 +181,24 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelSenha)
                     .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RadioButtonFuncionario)
-                    .addComponent(RadioButtonGerente))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonCadastra)
-                    .addComponent(ButtonAlterar)
-                    .addComponent(ButtonExcluir)
-                    .addComponent(ButtonConsulta))
-                .addGap(24, 24, 24))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RadioButtonFuncionario)
+                            .addComponent(RadioButtonGerente)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ButtonCadastra)
+                            .addComponent(ButtonAlterar)
+                            .addComponent(ButtonExcluir)
+                            .addComponent(ButtonConsulta))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -191,6 +219,71 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonConsultaActionPerformed
+
+    private void btnRandomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRandomMouseClicked
+       
+        String[] nomes = new String[10];
+        nomes[1] = "Steci";
+        nomes[2] = "Emanuela";
+        nomes[3] = "Antoni";
+        nomes[4] = "Luciano";
+        nomes[5] = "Vitoria";
+        nomes[6] = "Henrique";
+        nomes[7] = "Renata";
+        nomes[8] = "Andressa";
+        nomes[9] = "Hugo";
+        nomes[10] = "Roseli";
+        
+        String[] datas = new String[10];
+        datas[1] = "01/01/2000";
+        datas[2] = "10/03/2003";
+        datas[3] = "27/02/2003";
+        datas[4] = "19/10/1968";
+        datas[5] = "14/09/2012";
+        datas[6] = "01/01/2002";
+        datas[7] = "05/10/2003";
+        datas[8] = "17/06/1998";
+        datas[9] = "19/06/1998";
+        datas[10] = "08/07/2003";
+        
+        double[] salarios = new double[10];
+        salarios[1] = 123.12;
+        salarios[2] = 620.12;
+        salarios[3] = 720.99;
+        salarios[4] = 870.50;
+        salarios[5] = 1500.00;
+        salarios[6] = 1192.50;
+        salarios[7] = 920.79;
+        salarios[8] = 250.30;
+        salarios[9] = 100.10;
+        salarios[10] = 1700.00;
+        
+        String senha = "123";
+        
+        Random gerador = new Random();
+        
+        int x  = gerador.nextInt(11);
+        TextFieldNome.setText(nomes[x]);
+        
+        x  = gerador.nextInt(11);
+        jFormattedDataAdimissao.setText(datas[x]);
+        
+        x  = gerador.nextInt(11);
+        TextFieldNomeUsuario.setText(nomes[x]);
+        
+        x  = gerador.nextInt(11);
+        TextFieldSalario.setText(""+salarios[x]);
+        
+        x  = gerador.nextInt(11);
+        PasswordFieldSenha.setText(senha);
+        
+        if((x % 2) == 0){
+            RadioButtonFuncionario.doClick();
+        }else{
+            RadioButtonGerente.doClick();
+        }
+        
+    }//GEN-LAST:event_btnRandomMouseClicked
 
     /**
      * @param args the command line arguments
@@ -243,7 +336,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldNomeUsuario;
     private javax.swing.JTextField TextFieldSalario;
+    private javax.swing.JButton btnRandom;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFormattedTextField jFormattedDataAdimissao;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

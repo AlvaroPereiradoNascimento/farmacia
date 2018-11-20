@@ -6,6 +6,8 @@
 
 package farmacia.view.Cliente;
 
+import java.util.Random;
+
 /**
  *
  * @author Alvaro Pereira do Nascimento
@@ -46,6 +48,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         ButtonAltera = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
+        btnRandom = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +117,15 @@ public class FormClienteCRUD extends javax.swing.JFrame {
 
         ButtonConsulta.setText("Consulta");
 
+        btnRandom.setText("( )");
+        btnRandom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRandomMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setText("Random");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,7 +133,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelEmail)
                             .addComponent(LabelTelefone3)
@@ -131,13 +144,21 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                             .addComponent(LabelDtNasc))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldEmail)
-                            .addComponent(TextFieldDtNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldRG, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnRandom)
+                                    .addComponent(jLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TextFieldDtNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TextFieldRG, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 34, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonCadastra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,9 +166,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ButtonConsulta)
-                        .addGap(0, 12, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(ButtonConsulta)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,16 +197,25 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                     .addComponent(LabelTelefone3)
                     .addComponent(TextFieldRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelTelefone4)
-                    .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonCadastra)
-                    .addComponent(ButtonAltera)
-                    .addComponent(jButton1)
-                    .addComponent(ButtonConsulta))
-                .addGap(24, 24, 24))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LabelTelefone4)
+                            .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ButtonCadastra)
+                            .addComponent(ButtonAltera)
+                            .addComponent(jButton1)
+                            .addComponent(ButtonConsulta))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))
+                            .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -219,6 +248,107 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private void TextFieldCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldCPFActionPerformed
+
+    private void btnRandomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRandomMouseClicked
+
+        String[] nomes = new String[10];
+        nomes[1] = "Alberto";
+        nomes[2] = "Kario";
+        nomes[3] = "Vinicius";
+        nomes[4] = "Victor";
+        nomes[5] = "Antonela";
+        nomes[6] = "Giovana";
+        nomes[7] = "Mona lisa";
+        nomes[8] = "Izalberto";
+        nomes[9] = "Emily";
+        nomes[10] = "Isabela";
+
+        String[] telefone = new String[10];
+        telefone[1] = "(11) 4545-4545";
+        telefone[2] = "(11) 9452-0000";
+        telefone[3] = "(11) 6666-9898";
+        telefone[4] = "(11) 2761-0000";
+        telefone[5] = "(11) 0000-6565";
+        telefone[6] = "(11) 1234-5555";
+        telefone[7] = "(11) 4122-0987";
+        telefone[8] = "(11) 9865-9999";
+        telefone[9] = "(11) 0000-0000";
+        telefone[10] = "(11) 2222-3333";
+        
+        String[] emails = new String[10];
+        emails[1] = "stefanidamasceno@gmail.com";
+        emails[2] = "hugopinheiro@gmail.com";
+        emails[3] = "albertogatao@gmail.com";
+        emails[4] = "yuri@gmail.com";
+        emails[5] = "adalberto@gmail.com";
+        emails[6] = "stevam@gmail.com";
+        emails[7] = "gato@gmail.com";
+        emails[8] = "quilombo@gmail.com";
+        emails[9] = "gabriel@gmail.com";
+        emails[10] = "almir@gmail.com";
+
+        double[] salarios = new double[10];
+        salarios[1] = 123.12;
+        salarios[2] = 620.12;
+        salarios[3] = 720.99;
+        salarios[4] = 870.50;
+        salarios[5] = 1500.00;
+        salarios[6] = 1192.50;
+        salarios[7] = 920.79;
+        salarios[8] = 250.30;
+        salarios[9] = 100.10;
+        salarios[10] = 1700.00;
+        
+        String[] datas = new String[10];
+        datas[1] = "01/01/2000";
+        datas[2] = "10/03/2003";
+        datas[3] = "27/02/2003";
+        datas[4] = "19/10/1968";
+        datas[5] = "14/09/2012";
+        datas[6] = "01/01/2002";
+        datas[7] = "05/10/2003";
+        datas[8] = "17/06/1998";
+        datas[9] = "19/06/1998";
+        datas[10] = "08/07/2003";
+        
+        String[] Rgs = new String[10];
+        Rgs[1] = "593701562";
+        Rgs[2] = "123701562";
+        Rgs[3] = "593234562";
+        Rgs[4] = "593123452";
+        Rgs[5] = "593701123";
+        Rgs[6] = "345661562";
+        Rgs[7] = "593436562";
+        Rgs[8] = "523455562";
+        Rgs[9] = "345701562";
+        Rgs[10] = "456701562";
+
+        String senha = "123";
+
+        Random gerador = new Random();
+
+        int x  = gerador.nextInt(11);
+        TextFieldNome.setText(nomes[x]);
+
+        x  = gerador.nextInt(11);
+        TextFieldTelefone.setText(telefone[x]);
+
+        x  = gerador.nextInt(11);
+        TextFieldEmail.setText(emails[x]);
+
+        x  = gerador.nextInt(11);
+        TextFieldDtNasc.setText(datas[x]);
+
+        x  = gerador.nextInt(11);
+        TextFieldRG.setText(Rgs[x]);
+
+        if((x % 2) == 0){
+            //RadioButtonFuncionario.doClick();
+        }else{
+            //RadioButtonGerente.doClick();
+        }
+
+    }//GEN-LAST:event_btnRandomMouseClicked
 
     /**
      * @param args the command line arguments
@@ -273,6 +403,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldRG;
     private javax.swing.JTextField TextFieldTelefone;
+    private javax.swing.JButton btnRandom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
