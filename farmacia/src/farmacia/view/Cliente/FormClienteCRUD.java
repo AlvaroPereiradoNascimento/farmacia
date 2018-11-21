@@ -6,21 +6,31 @@
 
 package farmacia.view.Cliente;
 
-import java.util.Random;
+
+import model.ClienteCpf;
+import Verifica.CpfCnpjUtils;
+import Verifica.DateValidator;
+import Verifica.EmailValidator;
+import java.awt.Color;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 
 /**
  *
- * @author Alvaro Pereira do Nascimento
+ * @author Alvaro Pereira do Nascimento.
  */
 public class FormClienteCRUD extends javax.swing.JFrame {
 
     /**
-     * Creates new form FormCliente
+     * Creates new form FormClienteCRUD2
      */
     public FormClienteCRUD() {
         initComponents();
     }
-
+    DateValidator d;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,163 +41,198 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private void initComponents() {
 
         LabelID = new javax.swing.JLabel();
-        TextFieldID = new javax.swing.JTextField();
-        TextFieldNome = new javax.swing.JTextField();
         LabelNome = new javax.swing.JLabel();
-        TextFieldTelefone = new javax.swing.JTextField();
         LabelTelefone = new javax.swing.JLabel();
         LabelEmail = new javax.swing.JLabel();
-        TextFieldEmail = new javax.swing.JTextField();
         LabelDtNasc = new javax.swing.JLabel();
-        TextFieldDtNasc = new javax.swing.JTextField();
         LabelTelefone3 = new javax.swing.JLabel();
-        TextFieldRG = new javax.swing.JTextField();
         LabelTelefone4 = new javax.swing.JLabel();
-        TextFieldCPF = new javax.swing.JTextField();
         ButtonCadastra = new javax.swing.JButton();
         ButtonAltera = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        ButtonExclui = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
-        btnRandom = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        ButtonLimpar = new javax.swing.JButton();
+        TextFieldID = new javax.swing.JTextField();
+        TextFieldNome = new javax.swing.JTextField();
+        TextFieldTelefone = new javax.swing.JTextField();
+        TextFieldEmail = new javax.swing.JTextField();
+        TextFieldDtNasc = new javax.swing.JTextField();
+        TextFieldRG = new javax.swing.JTextField();
+        TextFieldCPF = new javax.swing.JTextField();
+        LabelCelular = new javax.swing.JLabel();
+        TextFieldCelular = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         LabelID.setText("ID:");
 
-        TextFieldID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldIDActionPerformed(evt);
-            }
-        });
-
-        TextFieldNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldNomeActionPerformed(evt);
-            }
-        });
-
         LabelNome.setText("Nome:");
-
-        TextFieldTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldTelefoneActionPerformed(evt);
-            }
-        });
 
         LabelTelefone.setText("Telefone:");
 
         LabelEmail.setText("E-mail:");
 
-        TextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldEmailActionPerformed(evt);
-            }
-        });
-
         LabelDtNasc.setText("Dt de Nasc.:");
-
-        TextFieldDtNasc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDtNascActionPerformed(evt);
-            }
-        });
 
         LabelTelefone3.setText("RG:");
 
-        TextFieldRG.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldRGActionPerformed(evt);
-            }
-        });
-
         LabelTelefone4.setText("CPF:");
 
-        TextFieldCPF.addActionListener(new java.awt.event.ActionListener() {
+        ButtonCadastra.setText("Cadastra");
+        ButtonCadastra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldCPFActionPerformed(evt);
+                ButtonCadastraActionPerformed(evt);
             }
         });
-
-        ButtonCadastra.setText("Cadastra");
 
         ButtonAltera.setText("Altera");
-
-        jButton1.setText("Exclui");
-
-        ButtonConsulta.setText("Consulta");
-
-        btnRandom.setText("( )");
-        btnRandom.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRandomMouseClicked(evt);
+        ButtonAltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAlteraActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Random");
+        ButtonExclui.setText("Exclui");
+        ButtonExclui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonExcluiActionPerformed(evt);
+            }
+        });
+
+        ButtonConsulta.setText("Consulta");
+        ButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonConsultaActionPerformed(evt);
+            }
+        });
+
+        ButtonLimpar.setText("Limpar");
+        ButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLimparActionPerformed(evt);
+            }
+        });
+
+        TextFieldID.setEditable(false);
+        TextFieldID.setBackground(new java.awt.Color(153, 153, 153));
+
+        TextFieldNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldNomeFocusLost(evt);
+            }
+        });
+
+        TextFieldTelefone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldTelefoneFocusLost(evt);
+            }
+        });
+
+        TextFieldEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldEmailFocusLost(evt);
+            }
+        });
+
+        TextFieldDtNasc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldDtNascFocusLost(evt);
+            }
+        });
+
+        TextFieldRG.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldRGFocusLost(evt);
+            }
+        });
+
+        TextFieldCPF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldCPFFocusLost(evt);
+            }
+        });
+
+        LabelCelular.setText("Celular:");
+
+        TextFieldCelular.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldCelularFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelEmail)
-                            .addComponent(LabelTelefone3)
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LabelID)
+                            .addComponent(LabelNome))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LabelTelefone3)
+                            .addComponent(LabelDtNasc)
                             .addComponent(LabelTelefone4)
-                            .addComponent(LabelNome)
-                            .addComponent(LabelTelefone)
-                            .addComponent(LabelDtNasc))
+                            .addComponent(LabelEmail)
+                            .addComponent(LabelTelefone))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldEmail)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnRandom)
-                                    .addComponent(jLabel1)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldDtNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldRG, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 34, Short.MAX_VALUE))))
+                                .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LabelCelular)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TextFieldRG, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TextFieldCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                .addComponent(TextFieldDtNasc))))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(ButtonCadastra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ButtonAltera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(ButtonExclui)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ButtonConsulta)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(ButtonConsulta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ButtonLimpar)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelID)
-                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabelID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNome)
                     .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelTelefone)
                     .addComponent(TextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelTelefone))
+                    .addComponent(LabelCelular)
+                    .addComponent(TextFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelEmail))
+                    .addComponent(LabelEmail)
+                    .addComponent(TextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelDtNasc)
@@ -197,158 +242,360 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                     .addComponent(LabelTelefone3)
                     .addComponent(TextFieldRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelTelefone4)
-                            .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ButtonCadastra)
-                            .addComponent(ButtonAltera)
-                            .addComponent(jButton1)
-                            .addComponent(ButtonConsulta))
-                        .addGap(24, 24, 24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1))
-                            .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelTelefone4)
+                    .addComponent(TextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonCadastra)
+                    .addComponent(ButtonAltera)
+                    .addComponent(ButtonExclui)
+                    .addComponent(ButtonConsulta)
+                    .addComponent(ButtonLimpar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextFieldIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIDActionPerformed
+    private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldIDActionPerformed
-
-    private void TextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldNomeActionPerformed
-
-    private void TextFieldTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldTelefoneActionPerformed
-
-    private void TextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldEmailActionPerformed
-
-    private void TextFieldDtNascActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDtNascActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDtNascActionPerformed
-
-    private void TextFieldRGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldRGActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldRGActionPerformed
-
-    private void TextFieldCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldCPFActionPerformed
-
-    private void btnRandomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRandomMouseClicked
-
-        String[] nomes = new String[10];
-        nomes[1] = "Alberto";
-        nomes[2] = "Kario";
-        nomes[3] = "Vinicius";
-        nomes[4] = "Victor";
-        nomes[5] = "Antonela";
-        nomes[6] = "Giovana";
-        nomes[7] = "Mona lisa";
-        nomes[8] = "Izalberto";
-        nomes[9] = "Emily";
-        nomes[10] = "Isabela";
-
-        String[] telefone = new String[10];
-        telefone[1] = "(11) 4545-4545";
-        telefone[2] = "(11) 9452-0000";
-        telefone[3] = "(11) 6666-9898";
-        telefone[4] = "(11) 2761-0000";
-        telefone[5] = "(11) 0000-6565";
-        telefone[6] = "(11) 1234-5555";
-        telefone[7] = "(11) 4122-0987";
-        telefone[8] = "(11) 9865-9999";
-        telefone[9] = "(11) 0000-0000";
-        telefone[10] = "(11) 2222-3333";
+        /**
+        * Verificação de dados do funcionário para cadastro.
+        * @author Hugo Barros
+        * @implemented Alvaro Pereira do Nascimento
+        */
+        //verifica se campos estão vazios.
+       if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+            JOptionPane.showMessageDialog(this.TextFieldCPF,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
+            if (!CpfCnpjUtils.isValid(TextFieldCPF.getText())){
+                JOptionPane.showMessageDialog(this.TextFieldCPF,"CPF não é Verdadeiro","CPF", JOptionPane.ERROR_MESSAGE);
+                TextFieldCPF.setText(null);
+                TextFieldCPF.requestFocus();
+            }
+            else if(!(EmailValidator.isEmailValid(TextFieldEmail.getText()))){
+                JOptionPane.showMessageDialog(null,"Email cadastrado errado","Email inválido",JOptionPane.ERROR_MESSAGE);
+                TextFieldEmail.setText(null);
+                TextFieldEmail.requestFocus();
+            }else if (!d.data(TextFieldDtNasc.getText())){
+                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                TextFieldDtNasc.setText(null);
+                TextFieldDtNasc.requestFocus();
+            }else{
+              ClienteCpf c;
+                try {
+                    c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(), d.StringtoDate(TextFieldDtNasc.getText()));
+                } catch (ParseException ex) {
+                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                    TextFieldDtNasc.setText(null);
+                    TextFieldDtNasc.requestFocus();
+                }
+            } 
+       }else Editavel();
         
-        String[] emails = new String[10];
-        emails[1] = "stefanidamasceno@gmail.com";
-        emails[2] = "hugopinheiro@gmail.com";
-        emails[3] = "albertogatao@gmail.com";
-        emails[4] = "yuri@gmail.com";
-        emails[5] = "adalberto@gmail.com";
-        emails[6] = "stevam@gmail.com";
-        emails[7] = "gato@gmail.com";
-        emails[8] = "quilombo@gmail.com";
-        emails[9] = "gabriel@gmail.com";
-        emails[10] = "almir@gmail.com";
 
-        double[] salarios = new double[10];
-        salarios[1] = 123.12;
-        salarios[2] = 620.12;
-        salarios[3] = 720.99;
-        salarios[4] = 870.50;
-        salarios[5] = 1500.00;
-        salarios[6] = 1192.50;
-        salarios[7] = 920.79;
-        salarios[8] = 250.30;
-        salarios[9] = 100.10;
-        salarios[10] = 1700.00;
-        
-        String[] datas = new String[10];
-        datas[1] = "01/01/2000";
-        datas[2] = "10/03/2003";
-        datas[3] = "27/02/2003";
-        datas[4] = "19/10/1968";
-        datas[5] = "14/09/2012";
-        datas[6] = "01/01/2002";
-        datas[7] = "05/10/2003";
-        datas[8] = "17/06/1998";
-        datas[9] = "19/06/1998";
-        datas[10] = "08/07/2003";
-        
-        String[] Rgs = new String[10];
-        Rgs[1] = "593701562";
-        Rgs[2] = "123701562";
-        Rgs[3] = "593234562";
-        Rgs[4] = "593123452";
-        Rgs[5] = "593701123";
-        Rgs[6] = "345661562";
-        Rgs[7] = "593436562";
-        Rgs[8] = "523455562";
-        Rgs[9] = "345701562";
-        Rgs[10] = "456701562";
+    }//GEN-LAST:event_ButtonCadastraActionPerformed
 
-        String senha = "123";
+    private void ButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLimparActionPerformed
+        // TODO add your handling code here:
+        limpar();
+        TextFieldNome.requestFocus();
+        if ((TextFieldID.isEditable()) && !(TextFieldNome.isEditable())) Editavel();
+    }//GEN-LAST:event_ButtonLimparActionPerformed
 
-        Random gerador = new Random();
-
-        int x  = gerador.nextInt(11);
-        TextFieldNome.setText(nomes[x]);
-
-        x  = gerador.nextInt(11);
-        TextFieldTelefone.setText(telefone[x]);
-
-        x  = gerador.nextInt(11);
-        TextFieldEmail.setText(emails[x]);
-
-        x  = gerador.nextInt(11);
-        TextFieldDtNasc.setText(datas[x]);
-
-        x  = gerador.nextInt(11);
-        TextFieldRG.setText(Rgs[x]);
-
-        if((x % 2) == 0){
-            //RadioButtonFuncionario.doClick();
-        }else{
-            //RadioButtonGerente.doClick();
+    private void TextFieldNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeFocusLost
+        // TODO add your handling code here:
+        if (TextFieldNome.isEditable() && (!TextFieldID.isEditable())){
+            if( TextFieldNome.getText().length() == 0 ){
+                        JOptionPane.showMessageDialog(this.TextFieldNome, "Campo nome vazio.","Nome", JOptionPane.ERROR_MESSAGE);
+                        TextFieldNome.requestFocus();
+                    }
+            else if(matchesOnlyText(TextFieldNome.getText())) {
+                String nome = toTitledCase(TextFieldNome.getText());
+                TextFieldNome.setText(nome);
+                                    
+            }else {
+                JOptionPane.showMessageDialog(this.TextFieldNome, "Nome possui números ou dados inelegiveis","Nome com números.", JOptionPane.ERROR_MESSAGE);
+                TextFieldNome.requestFocus();
+                TextFieldNome.setText(null);
+            }   
+            
         }
+    }//GEN-LAST:event_TextFieldNomeFocusLost
 
-    }//GEN-LAST:event_btnRandomMouseClicked
+    private void TextFieldTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldTelefoneFocusLost
+        // TODO add your handling code here:
+        if (TextFieldTelefone.isEditable()){
+            if(TextFieldNome.getText().length() == 0 || (!( matchesOnlyText(TextFieldNome.getText())))){
+                TextFieldNome.requestFocus();
+            }
+                else if(TextFieldTelefone.getText().length() == 0){
+                    JOptionPane.showMessageDialog(this.TextFieldTelefone, "Campo Telefone Vazio.","Telefone", JOptionPane.ERROR_MESSAGE);
+                    TextFieldTelefone.requestFocus();
+                }else if (TextFieldTelefone.getText().length() != 10) {
+                    JOptionPane.showMessageDialog(this.TextFieldTelefone,"Dados de telefone incorretos!","Telefone Incorreto", JOptionPane.ERROR_MESSAGE);
+                    TextFieldTelefone.requestFocus();
+                    TextFieldTelefone.setText(null);
+                }
+        }
+    }//GEN-LAST:event_TextFieldTelefoneFocusLost
+
+    private void TextFieldCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldCelularFocusLost
+        // TODO add your handling code here:
+            if (TextFieldCelular.isEditable()){
+                if( TextFieldTelefone.getText().length() != 0  && TextFieldTelefone.getText().length() == 10 ){
+
+                if(TextFieldCelular.getText().length() == 0){
+                JOptionPane.showMessageDialog(this.TextFieldCelular, "Campo Celular Vazio.","Celular", JOptionPane.ERROR_MESSAGE);
+                TextFieldCelular.requestFocus();
+                }else if (TextFieldCelular.getText().length() != 11) {
+                JOptionPane.showMessageDialog(this.TextFieldCelular,"Dados de Celular incorretos!","Celular Incorreto", JOptionPane.ERROR_MESSAGE);
+                TextFieldCelular.requestFocus();
+                TextFieldCelular.setText(null);
+                }
+
+                }else TextFieldTelefone.requestFocus();
+            }
+        
+    }//GEN-LAST:event_TextFieldCelularFocusLost
+
+    private void TextFieldEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldEmailFocusLost
+        // TODO add your handling code here:
+        if (TextFieldEmail.isEditable()){
+            String toLowerCase = TextFieldEmail.getText().toLowerCase();
+            TextFieldEmail.setText(toLowerCase);
+            if( TextFieldCelular.getText().length() != 0 && TextFieldCelular.getText().length() == 11){
+
+                if(TextFieldEmail.getText().length() == 0){
+                        JOptionPane.showMessageDialog(this.TextFieldEmail,"Campo email Vazio","Email",JOptionPane.ERROR_MESSAGE);
+                        TextFieldEmail.requestFocus();
+                }else if((TextFieldEmail.getText()!= null) && (!(EmailValidator.isEmailValid(TextFieldEmail.getText())))){
+                        JOptionPane.showMessageDialog(this.TextFieldEmail,"Email cadastrado errado","Email inválido",JOptionPane.ERROR_MESSAGE);
+                        TextFieldEmail.setText(null);
+                        TextFieldEmail.requestFocus();
+                }
+            }else TextFieldCelular.requestFocus(); 
+        }
+    }//GEN-LAST:event_TextFieldEmailFocusLost
+
+    private void TextFieldDtNascFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldDtNascFocusLost
+        // TODO add your handling code here:
+        if (TextFieldDtNasc.isEditable()){
+            int date=0;
+            if(  (TextFieldEmail.getText().length() != 0) && ((EmailValidator.isEmailValid(TextFieldEmail.getText())))){
+
+                if (TextFieldDtNasc.getText().length()> 3 || TextFieldDtNasc.getText().length()< 11){
+                    if(TextFieldDtNasc.getText().length()== 8){
+                        try {
+                          date = Integer.parseInt(TextFieldDtNasc.getText());
+                            int ano = date%10000;
+                            int dia = date/1000000;
+                            date /= 10000;
+                            int mes = date%100;
+                            if (mes <10){
+                              TextFieldDtNasc.setText(dia+"/0"+mes+"/"+ano);  
+                            }
+                           else TextFieldDtNasc.setText(dia+"/"+mes+"/"+ano);
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtNasc.requestFocus();
+                           TextFieldDtNasc.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                           TextFieldDtNasc.setText("dia/mes/ano");
+                           TextFieldDtNasc.selectAll();
+                        }
+                    }else if (TextFieldDtNasc.getText().length()== 10){
+                            if(!d.data(TextFieldDtNasc.getText()))
+                               JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtNasc.requestFocus();
+                               TextFieldDtNasc.setText("dd/mm/aaaa");
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                               TextFieldDtNasc.setText("dia/mes/ano");
+                               TextFieldDtNasc.selectAll();
+                    }else if (TextFieldDtNasc.getText().length()== 6){
+                        try {
+                            date = Integer.parseInt(TextFieldDtNasc.getText());
+                            int ano = date%100;
+                            int dia = date/10000;
+                            date /= 100;
+                            int mes = date%100;
+                            if (ano < 100 && ano > 60 ) ano+=1900;
+                            else ano += 2000;
+                            TextFieldDtNasc.setText(dia+"/0"+mes+"/"+ano);
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtNasc.requestFocus();
+                           TextFieldDtNasc.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                           TextFieldDtNasc.setText("dia/mes/ano");
+                           TextFieldDtNasc.selectAll();
+                        }
+                    }else if (TextFieldDtNasc.getText().length()== 4){
+                            try {
+                                date = Integer.parseInt(TextFieldDtNasc.getText());
+                                int ano = date%100;
+                                int dia = date/1000;
+                                date /= 100;
+                                int mes = date%10;
+                                if (mes <10 && dia < 10&& (ano < 100 && ano > 60 )){
+                                        ano+=1900;
+                                        TextFieldDtNasc.setText("0"+dia+"/0"+mes+"/"+ano);  
+                                    }
+                            } catch (NumberFormatException e) {
+                               JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtNasc.requestFocus();
+                                TextFieldDtNasc.setText("dd/mm/aaaa");
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                               TextFieldDtNasc.setText("dia/mes/ano");
+                               TextFieldDtNasc.selectAll();
+                            }
+
+                        }else if (TextFieldDtNasc.getText().length()== 5){
+
+                               JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtNasc.requestFocus();
+                               TextFieldDtNasc.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                               TextFieldDtNasc.setText("dia/mes/ano");
+                               TextFieldDtNasc.selectAll();
+                            }
+
+
+
+                   else {
+                        JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                        TextFieldDtNasc.requestFocus();
+                        TextFieldDtNasc.setText("dia/mes/ano");
+                        TextFieldDtNasc.selectAll();
+                    }   
+                }else {
+                    JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                    TextFieldDtNasc.requestFocus();
+                     }
+            }else TextFieldEmail.requestFocus();
+        }    
+    }//GEN-LAST:event_TextFieldDtNascFocusLost
+
+    private void TextFieldRGFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldRGFocusLost
+        // TODO add your handling code here:
+        if (TextFieldRG.isEditable()){
+            String toUpperCase = TextFieldRG.getText().toUpperCase();
+            TextFieldRG.setText(toUpperCase);
+            if( TextFieldDtNasc.getText().length() != 0  && TextFieldDtNasc.getText().length() == 10 ){
+                if( TextFieldRG.getText().length() == 0 ){
+                        JOptionPane.showMessageDialog(this.TextFieldRG, "Campo RG vazio.","RG", JOptionPane.ERROR_MESSAGE);
+                        TextFieldRG.requestFocus();
+                        TextFieldRG.requestFocus();
+                    }
+            }else TextFieldDtNasc.requestFocus();
+        }
+    }//GEN-LAST:event_TextFieldRGFocusLost
+
+    private void TextFieldCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldCPFFocusLost
+        // TODO add your handling code here:
+        if(TextFieldRG.isEditable()){
+            if( TextFieldRG.getText().length() != 0 ){
+                if( TextFieldCPF.getText().length() == 0 ){
+                     JOptionPane.showMessageDialog(this.TextFieldCPF, "Campo CPF vazio.","CPF", JOptionPane.ERROR_MESSAGE);
+                     TextFieldCPF.requestFocus();
+                     TextFieldCPF.requestFocus();
+                 }
+            }else TextFieldRG.requestFocus();
+        }
+    }//GEN-LAST:event_TextFieldCPFFocusLost
+
+    private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
+        // TODO add your handling code here:[
+        
+        limpar();
+        int resposta;
+        if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())){
+           
+            if (TextFieldID.getText()!= null ){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    try {
+                        int ID = Integer.parseInt(TextFieldID.getText());
+                    } catch (NumberFormatException numberFormatException ) {
+                        JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
+                    }
+                      // BUSCA NO BANCO   
+                }
+            }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
+        }else  Editavel();
+    }//GEN-LAST:event_ButtonConsultaActionPerformed
+
+    private void ButtonExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluiActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())){
+            if (TextFieldID.getText()!= null ){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja cancelar cadastro do cliente", "Confirmação de exclusão de cliente" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    try {
+                        int ID = Integer.parseInt(TextFieldID.getText());
+                    } catch (NumberFormatException numberFormatException ) {
+                        JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
+                    }
+                      // Solicita exclusão do  banco      
+                }
+            }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
+        }
+ 
+    }//GEN-LAST:event_ButtonExcluiActionPerformed
+
+    private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        if ((!TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+            
+            if (TextFieldID.getText()!= null ){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja Alterar cadastro do cliente", "Confirmação de Alteração de dados do cliente" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    try {
+                        int ID = Integer.parseInt(TextFieldID.getText());
+                    } catch (NumberFormatException numberFormatException ) {
+                        JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
+                    }
+                       // busca ID no banco e trava o id liberando outros campos para alteração.
+                        ClienteCpf c;
+                try {
+                    c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(), d.StringtoDate(TextFieldDtNasc.getText()));
+                } catch (ParseException ex) {
+                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                    TextFieldDtNasc.setText(null);
+                    TextFieldDtNasc.requestFocus();
+                      // Solicita alteração do  banco 
+                    
+                    // em caso de confirmação imprme
+                    JOptionPane.showMessageDialog(this.TextFieldID,"Dados do cleinte foram alterados com sucesso ","Alteração com sucesso ",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
+        }else Editavel();
+    }//GEN-LAST:event_ButtonAlteraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,10 +625,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormClienteCRUD().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FormClienteCRUD().setVisible(true);
         });
     }
 
@@ -389,6 +634,9 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JButton ButtonAltera;
     private javax.swing.JButton ButtonCadastra;
     private javax.swing.JButton ButtonConsulta;
+    private javax.swing.JButton ButtonExclui;
+    private javax.swing.JButton ButtonLimpar;
+    private javax.swing.JLabel LabelCelular;
     private javax.swing.JLabel LabelDtNasc;
     private javax.swing.JLabel LabelEmail;
     private javax.swing.JLabel LabelID;
@@ -397,14 +645,96 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JLabel LabelTelefone3;
     private javax.swing.JLabel LabelTelefone4;
     private javax.swing.JTextField TextFieldCPF;
+    private javax.swing.JTextField TextFieldCelular;
     private javax.swing.JTextField TextFieldDtNasc;
     private javax.swing.JTextField TextFieldEmail;
     private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldRG;
     private javax.swing.JTextField TextFieldTelefone;
-    private javax.swing.JButton btnRandom;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * limpas todos os campos de texto.
+     */
+    private void limpar() {
+        TextFieldNome.setText(null);
+        TextFieldCPF.setText(null);
+        TextFieldDtNasc.setText(null);
+        TextFieldEmail.setText(null);
+        TextFieldRG.setText(null);
+        TextFieldTelefone.setText(null); 
+        TextFieldCelular.setText(null); 
+        TextFieldID.setText(null); 
+    }
+    /**
+     * Deixar campos editaveis de acordo com padrão
+     */
+    public void Editavel(){
+            if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+                TextFieldID.setBackground(Color.white);
+                TextFieldID.setEditable(true);
+                TextFieldNome.setBackground(Color.gray);  
+                TextFieldNome.setEditable(false);
+                TextFieldTelefone.setBackground(Color.gray);  
+                TextFieldTelefone.setEditable(false);
+                TextFieldCelular.setBackground(Color.gray);  
+                TextFieldCelular.setEditable(false);
+                TextFieldEmail.setBackground(Color.gray);  
+                TextFieldEmail.setEditable(false);
+                TextFieldDtNasc.setBackground(Color.gray);  
+                TextFieldDtNasc.setEditable(false);
+                TextFieldRG.setBackground(Color.gray);  
+                TextFieldRG.setEditable(false);
+                TextFieldCPF.setBackground(Color.gray);  
+                TextFieldCPF.setEditable(false);
+            }else {
+                TextFieldID.setBackground(Color.gray);
+                TextFieldID.setEditable(false);
+                TextFieldNome.setBackground(Color.white);  
+                TextFieldNome.setEditable(true);
+                TextFieldTelefone.setBackground(Color.white);  
+                TextFieldTelefone.setEditable(true);
+                TextFieldCelular.setBackground(Color.white);  
+                TextFieldCelular.setEditable(true);
+                TextFieldEmail.setBackground(Color.white);  
+                TextFieldEmail.setEditable(true);
+                TextFieldDtNasc.setBackground(Color.white);  
+                TextFieldDtNasc.setEditable(true);
+                TextFieldRG.setBackground(Color.white);  
+                TextFieldRG.setEditable(true);
+                TextFieldCPF.setBackground(Color.white);  
+                TextFieldCPF.setEditable(true);
+            }
+
+        }
+   public boolean matchesOnlyText(String text) {
+    return text.matches("[A-Z_a-z_À-ú\\s\\p{L}]+");
+    }
+    /**
+     *
+     * @param str
+     * @return  primeira letra de cada palavra com em maiuscula exceto para sílabas
+     */
+    public static String toTitledCase(String str){
+
+    String[] words = str.split(" ");
+    StringBuilder sb = new StringBuilder();
+  
+    for(int i = 0; i < words.length; i++){
+        String[] word= words[i].split("\\s");
+        if (words[i].length() > 2){
+            for (int y = 0;y<word.length;y++){
+            sb.append(word[y].substring(0, 1).toUpperCase() + word[y].substring(1).toLowerCase());
+            sb.append(" ");  
+        }
+        } else {
+            sb.append(words[i]);
+            sb.append(" ");      
+        }
+    }
+
+    return sb.toString().substring (0, sb.length() - 1);
+    }
 }
+

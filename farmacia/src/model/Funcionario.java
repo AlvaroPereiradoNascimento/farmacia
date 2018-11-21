@@ -17,31 +17,29 @@ import java.util.Objects;
 
 
 public class Funcionario {
-     private int id; 
      private String nome, NomeUsuario;
      Date dataAdmissao;
     private double salario;
      @SuppressWarnings("FieldMayBeFinal")
     private String senha;
+    private boolean trocasenha = false;
 
 /**
  *  Constrtutor de funcionário na qual criará outras subclasses de funcionários
- * @param id
- * @param nome
- * @param NomeUsuario
- * @param salario
- * @param senha 
+ * @param nome deve ser colocado o nome do Colaborador completo
+ * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso   
+ * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
+ * @param senha senha de acesso do colaborador 
+ * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
  * 
  */
-    public Funcionario(){
-        
-    }
-    public Funcionario(int id, String nome, String NomeUsuario, double salario, String senha) {
-        this.id = id;
+     
+    public Funcionario(String nome, String NomeUsuario, double salario, String senha,boolean trocasenha) {
         this.nome = nome;
         this.NomeUsuario = NomeUsuario;
         this.salario = salario;
         this.senha = senha;
+        this.trocasenha= trocasenha;
     }
 /**
  *  Informa nome da pessoa.
@@ -127,20 +125,6 @@ public class Funcionario {
             return false;
         }
         return true;
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
     
 }

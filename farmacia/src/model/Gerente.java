@@ -6,15 +6,28 @@
 
 package model;
 
-import java.util.Date;
-
 
 public class Gerente extends Funcionario{
     private int qtdDesocntos,QtdCaixasFechados,QtdCaixasabertos;
 
-    public Gerente() {
-        super();
+    /**
+     * Construtor de Gerente para efetuar processo de Criação de Gerente.
+     * @param qtdDesocntos mostra  a quantidade de descontos gerado pelo cliente
+     * @param QtdCaixasFechados mostra se caixa esta fechado pelo gerente
+     * @param QtdCaixasabertos mostr se caixa esta aberto pelo gerente
+     * @param nome deve ser colocado o nome do Colaborador completo
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso   
+     * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
+     * @param senha senha de acesso do colaborador 
+     * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+     */
+    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, double salario, String senha, boolean trocasenha) {
+        super(nome, NomeUsuario, salario, senha, trocasenha);
+        this.qtdDesocntos = qtdDesocntos;
+        this.QtdCaixasFechados = QtdCaixasFechados;
+        this.QtdCaixasabertos = QtdCaixasabertos;
     }
+
 
 
 

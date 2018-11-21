@@ -5,15 +5,17 @@
  */
 
 package farmacia.view.Funcionario;
-import model.Funcionario;
-import java.util.Date;
-import java.lang.String;
-import java.util.Random;
+import Verifica.DateValidator;
+import farmacia.view.Cliente.FormClienteCRUD;
+import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
  *
- * @author Alvaro Pereira do Nascimento
+ * @author Alvaro Pereira do Contratação 
  */
 public class FuncionarioCRUD extends javax.swing.JFrame {
 
@@ -23,7 +25,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     public FuncionarioCRUD() {
         initComponents();
     }
-
+    DateValidator d;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,136 +34,166 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroupFuncionario = new javax.swing.ButtonGroup();
+        buttonGroupGerente = new javax.swing.ButtonGroup();
+        LabelID = new javax.swing.JLabel();
+        TextFieldID = new javax.swing.JTextField();
         LabelNomeUsuario = new javax.swing.JLabel();
         TextFieldNomeUsuario = new javax.swing.JTextField();
-        TextFieldNome = new javax.swing.JTextField();
         LabelNome = new javax.swing.JLabel();
+        TextFieldNome = new javax.swing.JTextField();
         LabelDataAdmissao = new javax.swing.JLabel();
-        jFormattedDataAdimissao = new javax.swing.JFormattedTextField();
+        TextFieldDtAdm = new javax.swing.JTextField();
         LabelSalario = new javax.swing.JLabel();
         TextFieldSalario = new javax.swing.JTextField();
+        LabelSenha = new javax.swing.JLabel();
+        PasswordFieldSenha = new javax.swing.JPasswordField();
+        RadioButtonFuncionario = new javax.swing.JRadioButton();
+        RadioButtonGerente = new javax.swing.JRadioButton();
         ButtonCadastra = new javax.swing.JButton();
         ButtonAlterar = new javax.swing.JButton();
         ButtonExcluir = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
-        RadioButtonFuncionario = new javax.swing.JRadioButton();
-        RadioButtonGerente = new javax.swing.JRadioButton();
-        LabelSenha = new javax.swing.JLabel();
-        PasswordFieldSenha = new javax.swing.JPasswordField();
-        btnRandom = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        ButtonLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        LabelID.setText("ID:");
+
+        TextFieldID.setEditable(false);
+        TextFieldID.setBackground(java.awt.Color.gray);
+
         LabelNomeUsuario.setText("Nome do Usuário:");
+
+        TextFieldNomeUsuario.setEditable(false);
+        TextFieldNomeUsuario.setBackground(java.awt.Color.gray);
+        TextFieldNomeUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldNomeUsuarioFocusLost(evt);
+            }
+        });
 
         LabelNome.setText("Nome:");
 
+        TextFieldNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldNomeFocusLost(evt);
+            }
+        });
+
         LabelDataAdmissao.setText("Data de admissão:");
+
+        TextFieldDtAdm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldDtAdmFocusLost(evt);
+            }
+        });
 
         LabelSalario.setText("Salário:");
 
-        TextFieldSalario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldSalarioActionPerformed(evt);
+        TextFieldSalario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldSalarioFocusLost(evt);
             }
         });
 
-        ButtonCadastra.setText(" Cadastrar");
-        ButtonCadastra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonCadastraActionPerformed(evt);
-            }
-        });
+        LabelSenha.setText("Senha:");
 
-        ButtonAlterar.setText("Alterar");
-        ButtonAlterar.setToolTipText("");
-
-        ButtonExcluir.setText("Excluir");
-        ButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonExcluirActionPerformed(evt);
-            }
-        });
-
-        ButtonConsulta.setText("Consulta");
-        ButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonConsultaActionPerformed(evt);
+        PasswordFieldSenha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                PasswordFieldSenhaFocusLost(evt);
             }
         });
 
         RadioButtonFuncionario.setText("Funcionário");
 
-        RadioButtonGerente.setText("Gerente");
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, buttonGroupFuncionario, org.jdesktop.beansbinding.ELProperty.create("${selection.pressed}"), RadioButtonFuncionario, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
 
-        LabelSenha.setText("Senha:");
-
-        PasswordFieldSenha.setText("jPasswordField1");
-
-        btnRandom.setText("( )");
-        btnRandom.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRandomMouseClicked(evt);
+        RadioButtonFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioButtonFuncionarioActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Random");
+        RadioButtonGerente.setText("Gerente");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, buttonGroupGerente, org.jdesktop.beansbinding.ELProperty.create("${selection.pressed}"), RadioButtonGerente, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
+        RadioButtonGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioButtonGerenteActionPerformed(evt);
+            }
+        });
+
+        ButtonCadastra.setText(" Cadastrar");
+
+        ButtonAlterar.setText("Alterar");
+        ButtonAlterar.setToolTipText("");
+
+        ButtonExcluir.setText("Excluir");
+
+        ButtonConsulta.setText("Consulta");
+
+        ButtonLimpar.setText("Limpar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(ButtonCadastra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ButtonAlterar)
-                .addGap(18, 18, 18)
-                .addComponent(ButtonExcluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ButtonConsulta)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LabelSalario)
-                            .addComponent(LabelDataAdmissao)
                             .addComponent(LabelNomeUsuario)
                             .addComponent(LabelNome)
-                            .addComponent(LabelSenha))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(LabelDataAdmissao)
+                            .addComponent(LabelSalario)
+                            .addComponent(LabelSenha)
+                            .addComponent(LabelID))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(TextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(TextFieldNomeUsuario))
-                                    .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFormattedDataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(TextFieldSalario, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(242, 242, 242))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(94, 94, 94)
+                                .addComponent(ButtonAlterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(ButtonConsulta)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ButtonLimpar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
                         .addComponent(RadioButtonFuncionario)
                         .addGap(18, 18, 18)
                         .addComponent(RadioButtonGerente)))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRandom)
-                    .addComponent(jLabel1))
-                .addGap(25, 25, 25))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelID)
+                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNomeUsuario)
                     .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,7 +204,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelDataAdmissao)
-                    .addComponent(jFormattedDataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,109 +213,224 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelSenha)
                     .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(RadioButtonFuncionario)
-                            .addComponent(RadioButtonGerente)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ButtonCadastra)
-                            .addComponent(ButtonAlterar)
-                            .addComponent(ButtonExcluir)
-                            .addComponent(ButtonConsulta))
-                        .addGap(24, 24, 24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RadioButtonFuncionario)
+                    .addComponent(RadioButtonGerente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonCadastra)
+                    .addComponent(ButtonAlterar)
+                    .addComponent(ButtonExcluir)
+                    .addComponent(ButtonConsulta)
+                    .addComponent(ButtonLimpar))
+                .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextFieldSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldSalarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldSalarioActionPerformed
+    private void RadioButtonFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonFuncionarioActionPerformed
+        // TODO add your handling code here:,
+        if (RadioButtonGerente.isSelected()){
+        RadioButtonGerente.setSelected(false);
+        }
+    }//GEN-LAST:event_RadioButtonFuncionarioActionPerformed
 
-    private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
+    private void RadioButtonGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonGerenteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonCadastraActionPerformed
+        if (RadioButtonFuncionario.isSelected()){
+        RadioButtonFuncionario.setSelected(false);
+        }
+    }//GEN-LAST:event_RadioButtonGerenteActionPerformed
 
-    private void ButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluirActionPerformed
+    private void TextFieldNomeUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonExcluirActionPerformed
+        if (TextFieldNome.getText() != null ){
+            TextFieldNomeUsuario. setText(GeraUsuario(TextFieldNome.getText()));
+//            boolean unico;
+//            int add;
+//            /**
+//             * efetua acesso no banco e verifica se nome de usuário de fato é unico e caso não seja cria um número no final sempre somando um
+//             */
+//            do {
+//            unico = false;
+//            add = 1;
+//            //efetua um if de teste para verificar se somente o campo usuário ja serve para criação.
+//            // consulta o banco e verifica se nome de usuário existe e caso contrário soma um no add e faz uma nova busca com nome de usuário mais o add 
+//            }while (unico = true);
+//            // encerra conexão com os banco de dados
+            
+        }else TextFieldNome.requestFocus();
+    }//GEN-LAST:event_TextFieldNomeUsuarioFocusLost
 
-    private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
+    private void TextFieldNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonConsultaActionPerformed
-
-    private void btnRandomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRandomMouseClicked
-       
-        String[] nomes = new String[10];
-        nomes[1] = "Steci";
-        nomes[2] = "Emanuela";
-        nomes[3] = "Antoni";
-        nomes[4] = "Luciano";
-        nomes[5] = "Vitoria";
-        nomes[6] = "Henrique";
-        nomes[7] = "Renata";
-        nomes[8] = "Andressa";
-        nomes[9] = "Hugo";
-        nomes[10] = "Roseli";
-        
-        String[] datas = new String[10];
-        datas[1] = "01/01/2000";
-        datas[2] = "10/03/2003";
-        datas[3] = "27/02/2003";
-        datas[4] = "19/10/1968";
-        datas[5] = "14/09/2012";
-        datas[6] = "01/01/2002";
-        datas[7] = "05/10/2003";
-        datas[8] = "17/06/1998";
-        datas[9] = "19/06/1998";
-        datas[10] = "08/07/2003";
-        
-        double[] salarios = new double[10];
-        salarios[1] = 123.12;
-        salarios[2] = 620.12;
-        salarios[3] = 720.99;
-        salarios[4] = 870.50;
-        salarios[5] = 1500.00;
-        salarios[6] = 1192.50;
-        salarios[7] = 920.79;
-        salarios[8] = 250.30;
-        salarios[9] = 100.10;
-        salarios[10] = 1700.00;
-        
-        String senha = "123";
-        
-        Random gerador = new Random();
-        
-        int x  = gerador.nextInt(11);
-        TextFieldNome.setText(nomes[x]);
-        
-        x  = gerador.nextInt(11);
-        jFormattedDataAdimissao.setText(datas[x]);
-        
-        x  = gerador.nextInt(11);
-        TextFieldNomeUsuario.setText(nomes[x]);
-        
-        x  = gerador.nextInt(11);
-        TextFieldSalario.setText(""+salarios[x]);
-        
-        x  = gerador.nextInt(11);
-        PasswordFieldSenha.setText(senha);
-        
-        if((x % 2) == 0){
-            RadioButtonFuncionario.doClick();
-        }else{
-            RadioButtonGerente.doClick();
+        if (TextFieldNome.isEditable() && (!TextFieldID.isEditable())){
+            if( TextFieldNome.getText().length() == 0 ){
+                        JOptionPane.showMessageDialog(this.TextFieldNome, "Campo nome vazio.","Nome", JOptionPane.ERROR_MESSAGE);
+                        TextFieldNome.requestFocus();
+                    }
+            else if(matchesOnlyText(TextFieldNome.getText())) {
+                String nome = toTitledCase(TextFieldNome.getText());
+                TextFieldNome.setText(nome);
+                                    
+            }else {
+                JOptionPane.showMessageDialog(this.TextFieldNome, "Nome possui números ou dados inelegiveis","Nome com números.", JOptionPane.ERROR_MESSAGE);
+                TextFieldNome.requestFocus();
+                TextFieldNome.setText(null);
+            }   
+            
         }
         
-    }//GEN-LAST:event_btnRandomMouseClicked
+    }//GEN-LAST:event_TextFieldNomeFocusLost
+
+    private void TextFieldDtAdmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldDtAdmFocusLost
+        // TODO add your handling code here:
+        if (TextFieldDtAdm.isEditable()){
+            int date=0;
+            if(  (TextFieldNome.getText().length() != 0) ){
+
+                if (TextFieldDtAdm.getText().length()> 3 || TextFieldDtAdm.getText().length()< 11){
+                    if(TextFieldDtAdm.getText().length()== 8){
+                        try {
+                          date = Integer.parseInt(TextFieldDtAdm.getText());
+                            int ano = date%10000;
+                            int dia = date/1000000;
+                            date /= 10000;
+                            int mes = date%100;
+                            if (mes <10){
+                              TextFieldDtAdm.setText(dia+"/0"+mes+"/"+ano);  
+                            }
+                           else TextFieldDtAdm.setText(dia+"/"+mes+"/"+ano);
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtAdm.requestFocus();
+                           TextFieldDtAdm.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                           TextFieldDtAdm.setText("dia/mes/ano");
+                           TextFieldDtAdm.selectAll();
+                        }
+                    }else if (TextFieldDtAdm.getText().length()== 10){
+                            if(!d.data(TextFieldDtAdm.getText()))
+                               JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtAdm.requestFocus();
+                               TextFieldDtAdm.setText("dd/mm/aaaa");
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                               TextFieldDtAdm.setText("dia/mes/ano");
+                               TextFieldDtAdm.selectAll();
+                    }else if (TextFieldDtAdm.getText().length()== 6){
+                        try {
+                            date = Integer.parseInt(TextFieldDtAdm.getText());
+                            int ano = date%100;
+                            int dia = date/10000;
+                            date /= 100;
+                            int mes = date%100;
+                            if (ano < 100 && ano > 60 ) ano+=1900;
+                            else ano += 2000;
+                            TextFieldDtAdm.setText(dia+"/0"+mes+"/"+ano);
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtAdm.requestFocus();
+                           TextFieldDtAdm.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                           TextFieldDtAdm.setText("dia/mes/ano");
+                           TextFieldDtAdm.selectAll();
+                        }
+                    }else if (TextFieldDtAdm.getText().length()== 4){
+                            try {
+                                date = Integer.parseInt(TextFieldDtAdm.getText());
+                                int ano = date%100;
+                                int dia = date/1000;
+                                date /= 100;
+                                int mes = date%10;
+                                if (mes <10 && dia < 10&& (ano < 100 && ano > 60 )){
+                                        ano+=1900;
+                                        TextFieldDtAdm.setText("0"+dia+"/0"+mes+"/"+ano);  
+                                    }
+                            } catch (NumberFormatException e) {
+                               JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtAdm.requestFocus();
+                                TextFieldDtAdm.setText("dd/mm/aaaa");
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                               TextFieldDtAdm.setText("dia/mes/ano");
+                               TextFieldDtAdm.selectAll();
+                            }
+
+                        }else if (TextFieldDtAdm.getText().length()== 5){
+
+                               JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                               TextFieldDtAdm.requestFocus();
+                               TextFieldDtAdm.setText("dd/mm/aaaa");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                               TextFieldDtAdm.setText("dia/mes/ano");
+                               TextFieldDtAdm.selectAll();
+                            }
+
+
+
+                   else {
+                        JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                        TextFieldDtAdm.requestFocus();
+                        TextFieldDtAdm.setText("dia/mes/ano");
+                        TextFieldDtAdm.selectAll();
+                    }   
+                }else {
+                    JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                    TextFieldDtAdm.requestFocus();
+                     }
+            }else TextFieldNome.requestFocus();
+        }   
+    }//GEN-LAST:event_TextFieldDtAdmFocusLost
+
+    private void TextFieldSalarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldSalarioFocusLost
+        // TODO add your handling code here:
+        if (TextFieldSalario.isEditable()){
+            if (TextFieldDtAdm.getText().length()!= 0){
+                if (ConverteVirgula(TextFieldSalario.getText())== 0){
+                    JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário possui dados inválidos.","Salário", JOptionPane.ERROR_MESSAGE);
+                    TextFieldSalario.requestFocus();
+                }else {
+                JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário esta vazio.","Salário", JOptionPane.ERROR_MESSAGE);
+                TextFieldSalario.requestFocus();
+                }
+            }else TextFieldDtAdm.requestFocus();
+        }
+    }//GEN-LAST:event_TextFieldSalarioFocusLost
+
+    private void PasswordFieldSenhaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PasswordFieldSenhaFocusLost
+        // TODO add your handling code here:
+        if (PasswordFieldSenha.isEditable()){
+             if (TextFieldSalario.getText().length()!= 0){
+                 if (PasswordFieldSenha.getPassword() == null ){
+                     JOptionPane.showMessageDialog(this.PasswordFieldSenha, "Campo senha esta vazio.","Senha", JOptionPane.ERROR_MESSAGE);
+                    PasswordFieldSenha.requestFocus();
+                 }
+             }else  TextFieldSalario.requestFocus();
+        }
+    }//GEN-LAST:event_PasswordFieldSenhaFocusLost
 
     /**
      * @param args the command line arguments
@@ -325,7 +472,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private javax.swing.JButton ButtonCadastra;
     private javax.swing.JButton ButtonConsulta;
     private javax.swing.JButton ButtonExcluir;
+    private javax.swing.JButton ButtonLimpar;
     private javax.swing.JLabel LabelDataAdmissao;
+    private javax.swing.JLabel LabelID;
     private javax.swing.JLabel LabelNome;
     private javax.swing.JLabel LabelNomeUsuario;
     private javax.swing.JLabel LabelSalario;
@@ -333,12 +482,107 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private javax.swing.JPasswordField PasswordFieldSenha;
     private javax.swing.JRadioButton RadioButtonFuncionario;
     private javax.swing.JRadioButton RadioButtonGerente;
+    private javax.swing.JTextField TextFieldDtAdm;
+    private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldNomeUsuario;
     private javax.swing.JTextField TextFieldSalario;
-    private javax.swing.JButton btnRandom;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JFormattedTextField jFormattedDataAdimissao;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.ButtonGroup buttonGroupFuncionario;
+    private javax.swing.ButtonGroup buttonGroupGerente;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar() {
+        TextFieldID.setText(null); 
+        TextFieldNomeUsuario.setText(null);
+        TextFieldNome.setText(null);
+        TextFieldDtAdm.setText(null);
+        TextFieldSalario.setText(null);
+        PasswordFieldSenha.setText(null);
+        
+        
+    }
+    /**
+     * Deixar campos editaveis de acordo com padrão
+     */
+    public void Editavel(){
+            if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+                TextFieldID.setBackground(Color.white);
+                TextFieldID.setEditable(true);
+                TextFieldNome.setBackground(Color.gray);  
+                TextFieldNome.setEditable(false);
+                TextFieldNomeUsuario.setBackground(Color.gray);  
+                TextFieldNomeUsuario.setEditable(false);
+                TextFieldDtAdm.setBackground(Color.gray);  
+                TextFieldDtAdm.setEditable(false);
+                TextFieldSalario.setBackground(Color.gray);  
+                TextFieldSalario.setEditable(false);
+                PasswordFieldSenha.setBackground(Color.gray);  
+                PasswordFieldSenha.setEditable(false);
+
+            }else {
+                TextFieldID.setBackground(Color.gray);
+                TextFieldID.setEditable(false);
+                TextFieldNome.setBackground(Color.white);  
+                TextFieldNome.setEditable(true);
+                TextFieldNomeUsuario.setBackground(Color.white);  
+                TextFieldNomeUsuario.setEditable(true);
+                TextFieldDtAdm.setBackground(Color.white);  
+                TextFieldDtAdm.setEditable(true);
+                TextFieldSalario.setBackground(Color.white);  
+                TextFieldSalario.setEditable(true);
+                PasswordFieldSenha.setBackground(Color.white);  
+                PasswordFieldSenha.setEditable(true);
+
+            }
+
+        }
+   public boolean matchesOnlyText(String text) {
+    return text.matches("[A-Z_a-z_À-ú\\s\\p{L}]+");
+    }
+    /**
+     *
+     * @param str
+     * @return  primeira letra de cada palavra com em maiuscula exceto para sílabas
+     */
+    public static String toTitledCase(String str){
+
+    String[] words = str.split(" ");
+    StringBuilder sb = new StringBuilder();
+  
+    for(int i = 0; i < words.length; i++){
+        String[] word= words[i].split("\\s");
+        if (words[i].length() > 2){
+            for (int y = 0;y<word.length;y++){
+            sb.append(word[y].substring(0, 1).toUpperCase() + word[y].substring(1).toLowerCase());
+            sb.append(" ");  
+            }
+        } else {
+            sb.append(words[i]);
+            sb.append(" ");      
+        }
+    }
+
+    return sb.toString().substring (0, sb.length() - 1);
+    }
+    public String GeraUsuario(String nome){
+        String[] words = nome.split(" ");
+        return words[0] +"."+ words[words.length-1];
+        
+    }
+    public double ConverteVirgula(String valor){
+        String replace = valor.replace(",",".");
+        try{
+            return Double.parseDouble(replace);
+        }catch(NumberFormatException e){
+            return 0.0 ;
+        }
+        
+        
+    }
+    public String ConvertePonto(double valor){
+        String replace = Double.toString(valor);
+         return replace = replace.replace(".",",");
+    }
+
 }

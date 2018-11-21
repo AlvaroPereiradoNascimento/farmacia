@@ -10,19 +10,29 @@ package model;
  *
  * @author Alvaro Pereira do Nascimento
  */
+
+
 import java.util.Date;
 
 
 public class ClienteCpf {
-    int id;
-    String nome,rg,email,telefone,cpf;
+    int telefone,cpf,id,celular;
+    String nome,rg,email;
     Date datanasc;
-
-    public ClienteCpf(String telefone, String cpf, 
-            int id, String nome, String rg, 
-            String email, Date datanasc) {
-        
+/**
+ * Construtor para cadastro de cliente.
+ * @param telefone
+ * @param celular
+ * @param cpf
+ * @param id
+ * @param nome
+ * @param rg
+ * @param email
+ * @param datanasc 
+ */
+    public ClienteCpf(int telefone, int celular ,int cpf, int id, String nome, String rg, String email, Date datanasc) {
         this.telefone = telefone;
+        this.celular = celular;
         this.cpf = cpf;
         this.id = id;
         this.nome = nome;
@@ -30,24 +40,30 @@ public class ClienteCpf {
         this.email = email;
         this.datanasc = datanasc;
     }
-    
-    public ClienteCpf(){
-        
+    public ClienteCpf(int telefone, int celular ,int cpf, String nome, String rg, String email, Date datanasc) {
+        this.telefone = telefone;
+        this.celular = celular;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.rg = rg;
+        this.email = email;
+        this.datanasc = datanasc;
     }
+    
 
-    public String getTelefone() {
+    public int getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
 
-    public String getCpf() {
+    public int getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(int cpf) {
         this.cpf = cpf;
     }
 

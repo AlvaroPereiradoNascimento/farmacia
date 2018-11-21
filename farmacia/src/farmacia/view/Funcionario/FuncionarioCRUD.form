@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupFuncionario">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupGerente">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -28,66 +30,68 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="ButtonCadastra" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="ButtonAlterar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="ButtonExcluir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="ButtonConsulta" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="LabelSalario" min="-2" max="-2" attributes="0"/>
-                          <Component id="LabelDataAdmissao" min="-2" max="-2" attributes="0"/>
                           <Component id="LabelNomeUsuario" min="-2" max="-2" attributes="0"/>
                           <Component id="LabelNome" min="-2" max="-2" attributes="0"/>
-                          <Component id="LabelSenha" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelDataAdmissao" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelSalario" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelSenha" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelID" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="TextFieldNome" pref="151" max="32767" attributes="0"/>
-                                      <Component id="TextFieldNomeUsuario" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="TextFieldSalario" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="jFormattedDataAdimissao" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="PasswordFieldSenha" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="34" max="32767" attributes="0"/>
+                          <Component id="PasswordFieldSenha" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="TextFieldNome" min="-2" pref="151" max="-2" attributes="0"/>
+                          <Component id="TextFieldNomeUsuario" min="-2" pref="151" max="-2" attributes="0"/>
+                          <Component id="TextFieldID" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="TextFieldDtAdm" alignment="0" pref="75" max="32767" attributes="0"/>
+                              <Component id="TextFieldSalario" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="ButtonCadastra" min="-2" pref="90" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="94" pref="94" max="-2" attributes="0"/>
+                              <Component id="ButtonAlterar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="ButtonExcluir" min="-2" pref="76" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <Component id="ButtonConsulta" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ButtonLimpar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
                       <Component id="RadioButtonFuncionario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="RadioButtonGerente" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnRandom" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LabelID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextFieldID" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelNomeUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TextFieldNomeUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -100,7 +104,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelDataAdmissao" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jFormattedDataAdimissao" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextFieldDtAdm" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -112,57 +116,73 @@
                   <Component id="LabelSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="PasswordFieldSenha" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="RadioButtonFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="RadioButtonGerente" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="ButtonCadastra" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ButtonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ButtonConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnRandom" min="-2" pref="23" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="RadioButtonFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="RadioButtonGerente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="ButtonCadastra" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JLabel" name="LabelID">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TextFieldID">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
+        </Property>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JLabel" name="LabelNomeUsuario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nome do Usu&#xe1;rio:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TextFieldNomeUsuario">
-    </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldNome">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldNomeUsuarioFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelNome">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nome:"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JTextField" name="TextFieldNome">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldNomeFocusLost"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JLabel" name="LabelDataAdmissao">
       <Properties>
         <Property name="text" type="java.lang.String" value="Data de admiss&#xe3;o:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFormattedDataAdimissao">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-      </AuxValues>
+    <Component class="javax.swing.JTextField" name="TextFieldDtAdm">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldDtAdmFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelSalario">
       <Properties>
@@ -171,16 +191,45 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TextFieldSalario">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldSalarioActionPerformed"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldSalarioFocusLost"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LabelSenha">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Senha:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="PasswordFieldSenha">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="PasswordFieldSenhaFocusLost"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RadioButtonFuncionario">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
+      </Properties>
+      <BindingProperties>
+        <BindingProperty name="selected" source="buttonGroupFuncionario" sourcePath="${selection.pressed}" target="RadioButtonFuncionario" targetPath="selected" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RadioButtonFuncionarioActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RadioButtonGerente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gerente"/>
+      </Properties>
+      <BindingProperties>
+        <BindingProperty name="selected" source="buttonGroupGerente" sourcePath="${selection.pressed}" target="RadioButtonGerente" targetPath="selected" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RadioButtonGerenteActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonCadastra">
       <Properties>
         <Property name="text" type="java.lang.String" value=" Cadastrar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonCadastraActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonAlterar">
       <Properties>
@@ -192,49 +241,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonExcluirActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonConsulta">
       <Properties>
         <Property name="text" type="java.lang.String" value="Consulta"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonConsultaActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="RadioButtonFuncionario">
+    <Component class="javax.swing.JButton" name="ButtonLimpar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="RadioButtonGerente">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Gerente"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LabelSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Senha:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JPasswordField" name="PasswordFieldSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnRandom">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="( )"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRandomMouseClicked"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Random"/>
+        <Property name="text" type="java.lang.String" value="Limpar"/>
       </Properties>
     </Component>
   </SubComponents>
