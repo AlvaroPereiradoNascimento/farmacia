@@ -287,7 +287,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
             }else{
               ClienteCpf c;
                 try {
-                    c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(), d.StringtoDate(TextFieldDtNasc.getText()));
+                   c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(), d.StringtoDate(TextFieldDtNasc.getText()));
                     ClienteDAO.inserir(c);
                     cliente.inserir(c);
                   if (valida)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);

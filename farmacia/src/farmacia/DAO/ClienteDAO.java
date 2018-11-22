@@ -14,30 +14,37 @@ import persistencia.Banco;
 /**
  *
  * @author HUGOPINHEIROBARROS
+ * @edited Alvaro Pereira do Nascimento
  */
 public class ClienteDAO implements DAO<ClienteCpf>{
 
     private ClienteCpf cliente;
     private java.sql.PreparedStatement pst;
     private java.sql.ResultSet rs;
-    
+    /**
+     * efetua inserção única de cliente no sistema.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     @Override
-    public boolean inserir(ClienteCpf obj) 
-            throws SQLException, ClassNotFoundException {
+    public boolean inserir(ClienteCpf obj) throws SQLException, ClassNotFoundException {
             String sql;
         //cria o comando da DML
-        sql = "INSERT INTO cliente"
-                + "(nome,tel,email,dt_nasc,rg,cpf)"
-                + "values ( ?, ?, ?, ?, ?, ?);";
+        sql = "INSERT INTO clientes"
+                + "(nome,tel,cel,email,dt_nasc,rg,cpf)"
+                + "values ( ?, ?, ?, ?, ?, ?, ?);";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
         pst.setString(1, obj.getNome());
-        pst.setString(2, obj.getTelefone());
-        pst.setString(3, obj.getEmail());
-        pst.setDate(4, (Date) obj.getDatanasc());
-        pst.setString(5, obj.getRg());
-        pst.setString(6, obj.getCpf());
+        pst.setInt(2, obj.getTelefone());
+        pst.setInt(3, obj.getCelular());
+        pst.setString(4, obj.getEmail());
+        pst.setDate(5, (Date) obj.getDatanasc());
+        pst.setString(6, obj.getRg());
+        pst.setInt(7, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -48,14 +55,23 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         }
     }
 
+    /**
+     * Efetua alteração do cliente no banco.
+     * Método para alteração de objetos no banco de dados.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public boolean alterar(ClienteCpf obj) 
             throws SQLException, ClassNotFoundException {
         String sql;
         
-        sql = "UPDATE Filme SET "
+        sql = "UPDATE clientes SET "
                 + "nome = ?,"
                 + "tel = ?,"
+                + "cel = ?,"
                 + "email = ?,"
                 + "dt_nasc = ?,"
                 + "rg = ?,"
@@ -66,12 +82,12 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         
         pst.setString(1, obj.getNome());
-        pst.setString(2, obj.getTelefone());
-        pst.setString(3, obj.getEmail());
-        pst.setDate(4, (Date) obj.getDatanasc());
-        pst.setString(5, obj.getRg());
-        pst.setString(6, obj.getCpf());
-        pst.setInt(7, obj.getId());
+        pst.setInt(2, obj.getTelefone());
+        pst.setInt(3, obj.getCelular());
+        pst.setString(4, obj.getEmail());
+        pst.setDate(5, (Date) obj.getDatanasc());
+        pst.setString(6, obj.getRg());
+        pst.setInt(7, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -82,12 +98,18 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         }
     }
 
+    /**
+     * efetua exclusão única de cliente no banco.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
-    public boolean excluir(ClienteCpf obj) 
-            throws SQLException, ClassNotFoundException {
+    public boolean excluir(ClienteCpf obj) throws SQLException, ClassNotFoundException {
         String sql;
         
-        sql = "DELETE FROM cliente "
+        sql = "DELETE FROM clientes "
                 + "WHERE id = ?;";
         Banco.abrir();
         
@@ -102,11 +124,18 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         }
     }
 
+    /**
+     * efetua busca única de cliente no banco.
+     * Utiliza como busca o ID do cliente.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
-    public ClienteCpf buscar(ClienteCpf obj) 
-            throws SQLException, ClassNotFoundException {
+    public ClienteCpf buscar(ClienteCpf obj)throws SQLException, ClassNotFoundException {
         cliente = null;
-        String sql = "SELECT * FROM cliente "
+        String sql = "SELECT * FROM clientes "
                    + "WHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
@@ -116,28 +145,54 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-            cliente = new ClienteCpf();
-            cliente.setId(rs.getInt("id"));
-            cliente.setNome(rs.getString("nome"));
-            cliente.setTelefone(rs.getString("telefone"));
-            cliente.setEmail(rs.getString("email"));
-            cliente.setDatanasc(rs.getDate("data_nasc"));
-            cliente.setRg(rs.getString("rg"));
-            cliente.setCpf(rs.getString("cnpj"));
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
         }
         
         rs.close();
         Banco.fechar();
         return cliente;
     }
-
+    /**
+     * efetua busca única de cliente no banco.
+     * Utiliza como busca o CPF do cliente.
+     * @param obj
+     * @return cliente
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public ClienteCpf buscarCPF(ClienteCpf obj) throws SQLException, ClassNotFoundException {
+        cliente = null;
+        String sql = "SELECT * FROM clientes "
+                   + "WHERE cpf = ?;";
+        Banco.abrir();
+        pst = Banco.getConexao().prepareStatement(sql);
+        
+        pst.setInt(1, obj.getId());
+        
+        rs = pst.executeQuery();
+        
+        if(rs.next()){
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+        }
+        
+        rs.close();
+        Banco.fechar();
+        return cliente;
+    }
+    /**
+     * efetua listagem de clientes para o sistema no banco.
+     * @param criterio
+     * @return clientes
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     @Override
     public List<ClienteCpf> listar(String criterio) 
             throws SQLException, ClassNotFoundException {
         ArrayList<ClienteCpf> clientes = new ArrayList<>();
         cliente = null;
         
-        String sql = "SELECT * FROM filme";
+        String sql = "SELECT * FROM clientes";
         
         if(criterio.length() > 0)
             sql += "WHERE " + criterio;
@@ -148,16 +203,8 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         while(rs.next()){
             
-            cliente = new ClienteCpf();
-            cliente.setId(rs.getInt("id"));
-            cliente.setNome(rs.getString("nome"));
-            cliente.setTelefone(rs.getString("tel"));
-            cliente.setEmail(rs.getString("email"));
-            cliente.setDatanasc(rs.getDate("dt_nasc"));
-            cliente.setRg(rs.getString("rg"));
-            cliente.setCpf(rs.getString("cpf"));
-            
-            clientes.add(cliente);
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         clientes.add(cliente);
         }
         rs.close();
         return clientes;

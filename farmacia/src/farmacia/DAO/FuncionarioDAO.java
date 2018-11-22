@@ -14,7 +14,7 @@ import persistencia.Banco;
 /**
  *
  * @author HUGOPINHEIROBARROS
- * @ edited Alvaro Pereira do Nascimento
+ * @edited Alvaro Pereira do Nascimento
  */
 public class FuncionarioDAO implements DAO<Funcionario>{
 
@@ -154,45 +154,10 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         return funcionario; 
         }
     public Funcionario buscarNomeFuncionarioeID(Funcionario obj) throws SQLException, ClassNotFoundException {
-//        Funcionario a = buscar(obj);
-//        Funcionario b = buscarNomeFuncionario(obj);
-          funcionario = null;
-        String sql = "SELECT * FROM funcionarios "
-                   + "WHERE nomeuser = ?;";
-        Banco.abrir();
-        pst = Banco.getConexao().prepareStatement(sql);
-        
-        pst.setString(1, obj.getNomeUsuario());
-        
-        rs = pst.executeQuery();
-        
-        if(rs.next()){
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
-            
-        }
-        rs.close();
-        Funcionario a = funcionario;
-        pst = null;
-        funcionario = null;
-        sql = "SELECT * FROM funcionarios "
-                   + "WHERE id = ?;";
-        
-        pst = Banco.getConexao().prepareStatement(sql);
-        
-        pst.setInt(1, obj.getId());
-        
-        rs = pst.executeQuery();
-        
-        if(rs.next()){
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
-            
-        }
-        rs.close();
-        Banco.fechar();
-        Funcionario b = funcionario;
-        
-       if ((a==b) && (b == obj) && (obj == a)) return a;
-       else return null;
+        Funcionario a = buscar(obj);
+        Funcionario b = buscarNomeFuncionario(obj);
+        if ((a==b) && (b == obj) && (obj == a)) return a;
+        else return null;
     }
     @Override
     public List<Funcionario> listar(String criterio) 
