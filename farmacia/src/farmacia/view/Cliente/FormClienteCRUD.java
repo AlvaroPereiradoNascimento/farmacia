@@ -7,15 +7,17 @@
 package farmacia.view.Cliente;
 
 
-import model.ClienteCpf;
 import Verifica.CpfCnpjUtils;
 import Verifica.DateValidator;
 import Verifica.EmailValidator;
+import farmacia.DAO.ClienteDAO;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.ClienteCpf;
 
 
 /**
@@ -25,7 +27,7 @@ import javax.swing.JOptionPane;
 public class FormClienteCRUD extends javax.swing.JFrame {
 
     /**
-     * Creates new form FormClienteCRUD2
+     * Cria novas formas FormClienteCRUD
      */
     public FormClienteCRUD() {
         initComponents();
@@ -257,7 +259,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+      ClienteDAO cliente;
     private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
         // TODO add your handling code here:
         /**
@@ -265,6 +267,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         * @author Hugo Barros
         * @implemented Alvaro Pereira do Nascimento
         */
+        boolean valida = false;
         //verifica se campos estão vazios.
        if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
             JOptionPane.showMessageDialog(this.TextFieldCPF,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
@@ -285,12 +288,21 @@ public class FormClienteCRUD extends javax.swing.JFrame {
               ClienteCpf c;
                 try {
                     c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(), d.StringtoDate(TextFieldDtNasc.getText()));
+                    ClienteDAO.inserir(c);
+                    cliente.inserir(c);
+                  if (valida)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+                else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                      JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
                     TextFieldDtNasc.setText(null);
                     TextFieldDtNasc.requestFocus();
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             } 
        }else Editavel();
         
