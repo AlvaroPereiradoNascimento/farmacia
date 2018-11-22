@@ -23,6 +23,7 @@ public class Funcionario {
      @SuppressWarnings("FieldMayBeFinal")
     private String senha;
     private boolean trocasenha = false;
+    int id;
 
 /**
  *  Constrtutor de funcionário na qual criará outras subclasses de funcionários
@@ -31,15 +32,43 @@ public class Funcionario {
  * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
  * @param senha senha de acesso do colaborador 
  * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+ * @param id inteiro de verificação unica para cada funcionário.
+ * @param dataAdmissao data de admissão do colaborador
  * 
  */
      
-    public Funcionario(String nome, String NomeUsuario, double salario, String senha,boolean trocasenha) {
+    public Funcionario(String nome, String NomeUsuario, double salario, String senha,boolean trocasenha, int id ,Date dataAdmissao) {
         this.nome = nome;
         this.NomeUsuario = NomeUsuario;
         this.salario = salario;
         this.senha = senha;
         this.trocasenha= trocasenha;
+        this.id = id;
+        this.dataAdmissao = dataAdmissao;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public boolean isTrocasenha() {
+        return trocasenha;
+    }
+
+    public void setTrocasenha(boolean trocasenha) {
+        this.trocasenha = trocasenha;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 /**
  *  Informa nome da pessoa.

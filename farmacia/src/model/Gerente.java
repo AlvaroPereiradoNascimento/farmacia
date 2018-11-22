@@ -6,9 +6,25 @@
 
 package model;
 
+import java.util.Date;
+
 
 public class Gerente extends Funcionario{
     private int qtdDesocntos,QtdCaixasFechados,QtdCaixasabertos;
+
+    /**
+     * Construtor de Gerente para efetuar processo de Criação de Gerente.
+     * @param qtdDesocntos mostra  a quantidade de descontos gerado pelo cliente
+     * @param QtdCaixasFechados mostra se caixa esta fechado pelo gerente
+     * @param QtdCaixasabertos mostr se caixa esta aberto pelo gerente
+     * @param nome deve ser colocado o nome do Colaborador completo
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso
+     * @param salario deve ser colcodo o salário do colabordor com separador em ponto
+     * @param senha senha de acesso do colaborador
+     * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+     * @param id inteiro de verificação unica para cada funcionário.
+     */
+    
 
     /**
      * Construtor de Gerente para efetuar processo de Criação de Gerente.
@@ -20,17 +36,30 @@ public class Gerente extends Funcionario{
      * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
      * @param senha senha de acesso do colaborador 
      * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+     * @param id inteiro de verificação unica para cada funcionário.
+     * @param dataAdmissao data de admissão do funcionário.
      */
-    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, double salario, String senha, boolean trocasenha) {
-        super(nome, NomeUsuario, salario, senha, trocasenha);
+    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, double salario, String senha, boolean trocasenha, int id, Date dataAdmissao) {
+        super(nome, NomeUsuario, salario, senha, trocasenha, id, dataAdmissao);
         this.qtdDesocntos = qtdDesocntos;
         this.QtdCaixasFechados = QtdCaixasFechados;
         this.QtdCaixasabertos = QtdCaixasabertos;
     }
 
-
-
-
+    /**
+     *
+     * @param nome deve ser colocado o nome do Colaborador completo
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso   
+     * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
+     * @param senha senha de acesso do colaborador 
+     * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+     * @param id inteiro de verificação unica para cada funcionário.
+     * @param dataAdmissao data de admissão do funcionário.
+     */
+    public Gerente(String nome, String NomeUsuario, double salario, String senha, boolean trocasenha, int id, Date dataAdmissao) {
+        super(nome, NomeUsuario, salario, senha, trocasenha, id, dataAdmissao);
+    }
+    
     public int getQtdDesocntos() {
         return qtdDesocntos;
     }

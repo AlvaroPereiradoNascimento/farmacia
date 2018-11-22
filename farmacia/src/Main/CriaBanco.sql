@@ -17,6 +17,7 @@ id integer primary key auto_increment  not null,
 nomeuser varchar(255) not null unique,
 nome varchar(255) not null,
 senha varchar(255) not null,
+trocasenha varchar (5) not null,
 data_adimissao date  not null,
 salario double(10,2) not null,
 tipo int

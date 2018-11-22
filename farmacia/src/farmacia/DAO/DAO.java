@@ -11,6 +11,9 @@ import java.util.List;
 /**
  *
  * @author Viotti
+ * @edited Alvaro Pereira do Nascimento
+ * @edited HUGOPINHEIROBARROS
+ * @param <tipoOBJ>
  */
 public interface DAO <tipoOBJ> {
     

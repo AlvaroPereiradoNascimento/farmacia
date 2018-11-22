@@ -14,12 +14,14 @@ import persistencia.Banco;
 /**
  *
  * @author HUGOPINHEIROBARROS
+ * @ edited Alvaro Pereira do Nascimento
  */
 public class FuncionarioDAO implements DAO<Funcionario>{
 
     private Funcionario funcionario;
     private java.sql.PreparedStatement pst;
     private java.sql.ResultSet rs;
+    private Funcionario Funcionario;
     
     @Override
     public boolean inserir(Funcionario obj) 
@@ -31,9 +33,11 @@ public class FuncionarioDAO implements DAO<Funcionario>{
                 + "nome,"
                 + "senha,"
                 + "data_admissao,"
-                + "salario"
+                + "salario,"
+                + "trocasenha,"
+                + "nomeuser,"
                 + ")"
-                + "values ( ?, ?, ?, ?);";
+                + "values ( ?, ?, ?, ?,?,?);";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
@@ -61,6 +65,8 @@ public class FuncionarioDAO implements DAO<Funcionario>{
                 + "senha = ?,"
                 + "data_admissao = ?,"
                 + "salario = ?"
+                + "nomeuser = ?"
+                + "trocasenha = ?"
                 + "WHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
@@ -86,7 +92,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
             throws SQLException, ClassNotFoundException {
         String sql;
         
-        sql = "DELETE FROM fornecedores "
+        sql = "DELETE FROM funcionarios "
                 + "WHERE id = ?;";
         Banco.abrir();
         
@@ -101,11 +107,17 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         }
     }
 
+    /**
+     *  Efetua busca no banco de funcionario somente pelo seu ID
+     * @param obj
+     * @return funcionário existente no banco
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
-    public Funcionario buscar(Funcionario obj) 
-            throws SQLException, ClassNotFoundException {
+    public Funcionario buscar(Funcionario obj)throws SQLException, ClassNotFoundException {
         funcionario = null;
-        String sql = "SELECT * FROM cliente "
+        String sql = "SELECT * FROM funcionarios "
                    + "WHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
@@ -115,20 +127,73 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-            funcionario = new Funcionario();
-            funcionario.setId(rs.getInt("id"));
-            funcionario.setNome(rs.getString("nome"));
-            funcionario.setNomeUsuario(rs.getString("senha"));
-            funcionario.setDataAdmissao(rs.getDate("data_adimissao"));
-            funcionario.setSalario(rs.getDouble("salario"));
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
             
         }
-        
         rs.close();
         Banco.fechar();
         return funcionario;
     }
-
+    public Funcionario buscarNomeFuncionario(Funcionario obj) throws SQLException, ClassNotFoundException {
+           funcionario = null;
+        String sql = "SELECT * FROM funcionarios "
+                   + "WHERE nomeuser = ?;";
+        Banco.abrir();
+        pst = Banco.getConexao().prepareStatement(sql);
+        
+        pst.setString(1, obj.getNomeUsuario());
+        
+        rs = pst.executeQuery();
+        
+        if(rs.next()){
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            
+        }
+        rs.close();
+        Banco.fechar();
+        return funcionario; 
+        }
+    public Funcionario buscarNomeFuncionarioeID(Funcionario obj) throws SQLException, ClassNotFoundException {
+//        Funcionario a = buscar(obj);
+//        Funcionario b = buscarNomeFuncionario(obj);
+          funcionario = null;
+        String sql = "SELECT * FROM funcionarios "
+                   + "WHERE nomeuser = ?;";
+        Banco.abrir();
+        pst = Banco.getConexao().prepareStatement(sql);
+        
+        pst.setString(1, obj.getNomeUsuario());
+        
+        rs = pst.executeQuery();
+        
+        if(rs.next()){
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            
+        }
+        rs.close();
+        Funcionario a = funcionario;
+        pst = null;
+        funcionario = null;
+        sql = "SELECT * FROM funcionarios "
+                   + "WHERE id = ?;";
+        
+        pst = Banco.getConexao().prepareStatement(sql);
+        
+        pst.setInt(1, obj.getId());
+        
+        rs = pst.executeQuery();
+        
+        if(rs.next()){
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            
+        }
+        rs.close();
+        Banco.fechar();
+        Funcionario b = funcionario;
+        
+       if ((a==b) && (b == obj) && (obj == a)) return a;
+       else return null;
+    }
     @Override
     public List<Funcionario> listar(String criterio) 
             throws SQLException, ClassNotFoundException {
@@ -146,17 +211,20 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         
         while(rs.next()){
             
-            funcionario = new Funcionario();
-            funcionario.setId(rs.getInt("id"));
-            funcionario.setNome(rs.getString("nome"));
-            funcionario.setNomeUsuario(rs.getString("senha"));
-            funcionario.setDataAdmissao(rs.getDate("data_adimissao"));
-            funcionario.setSalario(rs.getDouble("salario"));
-            
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+
             funcionarios.add(funcionario);
         }
         rs.close();
         return funcionarios;
     }
     
+    public boolean StringToBoolean (String s){
+        if (s == "true") return true;
+        else return false;
+    }
+    public String BooleantoString (boolean s){
+        if (s) return "true";
+        else return "false";
+    }
 }
