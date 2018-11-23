@@ -153,7 +153,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         return cliente;
     }
     /**
-     * efetua busca única de cliente no banco.
+     * efetua busca única de cliente no banco pelo CPF.
      * Utiliza como busca o CPF do cliente.
      * @param obj
      * @return cliente
@@ -179,13 +179,21 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         Banco.fechar();
         return cliente;
     }
+
     /**
-     * efetua listagem de clientes para o sistema no banco.
-     * @param criterio
+     * efetua busca única de cliente no banco pelo CPF e ID.
+     * @param obj
      * @return clientes
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
+    public ClienteCpf buscasCPFID(ClienteCpf obj)throws SQLException, ClassNotFoundException{
+        ClienteCpf a = buscar(obj);
+        ClienteCpf b = buscarCPF(obj);
+        if ((a==b) && (b == obj) && (obj == a)) return a;
+        else return null;
+        }
+        
     @Override
     public List<ClienteCpf> listar(String criterio) 
             throws SQLException, ClassNotFoundException {

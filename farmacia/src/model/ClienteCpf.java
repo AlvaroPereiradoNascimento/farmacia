@@ -59,6 +59,16 @@ public class ClienteCpf {
         this.email = email;
         this.datanasc = datanasc;
     }
+/**
+ * Construtor para exclusivo para busca de cliente
+ * @param cpf
+ * @param id 
+ */
+    public ClienteCpf(int cpf, int id) {
+        this.cpf = cpf;
+        this.id = id;
+    }
+    
     
     /**
      * Mostra telefone do cliente
