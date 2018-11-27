@@ -16,9 +16,11 @@ import java.util.Date;
 
 
 public class ClienteCpf {
-    int telefone,cpf,id,celular;
+    int id;
+    long telefone ,cpf,celular;
     String nome,rg,email;
-    Date datanasc;
+   // Date datanasc;
+    String datanasc;
 /**
  * Construtor para cadastro de cliente.
  * @param telefone Deve ser cadastrado o telefone residencial do cliente.
@@ -30,7 +32,7 @@ public class ClienteCpf {
  * @param email deve ser cadastrado email do cliente
  * @param datanasc Deve ser registrado a data de nascimento do cliente.
  */
-    public ClienteCpf(int telefone, int celular ,int cpf, int id, String nome, String rg, String email, Date datanasc) {
+    public ClienteCpf(long telefone, long celular ,long cpf, int id, String nome, String rg, String email, String datanasc) {
         this.telefone = telefone;
         this.celular = celular;
         this.cpf = cpf;
@@ -50,7 +52,7 @@ public class ClienteCpf {
      * @param email deve ser cadastrado email do cliente
      * @param datanasc Deve ser registrado a data de nascimento do cliente.
      */
-    public ClienteCpf(int telefone, int celular ,int cpf, String nome, String rg, String email, Date datanasc) {
+    public ClienteCpf(long telefone, long celular ,long  cpf, String nome, String rg, String email, String datanasc) {
         this.telefone = telefone;
         this.celular = celular;
         this.cpf = cpf;
@@ -64,7 +66,7 @@ public class ClienteCpf {
  * @param cpf
  * @param id 
  */
-    public ClienteCpf(int cpf, int id) {
+    public ClienteCpf(long cpf, int id) {
         this.cpf = cpf;
         this.id = id;
     }
@@ -74,7 +76,7 @@ public class ClienteCpf {
      * Mostra telefone do cliente
      * @return Telefone
      */
-    public int getTelefone() {
+    public long getTelefone() {
         return telefone;
     }
     /**
@@ -88,7 +90,7 @@ public class ClienteCpf {
      * Mostra CPF do cliente
      * @return CPf
      */
-    public int getCpf() {
+    public long getCpf() {
         return cpf;
     }
     /**
@@ -99,7 +101,7 @@ public class ClienteCpf {
         this.cpf = cpf;
     }
     /**
-     * Mostra do ID do cleinte
+     * Mostra do ID do cliente
      * @return 
      */
     public int getId() {
@@ -154,25 +156,34 @@ public class ClienteCpf {
     public void setEmail(String email) {
         this.email = email;
     }
-    /**
-     * Mostra a Data de Nascimento do cliente
-     * @return Data de Nascimento
-     */
-    public Date getDatanasc() {
+//    /**
+//     * Mostra a Data de Nascimento do cliente
+//     * @return Data de Nascimento
+//     */
+//    public Date getDatanasc() {
+//        return datanasc;
+//    }
+//    /**
+//     * Altera a Data de Nascimento do cliente
+//     * @param datanasc 
+//     */
+//    public void setDatanasc(Date datanasc) {
+//        this.datanasc = datanasc;
+//    }
+
+    public String getDatanasc() {
         return datanasc;
     }
-    /**
-     * Altera a Data de Nascimento do cliente
-     * @param datanasc 
-     */
-    public void setDatanasc(Date datanasc) {
+
+    public void setDatanasc(String datanasc) {
         this.datanasc = datanasc;
     }
+    
     /**
      * Mostra o celular do cliente
      * @return 
      */
-    public int getCelular() {
+    public long getCelular() {
         return celular;
     }
     /**

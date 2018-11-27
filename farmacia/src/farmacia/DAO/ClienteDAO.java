@@ -34,17 +34,18 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         //cria o comando da DML
         sql = "INSERT INTO clientes"
                 + "(nome,tel,cel,email,dt_nasc,rg,cpf)"
-                + "values ( ?, ?, ?, ?, ?, ?, ?);";
+                + "values (?,?,?,?,?,?,?);";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
         pst.setString(1, obj.getNome());
-        pst.setInt(2, obj.getTelefone());
-        pst.setInt(3, obj.getCelular());
+        pst.setLong(2, obj.getTelefone());
+        pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        pst.setDate(5, (Date) obj.getDatanasc());
+        //pst.setDate(5, (Date) obj.getDatanasc());
+        pst.setString(5, obj.getDatanasc());
         pst.setString(6, obj.getRg());
-        pst.setInt(7, obj.getCpf());
+        pst.setLong(7, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -82,12 +83,13 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         
         pst.setString(1, obj.getNome());
-        pst.setInt(2, obj.getTelefone());
-        pst.setInt(3, obj.getCelular());
+        pst.setLong(2, obj.getTelefone());
+        pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        pst.setDate(5, (Date) obj.getDatanasc());
+        //pst.setDate(5, (Date) obj.getDatanasc());
+        pst.setString(5, obj.getDatanasc());
         pst.setString(6, obj.getRg());
-        pst.setInt(7, obj.getCpf());
+        pst.setLong(7, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -118,8 +120,10 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setInt(1, obj.getId());
         
         if(pst.executeUpdate() > 0){
+            Banco.fechar();
             return true;
         }else{
+            Banco.fechar();
             return false;
         }
     }
@@ -145,7 +149,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
         }
         
         rs.close();
@@ -172,7 +176,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
         }
         
         rs.close();
@@ -211,7 +215,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         while(rs.next()){
             
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
          clientes.add(cliente);
         }
         rs.close();

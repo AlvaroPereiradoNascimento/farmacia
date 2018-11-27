@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,20 +21,20 @@ import java.util.Date;
  */
 public class DateValidator {
     private Date datas;
-    public boolean data(String data) {
-         String dateFormat = "dd/MM/uuuu";
-
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-    .ofPattern(dateFormat)
-    .withResolverStyle(ResolverStyle.STRICT);
-    try {
-        LocalDate date = LocalDate.parse(data, dateTimeFormatter);
-        return true;
-    } catch (DateTimeParseException e) {
-       return false;
-    }catch(NullPointerException d ){
-        return true;
-    }
+    public boolean data(String dataTexto) {
+    Date data = null;
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    boolean resposta = false;
+    	try {
+    		format.setLenient(false);
+    		data = format.parse(dataTexto);
+                JOptionPane.showMessageDialog(null,"O Mané escreveu a data Certa","AVISO",JOptionPane.INFORMATION_MESSAGE);
+                resposta = true;
+    	} catch (ParseException e) {
+    		JOptionPane.showMessageDialog(null,"O Mané escreveu a data Errada","AVISO",JOptionPane.WARNING_MESSAGE);
+                resposta = false;
+    	}
+        return resposta;
     } 
     public Date StringtoDate(String data) throws ParseException {
         String formato = "dd/MM/yyyy";
