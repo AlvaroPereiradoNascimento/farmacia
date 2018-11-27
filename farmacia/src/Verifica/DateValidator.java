@@ -21,7 +21,7 @@ import java.util.Date;
 public class DateValidator {
     private Date datas;
     public boolean data(String data) {
-         String dateFormat = "dd/MM/uuuu";
+         String dateFormat = "dd/MM/yyyy";
 
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter
     .ofPattern(dateFormat)

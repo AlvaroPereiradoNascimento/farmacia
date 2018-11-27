@@ -277,10 +277,10 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Email cadastrado errado","Email inválido",JOptionPane.ERROR_MESSAGE);
                 TextFieldEmail.setText(null);
                 TextFieldEmail.requestFocus();
-            }else if (!d.data(TextFieldDtNasc.getText())){
-                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-                TextFieldDtNasc.setText(null);
-                TextFieldDtNasc.requestFocus();
+//            }else if (!d.data(TextFieldDtNasc.getText())){
+//                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+//                TextFieldDtNasc.setText(null);
+//                TextFieldDtNasc.requestFocus();
             }else{
               ClienteCpf c;
                 try {

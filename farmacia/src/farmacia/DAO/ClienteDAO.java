@@ -33,8 +33,8 @@ public class ClienteDAO implements DAO<ClienteCpf>{
             String sql;
         //cria o comando da DML
         sql = "INSERT INTO clientes"
-                + "(nome,tel,cel,email,dt_nasc,rg,cpf)"
-                + "values ( ?, ?, ?, ?, ?, ?, ?);";
+                + "(nome,tel,cel,email,rg,cpf)"
+                + "values ( '?', ?, ?, '?', '?', ?);";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
@@ -42,14 +42,16 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setInt(2, obj.getTelefone());
         pst.setInt(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        pst.setDate(5, (Date) obj.getDatanasc());
-        pst.setString(6, obj.getRg());
-        pst.setInt(7, obj.getCpf());
+        //pst.setDate(5, (Date) obj.getDatanasc());
+        pst.setString(5, obj.getRg());
+        pst.setInt(6, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
+            System.out.println("cadastro com sucessso!!!!!!");
             Banco.fechar();
             return true;
         }else{
+            System.out.println("erro no cadastro ");
             Banco.fechar();
             return false;
         }
