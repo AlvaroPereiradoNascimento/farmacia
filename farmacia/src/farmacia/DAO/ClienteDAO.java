@@ -48,9 +48,11 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setLong(7, obj.getCpf());
         
         if(pst.executeUpdate() > 0){
+            System.out.println("cadastro com sucessso!!!!!!");
             Banco.fechar();
             return true;
         }else{
+            System.out.println("erro no cadastro ");
             Banco.fechar();
             return false;
         }

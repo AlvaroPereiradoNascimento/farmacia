@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class DateValidator {
     private Date datas;
+
     public boolean data(String dataTexto) {
     Date data = null;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -35,7 +36,7 @@ public class DateValidator {
                 resposta = false;
     	}
         return resposta;
-    } 
+    }
     public Date StringtoDate(String data) throws ParseException {
         String formato = "dd/MM/yyyy";
       return new SimpleDateFormat(formato).parse(data);
