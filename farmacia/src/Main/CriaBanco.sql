@@ -7,7 +7,7 @@ nome varchar(255) ,
 tel int(10) ,
 cel int(11),
 email varchar(255) ,
-dt_nasc varchar(10) ,
+dt_nasc date ,
 rg varchar(255) ,
 cpf int(14) unique
 );

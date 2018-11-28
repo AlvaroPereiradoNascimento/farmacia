@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
  */
 public class DateValidator {
     private Date datas;
-
     public boolean data(String dataTexto) {
     Date data = null;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -29,10 +28,8 @@ public class DateValidator {
     	try {
     		format.setLenient(false);
     		data = format.parse(dataTexto);
-                JOptionPane.showMessageDialog(null,"O Mané escreveu a data Certa","AVISO",JOptionPane.INFORMATION_MESSAGE);
                 resposta = true;
     	} catch (ParseException e) {
-    		JOptionPane.showMessageDialog(null,"O Mané escreveu a data Errada","AVISO",JOptionPane.WARNING_MESSAGE);
                 resposta = false;
     	}
         return resposta;

@@ -42,8 +42,8 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setLong(2, obj.getTelefone());
         pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        //pst.setDate(5, (Date) obj.getDatanasc());
-        pst.setString(5, obj.getDatanasc());
+        pst.setDate(5, (Date) obj.getDatanasc());
+        //pst.setString(5, obj.getDatanasc());
         pst.setString(6, obj.getRg());
         pst.setLong(7, obj.getCpf());
         
@@ -88,8 +88,8 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setLong(2, obj.getTelefone());
         pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        //pst.setDate(5, (Date) obj.getDatanasc());
-        pst.setString(5, obj.getDatanasc());
+        pst.setDate(5, (Date) obj.getDatanasc());
+       // pst.setString(5, obj.getDatanasc());
         pst.setString(6, obj.getRg());
         pst.setLong(7, obj.getCpf());
         
@@ -151,7 +151,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
         }
         
         rs.close();
@@ -178,7 +178,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
         }
         
         rs.close();
@@ -217,7 +217,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         while(rs.next()){
             
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getString("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
          clientes.add(cliente);
         }
         rs.close();

@@ -25,6 +25,7 @@ import model.ClienteCpf;
  * @author Alvaro Pereira do Nascimento.
  */
 public class FormClienteCRUD extends javax.swing.JFrame {
+    private ClienteCpf cc;
 
     /**
      * Cria novas formas FormClienteCRUD
@@ -39,8 +40,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         TextFieldRG.setText("593701562");
         TextFieldEmail.setText("hugo@hugo.com");
         TextFieldDtNasc.setText("23045571808");
+        
     }
-    DateValidator d;
+        ClienteDAO cliente = new ClienteDAO();
+        ClienteCpf c ;
+        DateValidator d = new DateValidator();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -264,7 +268,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-      ClienteDAO cliente;
+      
     private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
         // TODO add your handling code here:
         /**
@@ -275,6 +279,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         
         //verifica se campos estão vazios.
        if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+           boolean registrado = false;
             JOptionPane.showMessageDialog(this.TextFieldCPF,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
             if (!CpfCnpjUtils.isValid(TextFieldCPF.getText())){
                 JOptionPane.showMessageDialog(this.TextFieldCPF,"CPF não é Verdadeiro","CPF", JOptionPane.ERROR_MESSAGE);
@@ -285,36 +290,14 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Email cadastrado errado","Email inválido",JOptionPane.ERROR_MESSAGE);
                 TextFieldEmail.setText(null);
                 TextFieldEmail.requestFocus();
-//            }else if (!d.data(TextFieldDtNasc.getText())){
-//                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-//                TextFieldDtNasc.setText(null);
-//                TextFieldDtNasc.requestFocus();
+            }else if (!d.data(TextFieldDtNasc.getText())){
+                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                TextFieldDtNasc.setText(null);
+                TextFieldDtNasc.requestFocus();
             }else{
-              ClienteCpf c;
-               boolean valida;
-                try {
-                   c = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()), 
-                           Long.parseUnsignedLong(TextFieldCelular.getText()),
-                           Long.parseUnsignedLong(TextFieldCPF.getText()),
-                           TextFieldNome.getText(), TextFieldRG.getText(),
-                           TextFieldEmail.getText(),
-                           /*d.StringtoDate(TextFieldDtNasc.getText())*/TextFieldDtNasc.getText());
-                   valida = cliente.inserir(c);
-                  if (valida)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
-                else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-//                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-//                    TextFieldDtNasc.setText(null);
-//                    TextFieldDtNasc.requestFocus();
-                } catch (SQLException | ClassNotFoundException ex) {
-                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-                }catch (java.lang.NumberFormatException ex){
-                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
-//                }catch (NullPointerException ex){
-//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"+ ex.getClass()+"\n"+ex.getCause()+"\n"+ex.getStackTrace()+"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
-                }
+                registrado = valida();
+               if (registrado)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+               else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
                 
             } 
        }else Editavel();
@@ -557,6 +540,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         int resposta;
         if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())&& (TextFieldCPF.isEditable())){
            
+                   
             if (TextFieldCPF.getText()!= null || TextFieldID.getText()!= null){
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
@@ -573,7 +557,9 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                             cliente.buscar(a);
                         }
                         if((TextFieldID.getText()== null) && (TextFieldCPF.getText()!= null)){
-                            a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),Integer.parseInt(TextFieldID.getText()));
+                            a = new ClienteCpf(
+                                    Integer.parseInt(TextFieldCPF.getText()),
+                                    Integer.parseInt(TextFieldID.getText()));
                             cliente.buscar(a);
                         }
                         } catch (SQLException ex) {
@@ -655,13 +641,22 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                            }
                         
                         ClienteCpf c;
-//                try {
-                    c = new ClienteCpf(Integer.parseInt(TextFieldTelefone.getText()),Integer.parseInt(TextFieldCelular.getText()),Integer.parseInt(TextFieldCPF.getText()),Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText(), TextFieldRG.getText(),TextFieldEmail.getText(),  /*d.StringtoDate(TextFieldDtNasc.getText())*/TextFieldDtNasc.getText());
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-//                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-//                    TextFieldDtNasc.setText(null);
-//                    TextFieldDtNasc.requestFocus();
+                try {
+                    c = new ClienteCpf(Integer.parseInt(
+                            TextFieldTelefone.getText()),
+                            Integer.parseInt(TextFieldCelular.getText()),
+                            Integer.parseInt(TextFieldCPF.getText()),
+                            Integer.parseInt(TextFieldID.getText()),
+                            TextFieldNome.getText(), 
+                            TextFieldRG.getText(),
+                            TextFieldEmail.getText(), 
+                            d.StringtoDate(TextFieldDtNasc.getText()));
+                    
+                } catch (ParseException ex) {
+                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                    TextFieldDtNasc.setText(null);
+                    TextFieldDtNasc.requestFocus();
                       // Solicita alteração do  banco 
                         
                     
@@ -672,11 +667,12 @@ public class FormClienteCRUD extends javax.swing.JFrame {
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
         }else Editavel();
     }//GEN-LAST:event_ButtonAlteraActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -817,5 +813,44 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         TextFieldDtNasc.setText(String.valueOf(c.getDatanasc()));
         TextFieldRG.setText(c.getRg());
     }
+
+    private boolean valida() {
+        boolean valida = false;
+            try {
+
+                cc = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()),
+                        Long.parseUnsignedLong(TextFieldCelular.getText()),
+                        Long.parseUnsignedLong(TextFieldCPF.getText()),
+                        TextFieldNome.getText(), TextFieldRG.getText(),
+                        TextFieldEmail.getText(),
+                        d.StringtoDate(TextFieldDtNasc.getText()));
+                System.out.println("Criado cliente");
+                valida = cliente.inserir(cc);
+                System.out.println("registrado no banco");
+                valida= true;
+            } catch (ParseException ex) {
+                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                TextFieldDtNasc.setText(null);
+                TextFieldDtNasc.requestFocus();
+                valida = false;
+            } catch (SQLException | ClassNotFoundException ex) {
+               Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+               JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+               valida = false;
+            }catch (java.lang.NumberFormatException ex){
+                JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                valida = false;
+            }catch (NullPointerException ex){
+                JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+                        + ex.getClass()+"\n"+ex.getCause()
+                        +"\n"+ex.getStackTrace()
+                        +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+                valida = false;
+            }
+     
+     return valida;
+    }
+    
 }
 

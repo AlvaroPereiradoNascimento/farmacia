@@ -19,11 +19,33 @@ public class Banco {
     public static java.sql.Connection conexao = null;
     //essa rotina é executada quando a classe
     //é carregada na memoria
-    static {
-        usuario = "root";
-        senha = "";
-        servidor = "localhost";
-        bd = "farmacia";
+    /**
+     * mais. Isso torna mais fácil a recuperação do servidor em caso ele fique fora do ar.
+            Nome do banco de dados MySQL:  	
+farmacia151
+Nome de usuário MySQL:  	
+alvaro.nasciment
+Senha do MySQL:  	
+••••••••••••
+Confirmação de senha do MySQL:  	
+••••••••••••
+ 
+Email:  	
+alvaro.nascimento@viavarejo.com.br
+ 
+     */
+//    static {
+//        usuario = "root";
+//        senha = "";
+//        servidor = "localhost";
+//        bd = "farmacia";
+//        porta = 3306;
+//    }
+     static {
+        usuario = "sql10267375";
+        senha = "48GBjQMpqK";
+        servidor = "sql10.freemysqlhosting.net";
+        bd = "sql10267375";
         porta = 3306;
     }
     
