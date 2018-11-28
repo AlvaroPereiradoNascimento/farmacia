@@ -70,6 +70,20 @@ public class ClienteCpf {
         this.cpf = cpf;
         this.id = id;
     }
+    /**
+     * Construtor para exclusivo para busca de cliente
+     * @param cpf 
+     */
+    public ClienteCpf(long cpf) {
+        this.cpf = cpf;
+    }
+    /**
+     * Construtor para exclusivo para busca de cliente
+     * @param id 
+     */
+    public ClienteCpf(int id) {
+        this.id = id;
+    }
     
     
     /**

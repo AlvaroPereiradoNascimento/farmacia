@@ -142,7 +142,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
     public ClienteCpf buscar(ClienteCpf obj)throws SQLException, ClassNotFoundException {
         cliente = null;
         String sql = "SELECT * FROM clientes "
-                   + "WHERE id = ?;";
+                + "WHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
@@ -151,7 +151,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"),d.convertSqlDateToUtilDate(rs.getDate("dt_nasc")));       
         }
         
         rs.close();
@@ -169,16 +169,16 @@ public class ClienteDAO implements DAO<ClienteCpf>{
     public ClienteCpf buscarCPF(ClienteCpf obj) throws SQLException, ClassNotFoundException {
         cliente = null;
         String sql = "SELECT * FROM clientes "
-                   + "WHERE cpf = ?;";
+                + "WHERE cpf = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
-        pst.setInt(1, obj.getId());
+        pst.setLong(1, obj.getCpf());
         
         rs = pst.executeQuery();
         
         if(rs.next()){
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"),d.convertSqlDateToUtilDate(rs.getDate("dt_nasc")));       
         }
         
         rs.close();
@@ -196,7 +196,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
     public ClienteCpf buscasCPFID(ClienteCpf obj)throws SQLException, ClassNotFoundException{
         ClienteCpf a = buscar(obj);
         ClienteCpf b = buscarCPF(obj);
-        if ((a==b) && (b == obj) && (obj == a)) return a;
+        if ((a.getCpf() == b.getCpf()) && (a.getId() == b.getId())&& (a.getNome().equals(b.getNome()))) return a;
         else return null;
         }
         
@@ -217,7 +217,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         
         while(rs.next()){
             
-         cliente = new ClienteCpf(rs.getInt("tel"), rs.getInt("cel") ,rs.getInt("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
+         cliente = new ClienteCpf(rs.getLong("tel"), rs.getLong("cel") ,rs.getLong("cpf"), rs.getInt("id"), rs.getString("nome"), rs.getString("rg"), rs.getString("email"), rs.getDate("dt_nasc"));       
          clientes.add(cliente);
         }
         rs.close();

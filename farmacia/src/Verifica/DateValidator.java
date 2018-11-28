@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -49,12 +50,17 @@ public class DateValidator {
         String formato = "dd/MM/yyyy";
       return new SimpleDateFormat(formato).parse(data);
     }
-    public String DatetoString(java.util.Date dtData) throws ParseException{
-        SimpleDateFormat formatBra;   
-        formatBra = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date newData = formatBra.parse(dtData.toString());
-        return (formatBra.format(newData));
+    /**
+     * Converte data pra string
+     * @param dtData
+     * @return
+     * @throws ParseException 
+     */
+    public static String DatetoString(java.util.Date dtData) throws ParseException{
+        String formato = "dd/MM/yyyy";
+        return new SimpleDateFormat(formato).format(dtData);
     }
+   
     /**
      * Inverte posição para inserção no banco de dados.
      * @param data
@@ -76,6 +82,11 @@ public class DateValidator {
         //retorna o valor desejado
       return new SimpleDateFormat(formato).parse(sb.toString());
     }
+    /**
+     * Converte data padrão em data de banco de dados.
+     * @param str
+     * @return data em sql 
+     */
     public java.sql.Date convertUtilDateToSqlDate( Date str) {
         
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");

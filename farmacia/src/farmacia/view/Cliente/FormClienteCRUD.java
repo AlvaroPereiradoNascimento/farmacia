@@ -35,11 +35,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         initComponents();
         TextFieldNome.setText("Alvaro bonitao");
         TextFieldCPF.setText("1401919757");
-        TextFieldCelular.setText("012345678910");
+        TextFieldCelular.setText("01234567891");
         TextFieldTelefone.setText("0123456789");
         TextFieldRG.setText("593701562");
         TextFieldEmail.setText("hugo@hugo.com");
-        TextFieldDtNasc.setText("14021994");
+        TextFieldDtNasc.setText("23045571808");
         
     }
         ClienteDAO cliente = new ClienteDAO();
@@ -308,7 +308,6 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private void ButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLimparActionPerformed
         // TODO add your handling code here:
         limpar();
-        TextFieldNome.requestFocus();
         if ((TextFieldID.isEditable()) && !(TextFieldNome.isEditable())) Editavel();
     }//GEN-LAST:event_ButtonLimparActionPerformed
 
@@ -505,31 +504,34 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
         // TODO add your handling code here:[
         
-        limpar();
+        
         int resposta;
         if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())&& (TextFieldCPF.isEditable())){
-           
-                   
             if (TextFieldCPF.getText()!= null || TextFieldID.getText()!= null){
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
                     
                     // busca ID e/ou CPF no banco 
                      ClienteCpf a = null;
+                     ClienteCpf buscarCPF = null;
                     try {
-                        if ((TextFieldID.getText()!= null) && (TextFieldCPF.getText()!= null)){
-                            a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),Integer.parseInt(TextFieldID.getText()));
-                            cliente.buscasCPFID(a);
+                        // buca por cpf e id
+                        if ((TextFieldID.getText().length() != 0) && (TextFieldCPF.getText().length()!= 0)){
+                            a = new ClienteCpf(Long.parseLong(TextFieldCPF.getText()),Integer.parseInt(TextFieldID.getText()));
+                            System.out.println("Busca por CPF e ID");
+                             buscarCPF = cliente.buscasCPFID(a);
                         }
-                        if ((TextFieldID.getText()!= null) && (TextFieldCPF.getText()== null)){
-                            a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),Integer.parseInt(TextFieldID.getText()));
-                            cliente.buscar(a);
+                        //busca por id
+                        else if ((TextFieldID.getText().length() != 0) && (TextFieldCPF.getText().length() == 0)){
+                            a = new ClienteCpf(Integer.parseInt(TextFieldID.getText()));
+                            System.out.println("Busca por ID");
+                             buscarCPF = cliente.buscar(a);
                         }
-                        if((TextFieldID.getText()== null) && (TextFieldCPF.getText()!= null)){
-                            a = new ClienteCpf(
-                                    Integer.parseInt(TextFieldCPF.getText()),
-                                    Integer.parseInt(TextFieldID.getText()));
-                            cliente.buscar(a);
+                        // busca por cpf
+                        else if((TextFieldID.getText().length() == 0) && (TextFieldCPF.getText().length() != 0)){
+                            a = new ClienteCpf(Long.parseUnsignedLong(TextFieldCPF.getText()));
+                            System.out.println("Busca por CPF");
+                             buscarCPF = cliente.buscarCPF(a);
                         }
                         } catch (SQLException ex) {
                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -538,12 +540,20 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                                JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
                            }
-                    //retorna algo e mostra caso ache o cleinte informado.
-                        if (a != null )mostra(a);
+                        //retorna algo e mostra caso ache o cleinte informado.
+                        if (buscarCPF != null )
+                            try {
+                            mostra(buscarCPF);
+                     } catch (ParseException ex) {
+                         Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                     }
                         else  JOptionPane.showMessageDialog(this,"Cliente não encontrado","Cliente",JOptionPane.ERROR_MESSAGE);
                 }
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou CPF estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
-        }else  Editavel();
+        }else{
+            Editavel();
+            limpar();
+        }
     }//GEN-LAST:event_ButtonConsultaActionPerformed
 
     private void ButtonExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluiActionPerformed
@@ -554,26 +564,43 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja cancelar cadastro do cliente", "Confirmação de exclusão de cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
                     try {
-                        int ID = Integer.parseInt(TextFieldID.getText());
-                    } catch (NumberFormatException numberFormatException ) {
-                        JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
-                    }
+                        c = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()),
+                                Long.parseUnsignedLong(TextFieldCelular.getText()),
+                                Long.parseUnsignedLong(TextFieldCPF.getText()),
+                                TextFieldNome.getText(), TextFieldRG.getText(),
+                                TextFieldEmail.getText(),
+                                d.StringtoDateSql(TextFieldDtNasc.getText()));
+                        System.out.println("Criado cliente");
+
+                        System.out.println("registrado no banco");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Problema de conversão","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                        TextFieldDtNasc.setText(null);
+                    }catch (java.lang.NumberFormatException ex){
+                        JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+
+                    }catch (NullPointerException ex){
+                        JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+                                + ex.getClass()+"\n"+ex.getCause()
+                                +"\n"+ex.getStackTrace()
+                                +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
                     try {
-                        boolean valida = cliente.excluir(null);
+                        boolean valida = cliente.excluir(c);
                         if (valida)JOptionPane.showMessageDialog(this,"Exclusão efetuada com sucesso ","Exclusão efetuada",JOptionPane.INFORMATION_MESSAGE);
                         else JOptionPane.showMessageDialog(this,"Exclusão não efetuada.","Exclusão não efetuada",JOptionPane.ERROR_MESSAGE);
-                    } catch (SQLException ex) {
-                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException exc) {
+                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, exc);
                            JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
-                    } catch (ClassNotFoundException ex) {
-                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                           JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                    } catch (ClassNotFoundException exc) {
+                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, exc);
+                           JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+exc,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
                    }
                        
                 }
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
         }
- 
+    }
     }//GEN-LAST:event_ButtonExcluiActionPerformed
 
     private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
@@ -585,12 +612,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja Alterar cadastro do cliente", "Confirmação de Alteração de dados do cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
                        int ID = 0;
-                    try {
-                        ID = Integer.parseInt(TextFieldID.getText());
-                    } catch (NumberFormatException numberFormatException ) {
-                        JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
-                    }
-                // cliente objeto cleinte para alteraçaõ         
+                    // cliente objeto cliente para alteração         
                     try {
                         c = new ClienteCpf(
                                 Long.parseLong(TextFieldTelefone.getText()),
@@ -763,13 +785,15 @@ public static void main(String args[]) {
 
     return sb.toString().substring (0, sb.length() - 1);
     }
-    public void mostra (ClienteCpf c){
+    public void mostra (ClienteCpf c) throws ParseException{
         TextFieldID.setText(String.valueOf(c.getId()));
         TextFieldNome.setText(c.getNome());
         TextFieldCelular.setText(String.valueOf(c.getCelular()));
         TextFieldEmail.setText(c.getEmail());
-        TextFieldDtNasc.setText(String.valueOf(c.getDatanasc()));
+        TextFieldDtNasc.setText(DateValidator.DatetoString(c.getDatanasc()));
         TextFieldRG.setText(c.getRg());
+        TextFieldTelefone.setText(String.valueOf(c.getTelefone()));
+        TextFieldCPF.setText(String.valueOf(c.getCpf()));
     }
 
     private boolean valida() {
@@ -804,9 +828,6 @@ public static void main(String args[]) {
                         +"\n"+ex.getStackTrace()
                         +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
                 valida = false;
-//            }catch (ClassCastException ex){
-//                JOptionPane.showMessageDialog(this,"Problema de Conversão de data.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-//               valida = false;
             }
      
      return valida;
