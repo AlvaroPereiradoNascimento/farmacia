@@ -39,7 +39,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         TextFieldTelefone.setText("0123456789");
         TextFieldRG.setText("593701562");
         TextFieldEmail.setText("hugo@hugo.com");
-        TextFieldDtNasc.setText("23045571808");
+        TextFieldDtNasc.setText("14021994");
         
     }
         ClienteDAO cliente = new ClienteDAO();
@@ -409,26 +409,14 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                            JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
                            TextFieldDtNasc.requestFocus();
                            TextFieldDtNasc.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                           TextFieldDtNasc.setText("dia/mes/ano");
-                           TextFieldDtNasc.selectAll();
+                            
                         }
                     }else if (TextFieldDtNasc.getText().length()== 10){
-                            if(!d.data(TextFieldDtNasc.getText()))
+                            if(!d.data(TextFieldDtNasc.getText())){
                                JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
                                TextFieldDtNasc.requestFocus();
                                TextFieldDtNasc.setText("dd/mm/aaaa");
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                               TextFieldDtNasc.setText("dia/mes/ano");
-                               TextFieldDtNasc.selectAll();
+                            }
                     }else if (TextFieldDtNasc.getText().length()== 6){
                         try {
                             date = Integer.parseInt(TextFieldDtNasc.getText());
@@ -443,11 +431,6 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                            JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
                            TextFieldDtNasc.requestFocus();
                            TextFieldDtNasc.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                            TextFieldDtNasc.setText("dia/mes/ano");
                            TextFieldDtNasc.selectAll();
                         }
@@ -465,33 +448,19 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                             } catch (NumberFormatException e) {
                                JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
                                TextFieldDtNasc.requestFocus();
-                                TextFieldDtNasc.setText("dd/mm/aaaa");
-                                try {
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                               TextFieldDtNasc.setText("dia/mes/ano");
-                               TextFieldDtNasc.selectAll();
-                            }
-
-                        }else if (TextFieldDtNasc.getText().length()== 5){
-
-                               JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
-                               TextFieldDtNasc.requestFocus();
                                TextFieldDtNasc.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                                TextFieldDtNasc.setText("dia/mes/ano");
                                TextFieldDtNasc.selectAll();
                             }
 
+                    }else if (TextFieldDtNasc.getText().length()== 5){
 
-
-                   else {
+                           JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtNasc.requestFocus();
+                           TextFieldDtNasc.setText("dd/mm/aaaa");
+                           TextFieldDtNasc.setText("dia/mes/ano");
+                           TextFieldDtNasc.selectAll();
+                    }else {
                         JOptionPane.showMessageDialog(this.TextFieldDtNasc, "Campo data de nascimento com formato inválido.","Data de Nascimento", JOptionPane.ERROR_MESSAGE);
                         TextFieldDtNasc.requestFocus();
                         TextFieldDtNasc.setText("dia/mes/ano");
@@ -593,10 +562,13 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         boolean valida = cliente.excluir(null);
                         if (valida)JOptionPane.showMessageDialog(this,"Exclusão efetuada com sucesso ","Exclusão efetuada",JOptionPane.INFORMATION_MESSAGE);
                         else JOptionPane.showMessageDialog(this,"Exclusão não efetuada.","Exclusão não efetuada",JOptionPane.ERROR_MESSAGE);
-                    } catch (SQLException | ClassNotFoundException ex) {
-                        Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-                    }
+                    } catch (SQLException ex) {
+                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                           JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                    } catch (ClassNotFoundException ex) {
+                           Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                           JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                   }
                        
                 }
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
@@ -618,52 +590,38 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                     } catch (NumberFormatException numberFormatException ) {
                         JOptionPane.showMessageDialog(this.TextFieldID,"ID informado não é válido","ID inválido",JOptionPane.ERROR_MESSAGE);
                     }
-                    
-                    
-                       // busca ID no banco e trava o id liberando outros campos para alteração.
+                // cliente objeto cleinte para alteraçaõ         
                     try {
-                        if ((TextFieldID.getText()!= null) && (TextFieldCPF.getText()!= null)){
-                            ClienteCpf a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),ID);
-                            cliente.buscasCPFID(a);
-                        }else if ((TextFieldID.getText()!= null) && (TextFieldCPF.getText()== null)){
-                            ClienteCpf a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),ID);
-                            cliente.buscar(a);
-                        }else if((TextFieldID.getText()== null) && (TextFieldCPF.getText()!= null)){
-                            ClienteCpf a = new ClienteCpf(Integer.parseInt(TextFieldCPF.getText()),ID);
-                            cliente.buscar(a);
-                        }
-                        } catch (SQLException ex) {
-                               Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                               JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
-                        } catch (ClassNotFoundException ex) {
-                               Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                               JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
-                           }
-                        
-                        ClienteCpf c;
-                try {
-                    c = new ClienteCpf(Integer.parseInt(
-                            TextFieldTelefone.getText()),
-                            Integer.parseInt(TextFieldCelular.getText()),
-                            Integer.parseInt(TextFieldCPF.getText()),
-                            Integer.parseInt(TextFieldID.getText()),
-                            TextFieldNome.getText(), 
-                            TextFieldRG.getText(),
-                            TextFieldEmail.getText(), 
-                            d.StringtoDate(TextFieldDtNasc.getText()));
+                        c = new ClienteCpf(
+                                Long.parseLong(TextFieldTelefone.getText()),
+                                Long.parseLong(TextFieldCelular.getText()),
+                                Integer.parseInt(TextFieldID.getText()),
+                                TextFieldNome.getText(), 
+                                TextFieldRG.getText(),
+                                TextFieldEmail.getText(), 
+                                d.StringtoDate(TextFieldDtNasc.getText()));
+
+                    }catch (ParseException ex) {
+                        Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                         JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                        TextFieldDtNasc.setText(null);
+                        TextFieldDtNasc.requestFocus();
+                    }    
+                    try {
+                       // Solicita alteração do  banco
+                       cliente.alterar(c);
+                       // em caso de confirmação imprme
+                        JOptionPane.showMessageDialog(this.TextFieldID,"Dados do cleinte foram alterados com sucesso ","Alteração com sucesso ",JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (SQLException ex) {
+                       Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                       JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                    } catch (ClassNotFoundException ex) {
+                       Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                       JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                    }
                     
-                } catch (ParseException ex) {
-                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                     JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-                    TextFieldDtNasc.setText(null);
-                    TextFieldDtNasc.requestFocus();
-                      // Solicita alteração do  banco 
-                        
                     
-                    // em caso de confirmação imprme
-//                    JOptionPane.showMessageDialog(this.TextFieldID,"Dados do cleinte foram alterados com sucesso ","Alteração com sucesso ",JOptionPane.INFORMATION_MESSAGE);
-//                    }
-                }
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
         }else Editavel();
     }//GEN-LAST:event_ButtonAlteraActionPerformed
@@ -740,7 +698,7 @@ public static void main(String args[]) {
         TextFieldID.setText(null); 
     }
     /**
-     * Deixar campos editaveis de acordo com padrão
+     * Deixar campos editáveis de acordo com padrão
      */
     public void Editavel(){
             if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
@@ -783,7 +741,7 @@ public static void main(String args[]) {
     /**
      *
      * @param str
-     * @return  primeira letra de cada palavra com em maiuscula exceto para sílabas
+     * @return  primeira letra de cada palavra com em maiúscula exceto para sílabas
      */
     public static String toTitledCase(String str){
 
@@ -818,19 +776,18 @@ public static void main(String args[]) {
         boolean valida = false;
             try {
 
-                cc = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()),
+                c = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()),
                         Long.parseUnsignedLong(TextFieldCelular.getText()),
                         Long.parseUnsignedLong(TextFieldCPF.getText()),
                         TextFieldNome.getText(), TextFieldRG.getText(),
                         TextFieldEmail.getText(),
-                        d.StringtoDate(TextFieldDtNasc.getText()));
+                        d.StringtoDateSql(TextFieldDtNasc.getText()));
                 System.out.println("Criado cliente");
-                valida = cliente.inserir(cc);
+                valida = cliente.inserir(c);
                 System.out.println("registrado no banco");
-                valida= true;
             } catch (ParseException ex) {
                 Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Problema de conversão","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
                 TextFieldDtNasc.setText(null);
                 TextFieldDtNasc.requestFocus();
                 valida = false;
@@ -847,6 +804,9 @@ public static void main(String args[]) {
                         +"\n"+ex.getStackTrace()
                         +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
                 valida = false;
+//            }catch (ClassCastException ex){
+//                JOptionPane.showMessageDialog(this,"Problema de Conversão de data.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+//               valida = false;
             }
      
      return valida;

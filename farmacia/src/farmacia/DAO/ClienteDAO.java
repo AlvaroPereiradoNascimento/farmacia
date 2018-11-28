@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package farmacia.DAO;
+import Verifica.DateValidator;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ import persistencia.Banco;
  * @edited Alvaro Pereira do Nascimento
  */
 public class ClienteDAO implements DAO<ClienteCpf>{
-
     private ClienteCpf cliente;
     private java.sql.PreparedStatement pst;
     private java.sql.ResultSet rs;
+    private final DateValidator d = new DateValidator();
     /**
      * efetua inserção única de cliente no sistema.
      * @param obj
@@ -42,8 +43,7 @@ public class ClienteDAO implements DAO<ClienteCpf>{
         pst.setLong(2, obj.getTelefone());
         pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        pst.setDate(5, (Date) obj.getDatanasc());
-        //pst.setString(5, obj.getDatanasc());
+        pst.setDate(5, d.convertUtilDateToSqlDate(obj.getDatanasc()));
         pst.setString(6, obj.getRg());
         pst.setLong(7, obj.getCpf());
         
