@@ -4,12 +4,12 @@ USE farmacia;
 CREATE TABLE clientes(
 id integer primary key auto_increment  unique,
 nome varchar(255) ,
-tel int(10) ,
-cel int(11),
+tel bigint(10) ,
+cel bigint(11),
 email varchar(255) ,
 dt_nasc date ,
 rg varchar(255) ,
-cpf int(14) unique
+cpf bigint(14) unique
 );
 
 CREATE TABLE funcionarios(
@@ -29,7 +29,7 @@ lote varchar(255)  unique,
 nome varchar(255) ,
 preco varchar(20) ,
 tipo int,
-validade varchar(255)  
+validade date  
 );
 
 CREATE TABLE vendas(

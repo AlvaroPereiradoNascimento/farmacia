@@ -76,9 +76,9 @@ public class DateValidator {
         java.util.Date dataUtil = new java.util.Date(); 
         
         dataUtil=str; 
-        java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
-
-        return dataSql; 
+        //java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
+        java.sql.Date sqlDate = new java.sql.Date(str.getTime());
+        return sqlDate; 
     } 
     
 }
