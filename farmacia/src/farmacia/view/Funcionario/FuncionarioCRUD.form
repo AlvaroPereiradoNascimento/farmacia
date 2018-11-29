@@ -44,13 +44,13 @@
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="PasswordFieldSenha" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
-                          <Component id="TextFieldNome" min="-2" pref="151" max="-2" attributes="0"/>
-                          <Component id="TextFieldNomeUsuario" min="-2" pref="151" max="-2" attributes="0"/>
                           <Component id="TextFieldID" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="TextFieldDtAdm" alignment="0" pref="75" max="32767" attributes="0"/>
                               <Component id="TextFieldSalario" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="TextFieldNome" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                          <Component id="TextFieldNomeUsuario" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -61,7 +61,6 @@
                               <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="94" pref="94" max="-2" attributes="0"/>
                               <Component id="ButtonAlterar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="ButtonExcluir" min="-2" pref="76" max="-2" attributes="0"/>

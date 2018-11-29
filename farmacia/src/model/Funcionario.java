@@ -29,10 +29,10 @@ public class Funcionario {
  *  Constrtutor de funcionário na qual criará outras subclasses de funcionários
  * @param nome deve ser colocado o nome do Colaborador completo
  * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso   
- * @param salario deve ser colcodo o salário do colabordor com separador em ponto   
+ * @param salario deve ser colocado o salário do colaborador com separador em ponto   
  * @param senha senha de acesso do colaborador 
- * @param trocasenha  boleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
- * @param id inteiro de verificação unica para cada funcionário.
+ * @param trocasenha  booleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
+ * @param id inteiro de verificação única para cada funcionário.
  * @param dataAdmissao data de admissão do colaborador
  * 
  */
@@ -46,6 +46,49 @@ public class Funcionario {
         this.id = id;
         this.dataAdmissao = dataAdmissao;
     }
+    
+    /**
+     * Constrtutor de funcionário na qual criará um novo funcionário para registro no banco e / ou subclasses de funcionários
+     * Constrtutor de funcionário na qual criará outras subclasses de funcionários
+     * @param nome deve ser colocado o nome do Colaborador completo
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso 
+     * @param dataAdmissao data de admissão do colaborador
+     * @param salario deve ser colocado o salário do colaborador com separador em ponto
+     * @param senha senha de acesso do colaborador 
+     */
+    public Funcionario(String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha) {
+        this.nome = nome;
+        this.NomeUsuario = NomeUsuario;
+        this.dataAdmissao = dataAdmissao;
+        this.salario = salario;
+        this.senha = senha;
+    }
+    /**
+     *  Construtor de funcionário que é exclusivo para busca do cliente no banco
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso 
+     * @param id  inteiro de verificação única para cada funcionário.
+     */
+    public Funcionario(String NomeUsuario, int id) {
+        this.NomeUsuario = NomeUsuario;
+        this.id = id;
+    }
+    /**
+     *  Construtor de funcionário que é exclusivo para busca do cliente no banco
+     * @param NomeUsuario deve ser colocado o nome de usuário para o sistema e acesso
+     */
+    public Funcionario(String NomeUsuario) {
+        this.NomeUsuario = NomeUsuario;
+    }
+    /**
+     *  Construtor de funcionário que é exclusivo para busca do cliente no banco 
+     * @param id  inteiro de verificação única para cada funcionário.
+     */
+    public Funcionario(int id) {
+        this.id = id;
+    }
+    
+    
+    
 
     public String getSenha() {
         return senha;

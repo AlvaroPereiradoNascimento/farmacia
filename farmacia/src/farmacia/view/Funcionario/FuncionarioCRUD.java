@@ -6,26 +6,37 @@
 
 package farmacia.view.Funcionario;
 import Verifica.DateValidator;
+import farmacia.DAO.FuncionarioDAO;
 import farmacia.view.Cliente.FormClienteCRUD;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Funcionario;
 
 
 /**
  *
  * @author Alvaro Pereira do Contratação 
  */
+@SuppressWarnings("serial")
 public class FuncionarioCRUD extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form FuncionárioCRUD
      */
     public FuncionarioCRUD() {
         initComponents();
+        TextFieldNome.requestFocus();
     }
-    DateValidator d;
+    DateValidator d = new DateValidator();
+    FuncionarioDAO funcionario = new FuncionarioDAO();
+    Funcionario f;
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,12 +169,12 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                .addComponent(TextFieldSalario, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addComponent(TextFieldSalario, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -171,7 +182,6 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                                 .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(242, 242, 242))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
                                 .addComponent(ButtonAlterar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,21 +258,24 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
     private void TextFieldNomeUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusLost
         // TODO add your handling code here:
-        if (TextFieldNome.getText() != null ){
-            TextFieldNomeUsuario. setText(GeraUsuario(TextFieldNome.getText()));
-//            boolean unico;
-//            int add;
-//            /**
-//             * efetua acesso no banco e verifica se nome de usuário de fato é unico e caso não seja cria um número no final sempre somando um
-//             */
-//            do {
-//            unico = false;
-//            add = 1;
-//            //efetua um if de teste para verificar se somente o campo usuário ja serve para criação.
-//            // consulta o banco e verifica se nome de usuário existe e caso contrário soma um no add e faz uma nova busca com nome de usuário mais o add 
-//            }while (unico = true);
-//            // encerra conexão com os banco de dados
-            
+        if (TextFieldNome.getText().length() != 0 ){
+            TextFieldNomeUsuario.setText(GeraUsuario(TextFieldNome.getText()));
+            List<Funcionario> vfuncionarios = new ArrayList<>();
+            String nome = TextFieldNomeUsuario.getText();
+            try {
+                vfuncionarios = funcionario.listar(TextFieldNome.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                 JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(vfuncionarios.size()> 0){
+                int i = vfuncionarios.size() ;
+                TextFieldNomeUsuario.setText(nome+i);
+            }else TextFieldNomeUsuario.setText(nome);
+            TextFieldNome.requestFocus();
         }else TextFieldNome.requestFocus();
     }//GEN-LAST:event_TextFieldNomeUsuarioFocusLost
 
@@ -276,6 +289,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             else if(matchesOnlyText(TextFieldNome.getText())) {
                 String nome = toTitledCase(TextFieldNome.getText());
                 TextFieldNome.setText(nome);
+                if(TextFieldNomeUsuario.getText() == null | TextFieldNomeUsuario.getText() == "." )TextFieldNomeUsuario.requestFocus();
+                
                                     
             }else {
                 JOptionPane.showMessageDialog(this.TextFieldNome, "Nome possui números ou dados inelegiveis","Nome com números.", JOptionPane.ERROR_MESSAGE);
@@ -292,8 +307,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         if (TextFieldDtAdm.isEditable()){
             int date=0;
             if(  (TextFieldNome.getText().length() != 0) ){
-
-                if (TextFieldDtAdm.getText().length()> 3 || TextFieldDtAdm.getText().length()< 11){
+                if (TextFieldNomeUsuario.getText().length()!= 0){
+                   if (TextFieldDtAdm.getText().length()> 3 || TextFieldDtAdm.getText().length()< 11){
                     if(TextFieldDtAdm.getText().length()== 8){
                         try {
                           date = Integer.parseInt(TextFieldDtAdm.getText());
@@ -305,30 +320,21 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                               TextFieldDtAdm.setText(dia+"/0"+mes+"/"+ano);  
                             }
                            else TextFieldDtAdm.setText(dia+"/"+mes+"/"+ano);
-                        } catch (NumberFormatException e) {
+                        }catch (NumberFormatException e) {
                            JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                            TextFieldDtAdm.requestFocus();
                            TextFieldDtAdm.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(5000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                            TextFieldDtAdm.setText("dia/mes/ano");
                            TextFieldDtAdm.selectAll();
                         }
                     }else if (TextFieldDtAdm.getText().length()== 10){
-                            if(!d.data(TextFieldDtAdm.getText()))
+                            if(!d.data(TextFieldDtAdm.getText())){
                                JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                                TextFieldDtAdm.requestFocus();
                                TextFieldDtAdm.setText("dd/mm/aaaa");
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                        }
                                TextFieldDtAdm.setText("dia/mes/ano");
                                TextFieldDtAdm.selectAll();
+                            }
                     }else if (TextFieldDtAdm.getText().length()== 6){
                         try {
                             date = Integer.parseInt(TextFieldDtAdm.getText());
@@ -343,64 +349,45 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                            JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                            TextFieldDtAdm.requestFocus();
                            TextFieldDtAdm.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                            TextFieldDtAdm.setText("dia/mes/ano");
                            TextFieldDtAdm.selectAll();
                         }
                     }else if (TextFieldDtAdm.getText().length()== 4){
-                            try {
-                                date = Integer.parseInt(TextFieldDtAdm.getText());
-                                int ano = date%100;
-                                int dia = date/1000;
-                                date /= 100;
-                                int mes = date%10;
-                                if (mes <10 && dia < 10&& (ano < 100 && ano > 60 )){
-                                        ano+=1900;
-                                        TextFieldDtAdm.setText("0"+dia+"/0"+mes+"/"+ano);  
-                                    }
-                            } catch (NumberFormatException e) {
-                               JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
-                               TextFieldDtAdm.requestFocus();
-                                TextFieldDtAdm.setText("dd/mm/aaaa");
-                                try {
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            date = Integer.parseInt(TextFieldDtAdm.getText());
+                            int ano = date%100;
+                            int dia = date/1000;
+                            date /= 100;
+                            int mes = date%10;
+                            if (mes <10 && dia < 10&& (ano < 100 && ano > 60 )){
+                                    ano+=1900;
+                                    TextFieldDtAdm.setText("0"+dia+"/0"+mes+"/"+ano);  
                                 }
-                               TextFieldDtAdm.setText("dia/mes/ano");
-                               TextFieldDtAdm.selectAll();
-                            }
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldDtAdm.requestFocus();
+                           TextFieldDtAdm.setText("dd/mm/aaaa");
+                           TextFieldDtAdm.setText("dia/mes/ano");
+                           TextFieldDtAdm.selectAll();
+                        }
 
-                        }else if (TextFieldDtAdm.getText().length()== 5){
-
-                               JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
-                               TextFieldDtAdm.requestFocus();
-                               TextFieldDtAdm.setText("dd/mm/aaaa");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                               TextFieldDtAdm.setText("dia/mes/ano");
-                               TextFieldDtAdm.selectAll();
-                            }
-
-
-
-                   else {
+                    }else if (TextFieldDtAdm.getText().length()== 5){
+                       JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
+                       TextFieldDtAdm.requestFocus();
+                       TextFieldDtAdm.setText("dd/mm/aaaa");
+                       TextFieldDtAdm.setText("dia/mes/ano");
+                       TextFieldDtAdm.selectAll();
+                    }else {
                         JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                         TextFieldDtAdm.requestFocus();
                         TextFieldDtAdm.setText("dia/mes/ano");
                         TextFieldDtAdm.selectAll();
                     }   
-                }else {
+                    }else {
                     JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                     TextFieldDtAdm.requestFocus();
-                     }
+                     } 
+                }else TextFieldNomeUsuario.requestFocus();
             }else TextFieldNome.requestFocus();
         }   
     }//GEN-LAST:event_TextFieldDtAdmFocusLost
@@ -409,13 +396,18 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (TextFieldSalario.isEditable()){
             if (TextFieldDtAdm.getText().length()!= 0){
-                if (ConverteVirgula(TextFieldSalario.getText())== 0){
-                    JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário possui dados inválidos.","Salário", JOptionPane.ERROR_MESSAGE);
-                    TextFieldSalario.requestFocus();
+                if (TextFieldSalario.getText().length() == 0){
+                    if (ConverteVirgula(TextFieldSalario.getText())== 0.0){
+                        JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário possui dados inválidos.","Salário", JOptionPane.ERROR_MESSAGE);
+                        TextFieldSalario.requestFocus();
+                    }else {
+                        double registra = ConverteVirgula(TextFieldSalario.getText());
+                        TextFieldSalario.setText(String.valueOf(registra));                        
+                    }
                 }else {
-                JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário esta vazio.","Salário", JOptionPane.ERROR_MESSAGE);
-                TextFieldSalario.requestFocus();
-                }
+                    JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário esta vazio.","Salário", JOptionPane.ERROR_MESSAGE);
+                    TextFieldSalario.requestFocus();
+                    }   
             }else TextFieldDtAdm.requestFocus();
         }
     }//GEN-LAST:event_TextFieldSalarioFocusLost

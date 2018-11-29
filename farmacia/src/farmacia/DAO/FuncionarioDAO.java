@@ -134,6 +134,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         Banco.fechar();
         return funcionario;
     }
+    
     public Funcionario buscarNomeFuncionario(Funcionario obj) throws SQLException, ClassNotFoundException {
            funcionario = null;
         String sql = "SELECT * FROM funcionarios "
@@ -183,6 +184,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         rs.close();
         return funcionarios;
     }
+    
     
     public boolean StringToBoolean (String s){
         if (s == "true") return true;

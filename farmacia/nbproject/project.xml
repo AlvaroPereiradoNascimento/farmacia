@@ -20,6 +20,7 @@
             <word>Seter</word>
             <word>string</word>
             <word>subclasse</word>
+            <word>subclasses</word>
         </spellchecker-wordlist>
     </configuration>
 </project>
