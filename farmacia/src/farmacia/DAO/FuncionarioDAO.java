@@ -161,20 +161,16 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         else return null;
     }
     @Override
-    public List<Funcionario> listar(String criterio) 
-            throws SQLException, ClassNotFoundException {
+    public List<Funcionario> listar(String criterio) throws SQLException, ClassNotFoundException {
+        
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
         funcionario = null;
-        
-        String sql = "SELECT * FROM funcionario";
-        
-        if(criterio.length() > 0)
-            sql += "WHERE " + criterio;
-        
+        String sql = new String();
+        if(criterio.length() > 0)sql = "SELECT * FROM funcionarios WHERE  '" + criterio+"'";
+        else return null;
+        Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
-        
         rs = pst.executeQuery();
-        
         while(rs.next()){
             
             funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
@@ -182,8 +178,30 @@ public class FuncionarioDAO implements DAO<Funcionario>{
             funcionarios.add(funcionario);
         }
         rs.close();
+        Banco.fechar();
         return funcionarios;
     }
+    public List<Funcionario> listargera(String criterio) throws SQLException, ClassNotFoundException {
+        
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        funcionario = null;
+        String sql = new String();
+        if(criterio.length() > 0)sql = "SELECT nomeuser FROM funcionarios WHERE  nomeuser = '" + criterio+"'";
+        else return null;
+        Banco.abrir();
+        pst = Banco.getConexao().prepareStatement(sql);
+        rs = pst.executeQuery();
+        while(rs.next()){
+            
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+
+            funcionarios.add(funcionario);
+        }
+        rs.close();
+        Banco.fechar();
+        return funcionarios;
+    }
+    
     
     
     public boolean StringToBoolean (String s){

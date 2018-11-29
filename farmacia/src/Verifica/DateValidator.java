@@ -49,6 +49,12 @@ public class DateValidator {
         String formato = "dd/MM/yyyy";
       return new SimpleDateFormat(formato).parse(data);
     }
+    public String DatetoString(java.util.Date dtData) throws ParseException{
+        SimpleDateFormat formatBra;   
+        formatBra = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date newData = formatBra.parse(dtData.toString());
+        return (formatBra.format(newData));
+    }
     /**
      * Inverte posição para inserção no banco de dados.
      * @param data
@@ -79,6 +85,15 @@ public class DateValidator {
         //java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
         java.sql.Date sqlDate = new java.sql.Date(str.getTime());
         return sqlDate; 
+    } 
+    public java.util.Date convertSqlDateToUtilDate( java.sql.Date str) {
+        
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+         
+        java.sql.Date sqlDate = new java.sql.Date(str.getTime());
+        java.util.Date dataUtil = new java.util.Date(sqlDate.getTime());
+
+        return dataUtil; 
     } 
     
 }

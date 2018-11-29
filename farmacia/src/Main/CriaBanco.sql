@@ -20,7 +20,7 @@ senha varchar(255) ,
 trocasenha varchar (5) ,
 data_adimissao date  ,
 salario double(10,2) ,
-tipo int
+gerente varchar (5)
 );
 
 CREATE TABLE produtos(

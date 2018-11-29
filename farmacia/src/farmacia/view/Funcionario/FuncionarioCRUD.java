@@ -31,7 +31,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
      */
     public FuncionarioCRUD() {
         initComponents();
-        TextFieldNome.requestFocus();
+        TextFieldID.requestFocus();
     }
     DateValidator d = new DateValidator();
     FuncionarioDAO funcionario = new FuncionarioDAO();
@@ -81,6 +81,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         TextFieldNomeUsuario.setEditable(false);
         TextFieldNomeUsuario.setBackground(java.awt.Color.gray);
         TextFieldNomeUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TextFieldNomeUsuarioFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TextFieldNomeUsuarioFocusLost(evt);
             }
@@ -259,11 +262,11 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private void TextFieldNomeUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusLost
         // TODO add your handling code here:
         if (TextFieldNome.getText().length() != 0 ){
-            TextFieldNomeUsuario.setText(GeraUsuario(TextFieldNome.getText()));
+            String nome = GeraUsuario(TextFieldNome.getText());
+            TextFieldNomeUsuario.setText(nome);
             List<Funcionario> vfuncionarios = new ArrayList<>();
-            String nome = TextFieldNomeUsuario.getText();
             try {
-                vfuncionarios = funcionario.listar(TextFieldNome.getText());
+                vfuncionarios = funcionario.listargera(nome);
             } catch (SQLException ex) {
                 Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
@@ -289,7 +292,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             else if(matchesOnlyText(TextFieldNome.getText())) {
                 String nome = toTitledCase(TextFieldNome.getText());
                 TextFieldNome.setText(nome);
-                if(TextFieldNomeUsuario.getText() == null | TextFieldNomeUsuario.getText() == "." )TextFieldNomeUsuario.requestFocus();
+                if(TextFieldNomeUsuario.getText().length() == 0 )TextFieldNomeUsuario.requestFocus();
                 
                                     
             }else {
@@ -306,7 +309,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (TextFieldDtAdm.isEditable()){
             int date=0;
-            if(  (TextFieldNome.getText().length() != 0) ){
+            if(TextFieldNome.getText().length() != 0){
                 if (TextFieldNomeUsuario.getText().length()!= 0){
                    if (TextFieldDtAdm.getText().length()> 3 || TextFieldDtAdm.getText().length()< 11){
                     if(TextFieldDtAdm.getText().length()== 8){
@@ -388,6 +391,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     TextFieldDtAdm.requestFocus();
                      } 
                 }else TextFieldNomeUsuario.requestFocus();
+               
             }else TextFieldNome.requestFocus();
         }   
     }//GEN-LAST:event_TextFieldDtAdmFocusLost
@@ -395,8 +399,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private void TextFieldSalarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldSalarioFocusLost
         // TODO add your handling code here:
         if (TextFieldSalario.isEditable()){
-            if (TextFieldDtAdm.getText().length()!= 0){
-                if (TextFieldSalario.getText().length() == 0){
+            if (TextFieldDtAdm.getText().length()!= 0 && TextFieldNomeUsuario.getText().length() != 0){
+                if (TextFieldSalario.getText().length() != 0){
                     if (ConverteVirgula(TextFieldSalario.getText())== 0.0){
                         JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário possui dados inválidos.","Salário", JOptionPane.ERROR_MESSAGE);
                         TextFieldSalario.requestFocus();
@@ -408,7 +412,10 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this.TextFieldSalario, "Campo salário esta vazio.","Salário", JOptionPane.ERROR_MESSAGE);
                     TextFieldSalario.requestFocus();
                     }   
-            }else TextFieldDtAdm.requestFocus();
+            }else {
+                if(TextFieldNomeUsuario.getText() == null )TextFieldNomeUsuario.requestFocus();
+                else TextFieldDtAdm.requestFocus();
+            }
         }
     }//GEN-LAST:event_TextFieldSalarioFocusLost
 
@@ -423,6 +430,13 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
              }else  TextFieldSalario.requestFocus();
         }
     }//GEN-LAST:event_PasswordFieldSenhaFocusLost
+
+    private void TextFieldNomeUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusGained
+        // TODO add your handling code here:
+        if(TextFieldNome.getText().length() == 0 )TextFieldNome.requestFocus();
+        else if(TextFieldDtAdm.getText().length() == 0) TextFieldDtAdm.requestFocus();
+        else if(TextFieldSalario.getText().length() == 0)TextFieldSalario.requestFocus();
+    }//GEN-LAST:event_TextFieldNomeUsuarioFocusGained
 
     /**
      * @param args the command line arguments
