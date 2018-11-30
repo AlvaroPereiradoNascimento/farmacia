@@ -67,11 +67,9 @@ public class ClienteDAO implements DAO<ClienteCpf>{
      * @throws ClassNotFoundException
      */
     @Override
-    public boolean alterar(ClienteCpf obj) 
-            throws SQLException, ClassNotFoundException {
+    public boolean alterar(ClienteCpf obj)throws SQLException, ClassNotFoundException {
         String sql;
-        
-        sql = "UPDATE clientes SET "
+        sql = "UPDATE clientes SET\n"
                 + "nome = ?,"
                 + "tel = ?,"
                 + "cel = ?,"
@@ -79,19 +77,20 @@ public class ClienteDAO implements DAO<ClienteCpf>{
                 + "dt_nasc = ?,"
                 + "rg = ?,"
                 + "cpf = ?"
-                + "WHERE id = ?;";
+                + "\n WHERE id  = ?;";
         Banco.abrir();
-        pst = Banco.getConexao().prepareStatement(sql);
         
+        pst = Banco.getConexao().prepareStatement(sql);
         
         pst.setString(1, obj.getNome());
         pst.setLong(2, obj.getTelefone());
         pst.setLong(3, obj.getCelular());
         pst.setString(4, obj.getEmail());
-        pst.setDate(5, (Date) obj.getDatanasc());
-       // pst.setString(5, obj.getDatanasc());
+        pst.setDate(5, d.convertUtilDateToSqlDate(obj.getDatanasc()));
         pst.setString(6, obj.getRg());
         pst.setLong(7, obj.getCpf());
+        pst.setInt(8, obj.getId());
+        
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();

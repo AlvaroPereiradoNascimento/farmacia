@@ -14,6 +14,7 @@ import farmacia.DAO.ClienteDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -40,6 +41,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         TextFieldRG.setText("593701562");
         TextFieldEmail.setText("hugo@hugo.com");
         TextFieldDtNasc.setText("23045571808");
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
         
     }
         ClienteDAO cliente = new ClienteDAO();
@@ -309,6 +312,10 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
         limpar();
         if ((TextFieldID.isEditable()) && !(TextFieldNome.isEditable())) Editavel();
+        ButtonCadastra.setEnabled(true);
+        ButtonConsulta.setEnabled(true);
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
     }//GEN-LAST:event_ButtonLimparActionPerformed
 
     private void TextFieldNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeFocusLost
@@ -328,7 +335,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 TextFieldNome.setText(null);
             }   
             
-        }
+        }else TextFieldTelefone.requestFocus();
     }//GEN-LAST:event_TextFieldNomeFocusLost
 
     private void TextFieldTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldTelefoneFocusLost
@@ -345,7 +352,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                     TextFieldTelefone.requestFocus();
                     TextFieldTelefone.setText(null);
                 }
-        }
+        }else TextFieldCelular.requestFocus();
     }//GEN-LAST:event_TextFieldTelefoneFocusLost
 
     private void TextFieldCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldCelularFocusLost
@@ -363,7 +370,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 }
 
                 }else TextFieldTelefone.requestFocus();
-            }
+            }else TextFieldEmail.requestFocus();
         
     }//GEN-LAST:event_TextFieldCelularFocusLost
 
@@ -383,7 +390,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         TextFieldEmail.requestFocus();
                 }
             }else TextFieldCelular.requestFocus(); 
-        }
+        }else TextFieldDtNasc.requestFocus();
     }//GEN-LAST:event_TextFieldEmailFocusLost
 
     private void TextFieldDtNascFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldDtNascFocusLost
@@ -470,7 +477,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                     TextFieldDtNasc.requestFocus();
                      }
             }else TextFieldEmail.requestFocus();
-        }    
+        }else TextFieldRG.requestFocus();    
     }//GEN-LAST:event_TextFieldDtNascFocusLost
 
     private void TextFieldRGFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldRGFocusLost
@@ -485,7 +492,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         TextFieldRG.requestFocus();
                     }
             }else TextFieldDtNasc.requestFocus();
-        }
+        }else TextFieldCPF.requestFocus();
     }//GEN-LAST:event_TextFieldRGFocusLost
 
     private void TextFieldCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldCPFFocusLost
@@ -507,6 +514,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         
         int resposta;
         if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())&& (TextFieldCPF.isEditable())){
+            
             if (TextFieldCPF.getText()!= null || TextFieldID.getText()!= null){
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
@@ -544,6 +552,10 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         if (buscarCPF != null )
                             try {
                             mostra(buscarCPF);
+                            ButtonCadastra.setEnabled(false);
+                            ButtonConsulta.setEnabled(false);
+                            ButtonAltera.setEnabled(true);
+                            ButtonExclui.setEnabled(true);
                      } catch (ParseException ex) {
                          Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                      }
@@ -553,23 +565,28 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         }else{
             Editavel();
             limpar();
+            ButtonCadastra.setEnabled(false);
         }
     }//GEN-LAST:event_ButtonConsultaActionPerformed
 
     private void ButtonExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluiActionPerformed
         // TODO add your handling code here:
         int resposta;
+        int id = Integer.parseInt(TextFieldID.getText());
         if (TextFieldID.isEditable() && (!TextFieldNome.isEditable())){
             if (TextFieldID.getText()!= null ){
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja cancelar cadastro do cliente", "Confirmação de exclusão de cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
                     try {
-                        c = new ClienteCpf(Long.parseUnsignedLong(TextFieldTelefone.getText()),
-                                Long.parseUnsignedLong(TextFieldCelular.getText()),
-                                Long.parseUnsignedLong(TextFieldCPF.getText()),
-                                TextFieldNome.getText(), TextFieldRG.getText(),
-                                TextFieldEmail.getText(),
-                                d.StringtoDateSql(TextFieldDtNasc.getText()));
+                        c = new ClienteCpf(
+                                Long.parseLong(TextFieldTelefone.getText()),
+                                Long.parseLong(TextFieldCelular.getText()),
+                                Long.parseLong(TextFieldCPF.getText()),
+                                id,
+                                TextFieldNome.getText(), 
+                                TextFieldRG.getText(),
+                                TextFieldEmail.getText(), 
+                                d.StringtoDate(TextFieldDtNasc.getText()));
                         System.out.println("Criado cliente");
 
                         System.out.println("registrado no banco");
@@ -585,56 +602,70 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                                 + ex.getClass()+"\n"+ex.getCause()
                                 +"\n"+ex.getStackTrace()
                                 +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+                    }
                     try {
                         boolean valida = cliente.excluir(c);
                         if (valida)JOptionPane.showMessageDialog(this,"Exclusão efetuada com sucesso ","Exclusão efetuada",JOptionPane.INFORMATION_MESSAGE);
                         else JOptionPane.showMessageDialog(this,"Exclusão não efetuada.","Exclusão não efetuada",JOptionPane.ERROR_MESSAGE);
+                        System.out.println("Cliente excluido com sucesso.");
+                        limpar();
                     } catch (SQLException exc) {
                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, exc);
-                           JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                           JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+exc,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
                     } catch (ClassNotFoundException exc) {
                            Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, exc);
                            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+exc,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
                    }
-                       
+                    ButtonCadastra.setEnabled(true);
+                    ButtonConsulta.setEnabled(true);
+                    ButtonAltera.setEnabled(false);
+                    ButtonExclui.setEnabled(false);    
                 }
             }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
         }
-    }
+    
     }//GEN-LAST:event_ButtonExcluiActionPerformed
 
     private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
         // TODO add your handling code here:
         int resposta;
+        int id = Integer.parseInt(TextFieldID.getText());
+        System.out.println("valor do id"+ id);
         if ((!TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
-            
-            if (TextFieldID.getText()!= null ){
+            if (TextFieldID.getText().length() != 0 ){ 
                 resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja Alterar cadastro do cliente", "Confirmação de Alteração de dados do cliente" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
-                       int ID = 0;
                     // cliente objeto cliente para alteração         
                     try {
                         c = new ClienteCpf(
                                 Long.parseLong(TextFieldTelefone.getText()),
                                 Long.parseLong(TextFieldCelular.getText()),
-                                Integer.parseInt(TextFieldID.getText()),
+                                Long.parseLong(TextFieldCPF.getText()),
+                                id,
                                 TextFieldNome.getText(), 
                                 TextFieldRG.getText(),
                                 TextFieldEmail.getText(), 
                                 d.StringtoDate(TextFieldDtNasc.getText()));
-
+                        System.out.println("Cliente criado!!!");
+                        System.out.println("cliente\n"+ c.getId());
                     }catch (ParseException ex) {
                         Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                          JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
                         TextFieldDtNasc.setText(null);
                         TextFieldDtNasc.requestFocus();
                     }    
+                    System.out.println("indo para alteração de cadastro.");
                     try {
                        // Solicita alteração do  banco
                        cliente.alterar(c);
                        // em caso de confirmação imprme
                         JOptionPane.showMessageDialog(this.TextFieldID,"Dados do cleinte foram alterados com sucesso ","Alteração com sucesso ",JOptionPane.INFORMATION_MESSAGE);
-
+                        ButtonCadastra.setEnabled(true);
+                        ButtonConsulta.setEnabled(true);
+                        ButtonAltera.setEnabled(false);
+                        ButtonExclui.setEnabled(false);
+                        limpar();
+                        Editavel();
                     } catch (SQLException ex) {
                        Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                        JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
@@ -642,12 +673,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                        Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
                        JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
                     }
-                    
-                    
-            }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
+                }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID esta Vazio","Campo Id esta Vazio",JOptionPane.ERROR_MESSAGE);
+            }
         }else Editavel();
     }//GEN-LAST:event_ButtonAlteraActionPerformed
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -778,7 +808,7 @@ public static void main(String args[]) {
             sb.append(" ");  
         }
         } else {
-            sb.append(words[i]);
+            sb.append(words[i].toLowerCase());
             sb.append(" ");      
         }
     }
