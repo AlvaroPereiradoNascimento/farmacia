@@ -13,15 +13,21 @@
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>Alvaro</word>
+            <word>Atendente</word>
             <word>Constrtutor</word>
             <word>email</word>
+            <word>equals</word>
             <word>Geter</word>
+            <word>id</word>
             <word>mail</word>
             <word>Nascimento</word>
+            <word>reset</word>
+            <word>salario</word>
             <word>Seter</word>
             <word>string</word>
             <word>subclasse</word>
             <word>subclasses</word>
+            <word>trocasenha</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

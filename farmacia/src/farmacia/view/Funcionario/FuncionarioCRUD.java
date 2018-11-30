@@ -10,11 +10,13 @@ import farmacia.DAO.FuncionarioDAO;
 import farmacia.view.Cliente.FormClienteCRUD;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.ClienteCpf;
 import model.Funcionario;
 
 
@@ -144,6 +146,11 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         });
 
         ButtonCadastra.setText(" Cadastrar");
+        ButtonCadastra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCadastraActionPerformed(evt);
+            }
+        });
 
         ButtonAlterar.setText("Alterar");
         ButtonAlterar.setToolTipText("");
@@ -261,25 +268,27 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
     private void TextFieldNomeUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusLost
         // TODO add your handling code here:
-        if (TextFieldNome.getText().length() != 0 ){
-            String nome = GeraUsuario(TextFieldNome.getText());
-            TextFieldNomeUsuario.setText(nome);
-            List<Funcionario> vfuncionarios = new ArrayList<>();
-            try {
-                vfuncionarios = funcionario.listargera(nome);
-            } catch (SQLException ex) {
-                Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-            } catch (ClassNotFoundException ex) {
-                 JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if(vfuncionarios.size()> 0){
-                int i = vfuncionarios.size() ;
-                TextFieldNomeUsuario.setText(nome+i);
-            }else TextFieldNomeUsuario.setText(nome);
-            TextFieldNome.requestFocus();
-        }else TextFieldNome.requestFocus();
+        if (!TextFieldNomeUsuario.isEditable()){
+            if (TextFieldNome.getText().length() != 0 ){
+                String nome = GeraUsuario(TextFieldNome.getText());
+                TextFieldNomeUsuario.setText(nome);
+                List<Funcionario> vfuncionarios = new ArrayList<>();
+                try {
+                    vfuncionarios = funcionario.listargera(nome);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                } catch (ClassNotFoundException ex) {
+                     JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(vfuncionarios.size()> 0){
+                    int i = vfuncionarios.size() ;
+                    TextFieldNomeUsuario.setText(nome+i);
+                }else TextFieldNomeUsuario.setText(nome);
+                TextFieldNome.requestFocus();
+            }else TextFieldNome.requestFocus();
+        }
     }//GEN-LAST:event_TextFieldNomeUsuarioFocusLost
 
     private void TextFieldNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeFocusLost
@@ -438,6 +447,25 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         else if(TextFieldSalario.getText().length() == 0)TextFieldSalario.requestFocus();
     }//GEN-LAST:event_TextFieldNomeUsuarioFocusGained
 
+    private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
+        // TODO add your handling code here:
+        if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
+            boolean registrado = false;
+            JOptionPane.showMessageDialog(this,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
+            if (!d.data(TextFieldDtAdm.getText())){
+                JOptionPane.showMessageDialog(this.TextFieldDtAdm,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                TextFieldDtAdm.setText(null);
+                TextFieldDtAdm.requestFocus();
+            }else{
+                registrado = cadastra();
+               if (registrado)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+               else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
+                
+            }
+        }
+        
+    }//GEN-LAST:event_ButtonCadastraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -564,8 +592,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             sb.append(" ");  
             }
         } else {
-            sb.append(words[i]);
-            sb.append(" ");      
+            sb.append(words[i].toLowerCase());
+            sb.append(" ");        
         }
     }
 
@@ -589,6 +617,45 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     public String ConvertePonto(double valor){
         String replace = Double.toString(valor);
          return replace = replace.replace(".",",");
+    }
+    
+    private boolean cadastra() {
+        boolean valida = false;
+                  if
+            try {
+
+                f = new ClienteCpf(
+                        Long.parseUnsignedLong(TextFieldTelefone.getText()),
+                        Long.parseUnsignedLong(TextFieldCelular.getText()),
+                        Long.parseUnsignedLong(TextFieldCPF.getText()),
+                        TextFieldNome.getText(), TextFieldRG.getText(),
+                        TextFieldEmail.getText(),
+                        d.StringtoDateSql(TextFieldDtNasc.getText()));
+                System.out.println("Criado cliente");
+                valida = cliente.inserir(c);
+                System.out.println("registrado no banco");
+            } catch (ParseException ex) {
+                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Problema de conversão","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                TextFieldDtNasc.setText(null);
+                TextFieldDtNasc.requestFocus();
+                valida = false;
+            } catch (SQLException | ClassNotFoundException ex) {
+               Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
+               JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+               valida = false;
+            }catch (java.lang.NumberFormatException ex){
+                JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                valida = false;
+            }catch (NullPointerException ex){
+                JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+                        + ex.getClass()+"\n"+ex.getCause()
+                        +"\n"+ex.getStackTrace()
+                        +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+                valida = false;
+            }
+     
+     return valida;
     }
 
 }

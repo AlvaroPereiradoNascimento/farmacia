@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package farmacia.DAO;
+import Verifica.DateValidator;
+import Verifica.IsTrue;
 import model.Funcionario;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -22,6 +24,8 @@ public class FuncionarioDAO implements DAO<Funcionario>{
     private java.sql.PreparedStatement pst;
     private java.sql.ResultSet rs;
     private Funcionario Funcionario;
+    private DateValidator d;
+    private IsTrue t;
     
     @Override
     public boolean inserir(Funcionario obj) 
@@ -31,11 +35,11 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         sql = "INSERT INTO funcionarios"
                 + "("
                 + "nome,"
-                + "senha,"
+                + "nomeuser,"
                 + "data_admissao,"
                 + "salario,"
+                + "senha,"
                 + "trocasenha,"
-                + "nomeuser,"
                 + ")"
                 + "values ( ?, ?, ?, ?,?,?);";
         Banco.abrir();
@@ -43,8 +47,10 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         
         pst.setString(1, obj.getNome());
         pst.setString(2, obj.getNomeUsuario());
-        pst.setDate(3, (Date) obj.getDataAdmissao());
+        pst.setDate(3, d.convertUtilDateToSqlDate(obj.getDataAdmissao()) );
         pst.setDouble(4, obj.getSalario());
+        pst.setString(5, obj.getSenha());
+        pst.setString(6,t.BooleanToString(obj.isTrocasenha()));
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -60,22 +66,24 @@ public class FuncionarioDAO implements DAO<Funcionario>{
             throws SQLException, ClassNotFoundException {
         String sql;
         
-        sql = "UPDATE funcionarios SET "
+        sql = "UPDATE funcionarios SET \n"
                 + "nome = ?,"
                 + "senha = ?,"
                 + "data_admissao = ?,"
                 + "salario = ?"
                 + "nomeuser = ?"
                 + "trocasenha = ?"
-                + "WHERE id = ?;";
+                + "\nWHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
         
         pst.setString(1, obj.getNome());
-        pst.setString(2, obj.getNomeUsuario());
-        pst.setDate(3, (Date) obj.getDataAdmissao());
+        pst.setString(2, obj.getSenha());
+        pst.setDate(3, d.convertUtilDateToSqlDate(obj.getDataAdmissao()) );
         pst.setDouble(4, obj.getSalario());
+        pst.setString(5, obj.getNomeUsuario());
+        pst.setString(6,t.BooleanToString(obj.isTrocasenha()));
         pst.setInt(7, obj.getId());
         
         if(pst.executeUpdate() > 0){
@@ -157,7 +165,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
     public Funcionario buscarNomeFuncionarioeID(Funcionario obj) throws SQLException, ClassNotFoundException {
         Funcionario a = buscar(obj);
         Funcionario b = buscarNomeFuncionario(obj);
-        if ((a==b) && (b == obj) && (obj == a)) return a;
+        if ((a.getNomeUsuario().equals(b.getNomeUsuario())) && (a.getId() == b.getId())&& (a.getNome().equals(b.getNome()))) return a;
         else return null;
     }
     @Override

@@ -34,15 +34,6 @@ public class FormClienteCRUD extends javax.swing.JFrame {
     public FormClienteCRUD() {
         
         initComponents();
-        TextFieldNome.setText("Alvaro bonitao");
-        TextFieldCPF.setText("1401919757");
-        TextFieldCelular.setText("01234567891");
-        TextFieldTelefone.setText("0123456789");
-        TextFieldRG.setText("593701562");
-        TextFieldEmail.setText("hugo@hugo.com");
-        TextFieldDtNasc.setText("23045571808");
-        ButtonAltera.setEnabled(false);
-        ButtonExclui.setEnabled(false);
         
     }
         ClienteDAO cliente = new ClienteDAO();
@@ -282,8 +273,8 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         
         //verifica se campos estão vazios.
        if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
-           boolean registrado = false;
-            JOptionPane.showMessageDialog(this.TextFieldCPF,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
+            boolean registrado = false;
+            JOptionPane.showMessageDialog(this,"Iniciando casdastro","Cadastro", JOptionPane.INFORMATION_MESSAGE);
             if (!CpfCnpjUtils.isValid(TextFieldCPF.getText())){
                 JOptionPane.showMessageDialog(this.TextFieldCPF,"CPF não é Verdadeiro","CPF", JOptionPane.ERROR_MESSAGE);
                 TextFieldCPF.setText(null);
@@ -298,7 +289,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 TextFieldDtNasc.setText(null);
                 TextFieldDtNasc.requestFocus();
             }else{
-                registrado = valida();
+                registrado = cadastra();
                if (registrado)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
                else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
                 
@@ -826,7 +817,7 @@ public static void main(String args[]) {
         TextFieldCPF.setText(String.valueOf(c.getCpf()));
     }
 
-    private boolean valida() {
+    private boolean cadastra() {
         boolean valida = false;
             try {
 
