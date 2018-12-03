@@ -6,8 +6,8 @@
 
 package farmacia.view.Funcionario;
 import Verifica.DateValidator;
+import Verifica.IsTrue;
 import farmacia.DAO.FuncionarioDAO;
-import farmacia.view.Cliente.FormClienteCRUD;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -16,8 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.ClienteCpf;
+import model.Atendente;
 import model.Funcionario;
+import model.Gerente;
 
 
 /**
@@ -34,10 +35,20 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     public FuncionarioCRUD() {
         initComponents();
         TextFieldID.requestFocus();
+        TextFieldNome.setText("Alvaro Pereira do Nascimento");
+        TextFieldSalario.setText("1450.9");
+        TextFieldDtAdm.setText("14/02/1993");
+        TextFieldNomeUsuario.setText("Alvaro.Nascimento");
+        PasswordFieldSenha.setText("654321654321");
+        RadioButtonGerente.setSelected(false);
+        RadioButtonFuncionario.setSelected(true);
     }
     DateValidator d = new DateValidator();
     FuncionarioDAO funcionario = new FuncionarioDAO();
     Funcionario f;
+    Gerente g;
+    Atendente a;
+    IsTrue t = new IsTrue();
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,8 +77,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         RadioButtonFuncionario = new javax.swing.JRadioButton();
         RadioButtonGerente = new javax.swing.JRadioButton();
         ButtonCadastra = new javax.swing.JButton();
-        ButtonAlterar = new javax.swing.JButton();
-        ButtonExcluir = new javax.swing.JButton();
+        ButtonAltera = new javax.swing.JButton();
+        ButtonExclui = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
         ButtonLimpar = new javax.swing.JButton();
 
@@ -152,14 +163,24 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             }
         });
 
-        ButtonAlterar.setText("Alterar");
-        ButtonAlterar.setToolTipText("");
+        ButtonAltera.setText("Alterar");
+        ButtonAltera.setToolTipText("");
 
-        ButtonExcluir.setText("Excluir");
+        ButtonExclui.setText("Excluir");
 
         ButtonConsulta.setText("Consulta");
+        ButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonConsultaActionPerformed(evt);
+            }
+        });
 
         ButtonLimpar.setText("Limpar");
+        ButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,9 +213,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                                 .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(242, 242, 242))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ButtonAlterar)
+                                .addComponent(ButtonAltera)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ButtonExclui, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(7, 7, 7)
                                 .addComponent(ButtonConsulta)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -240,8 +261,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonCadastra)
-                    .addComponent(ButtonAlterar)
-                    .addComponent(ButtonExcluir)
+                    .addComponent(ButtonAltera)
+                    .addComponent(ButtonExclui)
                     .addComponent(ButtonConsulta)
                     .addComponent(ButtonLimpar))
                 .addContainerGap())
@@ -271,7 +292,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         if (!TextFieldNomeUsuario.isEditable()){
             if (TextFieldNome.getText().length() != 0 ){
                 String nome = GeraUsuario(TextFieldNome.getText());
-                TextFieldNomeUsuario.setText(nome);
+                TextFieldNomeUsuario.setText(null);
                 List<Funcionario> vfuncionarios = new ArrayList<>();
                 try {
                     vfuncionarios = funcionario.listargera(nome);
@@ -287,6 +308,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     TextFieldNomeUsuario.setText(nome+i);
                 }else TextFieldNomeUsuario.setText(nome);
                 TextFieldNome.requestFocus();
+                if(TextFieldNome.getText().length() == 0 )TextFieldNome.requestFocus();
+                else if(TextFieldDtAdm.getText().length() == 0) TextFieldDtAdm.requestFocus();
+                else if(TextFieldSalario.getText().length() == 0)TextFieldSalario.requestFocus();
             }else TextFieldNome.requestFocus();
         }
     }//GEN-LAST:event_TextFieldNomeUsuarioFocusLost
@@ -318,8 +342,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (TextFieldDtAdm.isEditable()){
             int date=0;
-            if(TextFieldNome.getText().length() != 0){
-                if (TextFieldNomeUsuario.getText().length()!= 0){
+            if(TextFieldNome.getText().length() != 0&& TextFieldNomeUsuario.getText().length()!= 0){
                    if (TextFieldDtAdm.getText().length()> 3 || TextFieldDtAdm.getText().length()< 11){
                     if(TextFieldDtAdm.getText().length()== 8){
                         try {
@@ -399,10 +422,10 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this.TextFieldDtAdm, "Campo data de contratação  com formato inválido.","Data de Contratação ", JOptionPane.ERROR_MESSAGE);
                     TextFieldDtAdm.requestFocus();
                      } 
-                }else TextFieldNomeUsuario.requestFocus();
-               
-            }else TextFieldNome.requestFocus();
-        }   
+                }else if(TextFieldNome.getText().length() == 0) TextFieldNomeUsuario.requestFocus();
+                    else TextFieldNome.requestFocus();
+            }
+       
     }//GEN-LAST:event_TextFieldDtAdmFocusLost
 
     private void TextFieldSalarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldSalarioFocusLost
@@ -442,9 +465,11 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
     private void TextFieldNomeUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeUsuarioFocusGained
         // TODO add your handling code here:
-        if(TextFieldNome.getText().length() == 0 )TextFieldNome.requestFocus();
-        else if(TextFieldDtAdm.getText().length() == 0) TextFieldDtAdm.requestFocus();
-        else if(TextFieldSalario.getText().length() == 0)TextFieldSalario.requestFocus();
+        if (!TextFieldNomeUsuario.isEditable()){
+            if(TextFieldNome.getText().length() == 0 )TextFieldNome.requestFocus();
+            else if(TextFieldDtAdm.getText().length() == 0) TextFieldDtAdm.requestFocus();
+            else if(TextFieldSalario.getText().length() == 0)TextFieldSalario.requestFocus();
+        }
     }//GEN-LAST:event_TextFieldNomeUsuarioFocusGained
 
     private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
@@ -465,6 +490,59 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_ButtonCadastraActionPerformed
+
+    private void ButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLimparActionPerformed
+        // TODO add your handling code here:
+        if (TextFieldID.isEditable() && TextFieldNomeUsuario.isEditable() && !TextFieldNome.isEditable() )Editavel();
+        limpar();
+    }//GEN-LAST:event_ButtonLimparActionPerformed
+
+    private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        if (TextFieldID.isEditable() && TextFieldNomeUsuario.isEditable() && !TextFieldNome.isEditable() ){
+            if (TextFieldID.getText() != null && TextFieldNomeUsuario.getText() != null){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    Funcionario buscarfunc = null;
+                        try {
+                                if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                             // busca por nome de usuário e id
+                             System.out.println("Busca por nome de usuário e id");
+                             f = new Funcionario(TextFieldNomeUsuario.getText(), Integer.parseInt(TextFieldID.getText()));
+                             buscarfunc = funcionario.buscarNomeFuncionarioeID(f);
+                             }else if ((TextFieldID.getText().length() == 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                             // busca por nome de usuário 
+                             f = new Funcionario(TextFieldNomeUsuario.getText());
+                             System.out.println("busca por nome de usuário");
+                             buscarfunc = funcionario.buscarNomeFuncionario(f);
+                             }else if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                             // busca por id
+                             f = new Funcionario(TextFieldID.getText());
+                             System.out.println("busca por id");
+                             buscarfunc = funcionario.buscar(f);
+                             }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if (buscarfunc != null ) {
+                            mostra(buscarfunc);
+                            ButtonCadastra.setEnabled(false);
+                            ButtonConsulta.setEnabled(false);
+                            ButtonAltera.setEnabled(true);
+                            ButtonExclui.setEnabled(true);
+                    }
+                
+            } else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome Usuário  estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
+            
+        }
+      }else {
+            Editavel();
+            limpar();
+        }
+    }//GEN-LAST:event_ButtonConsultaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -502,10 +580,10 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonAlterar;
+    private javax.swing.JButton ButtonAltera;
     private javax.swing.JButton ButtonCadastra;
     private javax.swing.JButton ButtonConsulta;
-    private javax.swing.JButton ButtonExcluir;
+    private javax.swing.JButton ButtonExclui;
     private javax.swing.JButton ButtonLimpar;
     private javax.swing.JLabel LabelDataAdmissao;
     private javax.swing.JLabel LabelID;
@@ -533,11 +611,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         TextFieldDtAdm.setText(null);
         TextFieldSalario.setText(null);
         PasswordFieldSenha.setText(null);
-        
-        
     }
     /**
-     * Deixar campos editaveis de acordo com padrão
+     * Deixar campos editáveis de acordo com padrão
      */
     public void Editavel(){
             if (!(TextFieldID.isEditable()) && (TextFieldNome.isEditable())){
@@ -545,28 +621,28 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 TextFieldID.setEditable(true);
                 TextFieldNome.setBackground(Color.gray);  
                 TextFieldNome.setEditable(false);
-                TextFieldNomeUsuario.setBackground(Color.gray);  
-                TextFieldNomeUsuario.setEditable(false);
                 TextFieldDtAdm.setBackground(Color.gray);  
                 TextFieldDtAdm.setEditable(false);
                 TextFieldSalario.setBackground(Color.gray);  
                 TextFieldSalario.setEditable(false);
                 PasswordFieldSenha.setBackground(Color.gray);  
                 PasswordFieldSenha.setEditable(false);
+                TextFieldNomeUsuario.setBackground(Color.white); 
+                TextFieldNomeUsuario.setEditable(true);
 
             }else {
                 TextFieldID.setBackground(Color.gray);
                 TextFieldID.setEditable(false);
                 TextFieldNome.setBackground(Color.white);  
                 TextFieldNome.setEditable(true);
-                TextFieldNomeUsuario.setBackground(Color.white);  
-                TextFieldNomeUsuario.setEditable(true);
                 TextFieldDtAdm.setBackground(Color.white);  
                 TextFieldDtAdm.setEditable(true);
                 TextFieldSalario.setBackground(Color.white);  
                 TextFieldSalario.setEditable(true);
                 PasswordFieldSenha.setBackground(Color.white);  
                 PasswordFieldSenha.setEditable(true);
+                TextFieldNomeUsuario.setBackground(Color.gray   ); 
+                TextFieldNomeUsuario.setEditable(false);
 
             }
 
@@ -599,11 +675,21 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
     return sb.toString().substring (0, sb.length() - 1);
     }
+    /**
+     * Gera nome de usuário padronizado para o sistema.
+     * @param nome
+     * @return 
+     */
     public String GeraUsuario(String nome){
         String[] words = nome.split(" ");
         return words[0] +"."+ words[words.length-1];
         
     }
+    /**
+     * Converte valor real de vírgula para ponto.
+     * @param valor
+     * @return 
+     */
     public double ConverteVirgula(String valor){
         String replace = valor.replace(",",".");
         try{
@@ -618,44 +704,134 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         String replace = Double.toString(valor);
          return replace = replace.replace(".",",");
     }
-    
-    private boolean cadastra() {
+    /**
+     * Efetua cadastro de funcionário no sistema podendo ser gerente ou  Atendente
+     * @return valida true or false
+     */
+    private boolean cadastra()  {
         boolean valida = false;
-                  if
-            try {
-
-                f = new ClienteCpf(
-                        Long.parseUnsignedLong(TextFieldTelefone.getText()),
-                        Long.parseUnsignedLong(TextFieldCelular.getText()),
-                        Long.parseUnsignedLong(TextFieldCPF.getText()),
-                        TextFieldNome.getText(), TextFieldRG.getText(),
-                        TextFieldEmail.getText(),
-                        d.StringtoDateSql(TextFieldDtNasc.getText()));
-                System.out.println("Criado cliente");
-                valida = cliente.inserir(c);
-                System.out.println("registrado no banco");
-            } catch (ParseException ex) {
-                Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this.TextFieldDtNasc,"Problema de conversão","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
-                TextFieldDtNasc.setText(null);
-                TextFieldDtNasc.requestFocus();
-                valida = false;
-            } catch (SQLException | ClassNotFoundException ex) {
-               Logger.getLogger(FormClienteCRUD.class.getName()).log(Level.SEVERE, null, ex);
-               JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-               valida = false;
-            }catch (java.lang.NumberFormatException ex){
-                JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
-                valida = false;
-            }catch (NullPointerException ex){
-                JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
-                        + ex.getClass()+"\n"+ex.getCause()
-                        +"\n"+ex.getStackTrace()
-                        +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
-                valida = false;
-            }
+                //Verifica qual radio buton esta selecionado.
+                if (!RadioButtonFuncionario.isSelected() && RadioButtonGerente.isSelected()){
+                    try {
+                        //Criação de gerente
+                        System.out.println("Gerando Gerente.");
+                        g = new Gerente(
+                                0,
+                                0,
+                                0,
+                                TextFieldNome.getText(),
+                                TextFieldNomeUsuario.getText(),
+                                d.StringtoDate(TextFieldDtAdm.getText()),
+                                Double.parseDouble(TextFieldSalario.getText()),
+                                PasswordFieldSenha.getSelectedText(),
+                                true
+                                );
+                        System.out.println("Criado Gerente");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conversão de data\nData errada"+ ex,"Data inválida",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    }
+                    // registro de gerente no banco.
+                    System.out.println("registrando no banco.");
+                    try {
+                        valida = funcionario.inserir(g);
+                        System.out.println("registrado no banco");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this," Classe não encontrada.\n"+ ex,"Classe em banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+//                    } catch (java.lang.NumberFormatException ex){
+//                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+//                    valida = false;
+//                    }catch (NullPointerException ex){
+//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+//                            + ex.getClass()
+//                            +"\n"+ex.getCause()
+//                            +"\n"+ex.getStackTrace()
+//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+//                    valida = false;
+                    } 
+                    
+                }else if(RadioButtonFuncionario.isSelected() && !RadioButtonGerente.isSelected()){
+                    try {
+//                         Atendente(
+//                          int qtdCaixasAbertos, 
+//                          String nome, 
+//                          String NomeUsuario, 
+//                          Date dataAdmissao, 
+//                          double salario, 
+//                          String senha, 
+//                          boolean trocasenha)
+//                          Criação de atendentente
+                        System.out.println("Gerando atendente.");
+                        a = new Atendente(
+                                0,
+                                TextFieldNome.getText(),
+                                TextFieldNomeUsuario.getText(),
+                                d.StringtoDate(TextFieldDtAdm.getText()),
+                                Double.parseDouble(TextFieldSalario.getText()),
+                                String.copyValueOf(PasswordFieldSenha.getPassword()),
+                                true);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conversão de data\nData errada"+ ex,"Data inválida",JOptionPane.ERROR_MESSAGE);
+                                valida = false;
+                    }
+                    // teste de dados
+                    System.out.println("dados do atendente.\n"
+                            + a.getNome()+"\n"
+                            + a.getNomeUsuario()+"\n"
+                            + a.getSenha()+"\n"
+                            + a.getSalario()+"\n"
+                            + a.getDataAdmissao()+"\n"
+                            + "\n");
+                    // Cadastro de funcionário no sistema.
+                    System.out.println("registrando no banco.");
+                    try {
+                        valida = funcionario.inserir(a);
+                        System.out.println("registrado no banco");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this," Classe não encontrada.\n"+ ex,"Classe em banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (java.lang.NumberFormatException ex){
+                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
+//                    }catch (NullPointerException ex){
+//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+//                            + ex.getClass()
+//                            +"\n"+ex.getCause()
+//                            +"\n"+ex.getStackTrace()
+//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+//                    valida = false;
+                    }
+                }
+                  
      
      return valida;
     }
+
+    private void mostra(Funcionario f) {
+        TextFieldID.setText(String.valueOf(f.getId()));
+        TextFieldNomeUsuario.setText(f.getNomeUsuario());
+        TextFieldNome.setText(f.getNome());
+        TextFieldSalario.setText(String.valueOf(f.getSalario()));
+        try {
+            TextFieldDtAdm.setText(DateValidator.DatetoString(f.getDataAdmissao()));
+        } catch (ParseException ex) {
+            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
 
 }

@@ -61,9 +61,9 @@
                               <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="ButtonAlterar" min="-2" max="-2" attributes="0"/>
+                              <Component id="ButtonAltera" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="ButtonExcluir" min="-2" pref="76" max="-2" attributes="0"/>
+                              <Component id="ButtonExclui" min="-2" pref="76" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                               <Component id="ButtonConsulta" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -123,8 +123,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ButtonCadastra" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ButtonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonAltera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonExclui" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -234,13 +234,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonCadastraActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonAlterar">
+    <Component class="javax.swing.JButton" name="ButtonAltera">
       <Properties>
         <Property name="text" type="java.lang.String" value="Alterar"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonExcluir">
+    <Component class="javax.swing.JButton" name="ButtonExclui">
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
@@ -249,11 +249,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Consulta"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonConsultaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonLimpar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Limpar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonLimparActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
