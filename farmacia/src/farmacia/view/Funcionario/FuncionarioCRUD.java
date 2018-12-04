@@ -113,6 +113,9 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         LabelDataAdmissao.setText("Data de admissão:");
 
         TextFieldDtAdm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TextFieldDtAdmFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TextFieldDtAdmFocusLost(evt);
             }
@@ -165,8 +168,18 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 
         ButtonAltera.setText("Alterar");
         ButtonAltera.setToolTipText("");
+        ButtonAltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAlteraActionPerformed(evt);
+            }
+        });
 
         ButtonExclui.setText("Excluir");
+        ButtonExclui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonExcluiActionPerformed(evt);
+            }
+        });
 
         ButtonConsulta.setText("Consulta");
         ButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
@@ -295,6 +308,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                 TextFieldNomeUsuario.setText(null);
                 List<Funcionario> vfuncionarios = new ArrayList<>();
                 try {
+                    System.out.println("efetua busca por " + nome);
                     vfuncionarios = funcionario.listargera(nome);
                 } catch (SQLException ex) {
                     Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -495,6 +509,10 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (TextFieldID.isEditable() && TextFieldNomeUsuario.isEditable() && !TextFieldNome.isEditable() )Editavel();
         limpar();
+        ButtonCadastra.setEnabled(true);
+        ButtonConsulta.setEnabled(true);
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
     }//GEN-LAST:event_ButtonLimparActionPerformed
 
     private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
@@ -502,47 +520,118 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         int resposta;
         if (TextFieldID.isEditable() && TextFieldNomeUsuario.isEditable() && !TextFieldNome.isEditable() ){
             if (TextFieldID.getText() != null && TextFieldNomeUsuario.getText() != null){
-                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do cliente", "Confirmação de Consulta de cliente" , JOptionPane.WARNING_MESSAGE);
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do funcionário.", "Confirmação de Consulta de funcionário" , JOptionPane.WARNING_MESSAGE);
                 if (resposta == JOptionPane.YES_OPTION){
                     Funcionario buscarfunc = null;
                         try {
-                                if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                            if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() != 0)){
                              // busca por nome de usuário e id
                              System.out.println("Busca por nome de usuário e id");
                              f = new Funcionario(TextFieldNomeUsuario.getText(), Integer.parseInt(TextFieldID.getText()));
                              buscarfunc = funcionario.buscarNomeFuncionarioeID(f);
-                             }else if ((TextFieldID.getText().length() == 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                            }else if ((TextFieldID.getText().length() == 0) && (TextFieldNomeUsuario.getText().length() != 0)){
                              // busca por nome de usuário 
                              f = new Funcionario(TextFieldNomeUsuario.getText());
                              System.out.println("busca por nome de usuário");
                              buscarfunc = funcionario.buscarNomeFuncionario(f);
-                             }else if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() != 0)){
+                            }else if ((TextFieldID.getText().length() != 0) && (TextFieldNomeUsuario.getText().length() == 0)){
                              // busca por id
-                             f = new Funcionario(TextFieldID.getText());
+                             f = new Funcionario(Integer.parseInt(TextFieldID.getText()));
                              System.out.println("busca por id");
                              buscarfunc = funcionario.buscar(f);
                              }
                         } catch (SQLException ex) {
                             Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                            
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
                         }
+
                         if (buscarfunc != null ) {
                             mostra(buscarfunc);
                             ButtonCadastra.setEnabled(false);
                             ButtonConsulta.setEnabled(false);
                             ButtonAltera.setEnabled(true);
                             ButtonExclui.setEnabled(true);
-                    }
+                        }else JOptionPane.showMessageDialog(this.TextFieldID,"Funcionário não encontrado.","Busca sem sucesso",JOptionPane.ERROR_MESSAGE);
                 
-            } else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome Usuário  estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
-            
-        }
-      }else {
+                } else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome Usuário  estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
+            }
+        }else {
             Editavel();
             limpar();
         }
     }//GEN-LAST:event_ButtonConsultaActionPerformed
+
+    private void ButtonExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluiActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        boolean registrado= false;
+        if (ButtonExclui.isEnabled()){
+            if (TextFieldID.getText() != null && TextFieldNomeUsuario.getText() != null){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja excluir cadastro do funcionário.", "Confirmação de exclusão de funcionário" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    Funcionario buscarfunc = null;
+                        try {
+                            // busca por id
+                             f = new Funcionario(Integer.parseInt(TextFieldID.getText()));
+                             System.out.println("busca por id para exclusão de funcionário.");
+                             registrado = funcionario.excluir(f);
+                             
+                        } catch (SQLException ex) {
+                            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                        }
+                        
+                        if (registrado){
+                            JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+                            limpar();
+                            Editavel();
+                            ButtonCadastra.setEnabled(true);
+                            ButtonConsulta.setEnabled(true);
+                            ButtonAltera.setEnabled(false);
+                            ButtonExclui.setEnabled(false);
+                        }
+                        else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
+                        
+                        
+                } else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome Usuário  estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_ButtonExcluiActionPerformed
+
+    private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        String senhas = new String();
+        boolean registrado =  false;
+        int id = Integer.parseInt(TextFieldID.getText());
+        System.out.println("valor do id"+ id);
+        if ((!TextFieldID.isEditable()) && (!TextFieldNomeUsuario.isEditable())){
+            if (TextFieldID.getText().length() != 0 ){ 
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja Alterar cadastro do cliente", "Confirmação de Alteração de dados do cliente" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    System.out.println("indo para alteração de cadastro.");
+                    registrado = altera();
+                    if (registrado)JOptionPane.showMessageDialog(this,"Alteração efetuada com sucesso ","Alteração efetuado",JOptionPane.INFORMATION_MESSAGE);
+                    else JOptionPane.showMessageDialog(this,"Alteração não efetuada.","Alteração não efetuada",JOptionPane.ERROR_MESSAGE);
+                    
+                    
+                }
+            }
+        }else Editavel();
+    }//GEN-LAST:event_ButtonAlteraActionPerformed
+
+    private void TextFieldDtAdmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldDtAdmFocusGained
+        // TODO add your handling code here:
+        if (TextFieldNomeUsuario.getText().length()== 0)TextFieldNomeUsuario.requestFocus();
+        
+    }//GEN-LAST:event_TextFieldDtAdmFocusGained
 
     /**
      * @param args the command line arguments
@@ -653,7 +742,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     /**
      *
      * @param str
-     * @return  primeira letra de cada palavra com em maiuscula exceto para sílabas
+     * @return  primeira letra de cada palavra com em maiúscula exceto para sílabas
      */
     public static String toTitledCase(String str){
 
@@ -723,7 +812,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                                 TextFieldNomeUsuario.getText(),
                                 d.StringtoDate(TextFieldDtAdm.getText()),
                                 Double.parseDouble(TextFieldSalario.getText()),
-                                PasswordFieldSenha.getSelectedText(),
+                                String.copyValueOf(PasswordFieldSenha.getPassword()),
                                 true
                                 );
                         System.out.println("Criado Gerente");
@@ -745,29 +834,20 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                         Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this," Classe não encontrada.\n"+ ex,"Classe em banco",JOptionPane.ERROR_MESSAGE);
                         valida = false;
-//                    } catch (java.lang.NumberFormatException ex){
-//                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
-//                    valida = false;
-//                    }catch (NullPointerException ex){
-//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
-//                            + ex.getClass()
-//                            +"\n"+ex.getCause()
-//                            +"\n"+ex.getStackTrace()
-//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
-//                    valida = false;
+                    } catch (java.lang.NumberFormatException ex){
+                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
+                    }catch (NullPointerException ex){
+                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+                            + ex.getClass()
+                            +"\n"+ex.getCause()
+                            +"\n"+ex.getStackTrace()
+                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
                     } 
                     
                 }else if(RadioButtonFuncionario.isSelected() && !RadioButtonGerente.isSelected()){
                     try {
-//                         Atendente(
-//                          int qtdCaixasAbertos, 
-//                          String nome, 
-//                          String NomeUsuario, 
-//                          Date dataAdmissao, 
-//                          double salario, 
-//                          String senha, 
-//                          boolean trocasenha)
-//                          Criação de atendentente
                         System.out.println("Gerando atendente.");
                         a = new Atendente(
                                 0,
@@ -789,11 +869,86 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                             + a.getSenha()+"\n"
                             + a.getSalario()+"\n"
                             + a.getDataAdmissao()+"\n"
+                            + a.isGerente()+"\n"
+                            + a.isTrocasenha()+"\n"
                             + "\n");
                     // Cadastro de funcionário no sistema.
                     System.out.println("registrando no banco.");
                     try {
                         valida = funcionario.inserir(a);
+                        System.out.println("registrado no banco");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this," Classe não encontrada.\n"+ ex,"Classe em banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (java.lang.NumberFormatException ex){
+                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
+                    }catch (NullPointerException ex){
+                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+                            + ex.getClass()
+                            +"\n"+ex.getCause()
+                            +"\n"+ex.getStackTrace()
+                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
+                    }
+                }
+                  
+     
+     return valida;
+    }
+
+    private void mostra(Funcionario f) {
+        TextFieldID.setText(String.valueOf(f.getId()));
+        TextFieldNomeUsuario.setText(f.getNomeUsuario());
+        TextFieldNome.setText(f.getNome());
+        TextFieldSalario.setText(String.valueOf(f.getSalario()));
+        try {
+            TextFieldDtAdm.setText(DateValidator.DatetoString(f.getDataAdmissao()));
+        } catch (ParseException ex) {
+            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this.TextFieldDtAdm,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+        }
+        if (f.isGerente() == true) RadioButtonGerente.setSelected(true);
+        else if (f.isGerente() == false) RadioButtonFuncionario.setSelected(true);
+        PasswordFieldSenha.setText(f.getSenha());
+    }
+    
+private boolean altera (){
+    Gerente g = null;
+    Atendente a = null;
+        boolean valida = false;
+                //Verifica qual radio buton esta selecionado.
+                if (!RadioButtonFuncionario.isSelected() && RadioButtonGerente.isSelected()){
+                    try {
+                        //Criação de gerente
+                        System.out.println("Gerando Gerente.");
+                        g = new Gerente(
+                                0,
+                                0,
+                                0,
+                                TextFieldNome.getText(),
+                                TextFieldNomeUsuario.getText(),
+                                d.StringtoDate(TextFieldDtAdm.getText()),
+                                Double.parseDouble(TextFieldSalario.getText()),
+                                String.copyValueOf(PasswordFieldSenha.getPassword()),
+                                true
+                                );
+                        System.out.println("Criado Gerente");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this.TextFieldDtAdm,"Data de nascimento inválida","Data de Nascimento",JOptionPane.ERROR_MESSAGE);
+                        
+                        valida = false;
+                    }
+                    // registro de gerente no banco.
+                    System.out.println("registrando no banco.");
+                    try {
+                        valida = funcionario.alterar(g);
                         System.out.println("registrado no banco");
                     } catch (SQLException ex) {
                         Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -814,24 +969,61 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
 //                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
 //                    valida = false;
                     }
+                    
+                }else if(RadioButtonFuncionario.isSelected() && !RadioButtonGerente.isSelected()){
+                    try {
+                        System.out.println("Gerando atendente.");
+                        a = new Atendente(
+                                0,
+                                TextFieldNome.getText(),
+                                TextFieldNomeUsuario.getText(),
+                                d.StringtoDate(TextFieldDtAdm.getText()),
+                                Double.parseDouble(TextFieldSalario.getText()),
+                                String.copyValueOf(PasswordFieldSenha.getPassword()),
+                                true);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conversão de data\nData errada"+ ex,"Data inválida",JOptionPane.ERROR_MESSAGE);
+                                valida = false;
+                    }
+                    // Cadastro de funcionário no sistema.
+                    System.out.println("registrando no banco.");
+                    try {
+                        valida = funcionario.alterar(a);
+                        System.out.println("registrado no banco");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this," Classe não encontrada.\n"+ ex,"Classe em banco",JOptionPane.ERROR_MESSAGE);
+                        valida = false;
+                    }catch (java.lang.NumberFormatException ex){
+                    JOptionPane.showMessageDialog(this,"Problema de conversão.\n"+ ex,"erro conversão",JOptionPane.ERROR_MESSAGE);
+                    valida = false;
+                    
+//                    }catch (NullPointerException ex){
+//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+//                            + ex.getClass()
+//                            +"\n"+ex.getCause()
+//                            +"\n"+ex.getStackTrace()
+//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+//                    valida = false;
+        
+//                    }catch (NullPointerException ex){
+//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
+//                            + ex.getClass()
+//                            +"\n"+ex.getCause()
+//                            +"\n"+ex.getStackTrace()
+//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
+//                    valida = false;
+                    }
+                return valida;
                 }
                   
      
      return valida;
-    }
-
-    private void mostra(Funcionario f) {
-        TextFieldID.setText(String.valueOf(f.getId()));
-        TextFieldNomeUsuario.setText(f.getNomeUsuario());
-        TextFieldNome.setText(f.getNome());
-        TextFieldSalario.setText(String.valueOf(f.getSalario()));
-        try {
-            TextFieldDtAdm.setText(DateValidator.DatetoString(f.getDataAdmissao()));
-        } catch (ParseException ex) {
-            Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-
+}
 
 }

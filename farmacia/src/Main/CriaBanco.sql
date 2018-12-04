@@ -18,7 +18,7 @@ nomeuser varchar(255)  unique,
 nome varchar(255) ,
 senha varchar(255) ,
 trocasenha varchar (5) ,
-data_adimissao date  ,
+dtadm date  ,
 salario double(10,2) ,
 gerente varchar (5)
 );

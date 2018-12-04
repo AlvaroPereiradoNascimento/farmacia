@@ -25,8 +25,8 @@ public class Gerente extends Funcionario{
      */
         
     
-    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, boolean gerente) {
-        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, gerente);
+    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha) {
+        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, true);
         this.qtdDesocntos = qtdDesocntos;
         this.QtdCaixasFechados = QtdCaixasFechados;
         this.QtdCaixasabertos = QtdCaixasabertos;
@@ -44,10 +44,9 @@ public class Gerente extends Funcionario{
      * @param trocasenha  booleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
      * @param id inteiro de verificação única para cada funcionário.
      * @param dataAdmissao data de admissão do funcionário.
-     * @param gerente booleano que informa se colaborador é gerente ou não.
      */
-    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, int id, boolean gerente) {
-        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, id, gerente);
+    public Gerente(int qtdDesocntos, int QtdCaixasFechados, int QtdCaixasabertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, int id) {
+        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, id, true);
         this.qtdDesocntos = qtdDesocntos;
         this.QtdCaixasFechados = QtdCaixasFechados;
         this.QtdCaixasabertos = QtdCaixasabertos;

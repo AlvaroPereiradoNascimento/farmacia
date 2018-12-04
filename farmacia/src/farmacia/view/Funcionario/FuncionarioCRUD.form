@@ -181,6 +181,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TextFieldDtAdm">
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldDtAdmFocusGained"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldDtAdmFocusLost"/>
       </Events>
     </Component>
@@ -239,11 +240,17 @@
         <Property name="text" type="java.lang.String" value="Alterar"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAlteraActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonExclui">
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonExcluiActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonConsulta">
       <Properties>

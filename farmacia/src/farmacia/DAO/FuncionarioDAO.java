@@ -6,11 +6,10 @@
 package farmacia.DAO;
 import Verifica.DateValidator;
 import Verifica.IsTrue;
-import model.Funcionario;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Funcionario;
 import persistencia.Banco;
 
 /**
@@ -24,24 +23,23 @@ public class FuncionarioDAO implements DAO<Funcionario>{
     private java.sql.PreparedStatement pst;
     private java.sql.ResultSet rs;
     private Funcionario Funcionario;
-    private DateValidator d;
-    private IsTrue t;
-    
+    private DateValidator d = new DateValidator();
+    private IsTrue t = new IsTrue();
+/**
+ * Inserção de cliente no banco de dados
+ * @param obj
+ * @return
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */    
     @Override
     public boolean inserir(Funcionario obj) 
             throws SQLException, ClassNotFoundException {
             String sql;
         //cria o comando da DML
         sql = "INSERT INTO funcionarios"
-                + "("
-                + "nome,"
-                + "nomeuser,"
-                + "data_admissao,"
-                + "salario,"
-                + "senha,"
-                + "trocasenha,"
-                + ")"
-                + "values ( ?, ?, ?, ?,?,?);";
+                + "(nome,nomeuser,dtadm,salario,senha,trocasenha,gerente)"
+                + "values (?,?,?,?,?,?,?);";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         
@@ -51,6 +49,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         pst.setDouble(4, obj.getSalario());
         pst.setString(5, obj.getSenha());
         pst.setString(6,t.BooleanToString(obj.isTrocasenha()));
+        pst.setString(7, t.BooleanToString(obj.isGerente()));
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
@@ -60,7 +59,13 @@ public class FuncionarioDAO implements DAO<Funcionario>{
             return false;
         }
     }
-
+    /**
+     * Alteração de banco de dados de funcionário.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     @Override
     public boolean alterar(Funcionario obj) 
             throws SQLException, ClassNotFoundException {
@@ -69,9 +74,9 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         sql = "UPDATE funcionarios SET \n"
                 + "nome = ?,"
                 + "senha = ?,"
-                + "data_admissao = ?,"
-                + "salario = ?"
-                + "nomeuser = ?"
+                + "dtadm = ?,"
+                + "salario = ?,"
+                + "nomeuser = ?,"
                 + "trocasenha = ?"
                 + "\nWHERE id = ?;";
         Banco.abrir();
@@ -88,13 +93,22 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
+            System.out.println("sucesso na alteração!!!");
+                    
             return true;
         }else{
             Banco.fechar();
+            System.out.println("falha na alteração.");
             return false;
         }
     }
-
+    /**
+     * Efetua exclusão de dados de funcionários do banco de dados.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     @Override
     public boolean excluir(Funcionario obj) 
             throws SQLException, ClassNotFoundException {
@@ -116,7 +130,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
     }
 
     /**
-     *  Efetua busca no banco de funcionario somente pelo seu ID
+     *  Efetua busca no banco de funcionário somente pelo seu ID
      * @param obj
      * @return funcionário existente no banco
      * @throws SQLException
@@ -135,14 +149,20 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("nomeuser"),rs.getDate("dtadm"), rs.getDouble("salario"), rs.getString("senha"),t.StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"), t.StringToBoolean(rs.getString("gerente")));
             
         }
         rs.close();
         Banco.fechar();
         return funcionario;
     }
-    
+    /**
+     * Efetua busca do banco de dados do nome de usuário.
+     * @param obj
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public Funcionario buscarNomeFuncionario(Funcionario obj) throws SQLException, ClassNotFoundException {
            funcionario = null;
         String sql = "SELECT * FROM funcionarios "
@@ -155,7 +175,7 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         rs = pst.executeQuery();
         
         if(rs.next()){
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("nomeuser"),rs.getDate("dtadm"), rs.getDouble("salario"), rs.getString("senha"),t.StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"), t.StringToBoolean(rs.getString("gerente")));
             
         }
         rs.close();
@@ -168,20 +188,27 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         if ((a.getNomeUsuario().equals(b.getNomeUsuario())) && (a.getId() == b.getId())&& (a.getNome().equals(b.getNome()))) return a;
         else return null;
     }
+    /**
+     *  efetua busca por string determinado.
+     * @param criterio
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     @Override
     public List<Funcionario> listar(String criterio) throws SQLException, ClassNotFoundException {
         
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
         funcionario = null;
         String sql = new String();
-        if(criterio.length() > 0)sql = "SELECT * FROM funcionarios WHERE  '" + criterio+"'";
+        if(criterio.length() > 0)sql = "SELECT * FROM funcionarios WHERE   '" + criterio+"';";
         else return null;
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         rs = pst.executeQuery();
         while(rs.next()){
-            
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("nomeuser"),rs.getDate("dtadm"), rs.getDouble("salario"), rs.getString("senha"),t.StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"), t.StringToBoolean(rs.getString("gerente")));
 
             funcionarios.add(funcionario);
         }
@@ -189,35 +216,31 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         Banco.fechar();
         return funcionarios;
     }
+    /**
+     * efetua busca de nome de usuário no sistema.
+     * @param criterio
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public List<Funcionario> listargera(String criterio) throws SQLException, ClassNotFoundException {
         
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
         funcionario = null;
         String sql = new String();
-        if(criterio.length() > 0)sql = "SELECT nomeuser FROM funcionarios WHERE  nomeuser = '" + criterio+"'";
+        if(criterio.length() > 0)sql = "SELECT * FROM funcionarios WHERE  nomeuser like '" + criterio+ "%';";//SELECT nomeuser FROM funcionarios WHERE nomeuser  like "Alvaro.Nascimento%"
         else return null;
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         rs = pst.executeQuery();
         while(rs.next()){
             
-            funcionario = new Funcionario(rs.getString("nome"), rs.getString("login"), rs.getDouble("salario"), rs.getString("senha"),StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"),rs.getDate("data_adimissao"));
+            funcionario = new Funcionario(rs.getString("nome"), rs.getString("nomeuser"),rs.getDate("dtadm"), rs.getDouble("salario"), rs.getString("senha"),t.StringToBoolean(rs.getString("trocasenha")), rs.getInt("id"), t.StringToBoolean(rs.getString("gerente")));
 
             funcionarios.add(funcionario);
         }
         rs.close();
         Banco.fechar();
         return funcionarios;
-    }
-    
-    
-    
-    public boolean StringToBoolean (String s){
-        if (s == "true") return true;
-        else return false;
-    }
-    public String BooleantoString (boolean s){
-        if (s) return "true";
-        else return "false";
     }
 }

@@ -27,8 +27,8 @@ public class Atendente extends Funcionario {
      * @param trocasenha  booleano que verifica se colaborador no primeiro acesso deve trocar a senha ou não
      * @param dataAdmissao data de admissão do funcionário.
      */
-    public Atendente(int qtdCaixasAbertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, boolean gerente) {
-        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, gerente);
+    public Atendente(int qtdCaixasAbertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha) {
+        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, false);
         this.qtdCaixasAbertos = qtdCaixasAbertos;
     }
 
@@ -44,8 +44,8 @@ public class Atendente extends Funcionario {
      */
     
 
-    public Atendente(int qtdCaixasAbertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, int id, boolean gerente) {
-        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, id, gerente);
+    public Atendente(int qtdCaixasAbertos, String nome, String NomeUsuario, Date dataAdmissao, double salario, String senha, boolean trocasenha, int id) {
+        super(nome, NomeUsuario, dataAdmissao, salario, senha, trocasenha, id, false);
         this.qtdCaixasAbertos = qtdCaixasAbertos;
     }
     /**

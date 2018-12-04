@@ -50,6 +50,20 @@ public class Funcionario {
         this.id = id;
         this.gerente = gerente;
     }
+     /**
+      * Informa se é gerente ou não     
+      * @return true or false   
+      */
+    public boolean isGerente() {
+        return gerente;
+    }
+    /**
+     * configura gerente
+     * @param gerente 
+     */
+    public void setGerente(boolean gerente) {
+        this.gerente = gerente;
+    }
     
     
     /**
