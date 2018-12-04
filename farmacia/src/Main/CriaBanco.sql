@@ -25,10 +25,9 @@ gerente varchar (5)
 
 CREATE TABLE produtos(
 id integer primary key auto_increment unique ,
-lote varchar(255)  unique,
-nome varchar(255) ,
-preco varchar(20) ,
-tipo int,
+nome varchar(255) unique,
+descricao varchar(255),
+preco varchar(10,2) ,
 validade date  
 );
 
@@ -42,4 +41,11 @@ valor varchar(255),
 foreign key (fk_func ) REFERENCES funcionarios(id),
 foreign key (fk_cli) REFERENCES clientes(id),
 foreign key (fk_prod) REFERENCES produtos(id)
+);
+
+CREATE TABLE caixas(
+id int primary key Not Null auto_increment unique,
+fk_func int,
+aberto varchar (5),
+foreign key (fk_func ) REFERENCES funcionarios(id)
 );

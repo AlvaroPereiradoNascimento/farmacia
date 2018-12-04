@@ -22,7 +22,7 @@ public class Banco {
    
     static {
         usuario = "root";
-        senha = "usbw";
+        senha = "";
         servidor = "localhost";
         bd = "farmacia";
         porta = 3306;

@@ -42,6 +42,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         PasswordFieldSenha.setText("654321654321");
         RadioButtonGerente.setSelected(false);
         RadioButtonFuncionario.setSelected(true);
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
     }
     DateValidator d = new DateValidator();
     FuncionarioDAO funcionario = new FuncionarioDAO();
@@ -83,6 +85,12 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         ButtonLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de funcionários");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(214748, 214748));
+        setMinimumSize(new java.awt.Dimension(470, 350));
+        setName("Funcionarios"); // NOI18N
+        setResizable(false);
 
         LabelID.setText("ID:");
 
@@ -137,7 +145,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             }
         });
 
-        RadioButtonFuncionario.setText("Funcionário");
+        RadioButtonFuncionario.setText("Atendente");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, buttonGroupFuncionario, org.jdesktop.beansbinding.ELProperty.create("${selection.pressed}"), RadioButtonFuncionario, org.jdesktop.beansbinding.BeanProperty.create("selected"));
         bindingGroup.addBinding(binding);
@@ -200,77 +208,82 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(LabelNomeUsuario)
+                    .addComponent(LabelNome)
+                    .addComponent(LabelDataAdmissao)
+                    .addComponent(LabelSalario)
+                    .addComponent(LabelSenha)
+                    .addComponent(LabelID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addComponent(PasswordFieldSenha)
+                        .addGap(132, 132, 132))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(TextFieldID)
+                        .addGap(122, 122, 122))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LabelNomeUsuario)
-                            .addComponent(LabelNome)
-                            .addComponent(LabelDataAdmissao)
-                            .addComponent(LabelSalario)
-                            .addComponent(LabelSenha)
-                            .addComponent(LabelID))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                .addComponent(TextFieldSalario, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextFieldSalario, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(132, 132, 132))
+                    .addComponent(TextFieldNome)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(242, 242, 242))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ButtonAltera)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ButtonExclui, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)
-                                .addComponent(ButtonConsulta)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ButtonLimpar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(RadioButtonFuncionario)
-                        .addGap(18, 18, 18)
-                        .addComponent(RadioButtonGerente)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(TextFieldNomeUsuario)
+                        .addGap(49, 49, 49)))
+                .addGap(100, 100, 100))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonAltera)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ButtonExclui, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonConsulta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonLimpar)
+                .addGap(26, 26, 26))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(RadioButtonFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(RadioButtonGerente, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                .addGap(171, 171, 171))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelID)
-                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TextFieldID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNomeUsuario)
-                    .addComponent(TextFieldNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TextFieldNomeUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldNome)
                     .addComponent(LabelNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelDataAdmissao)
-                    .addComponent(TextFieldDtAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TextFieldDtAdm))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldSalario)
                     .addComponent(LabelSalario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelSenha)
-                    .addComponent(PasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PasswordFieldSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RadioButtonFuncionario)
-                    .addComponent(RadioButtonGerente))
+                    .addComponent(RadioButtonFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RadioButtonGerente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonCadastra)
@@ -278,12 +291,13 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     .addComponent(ButtonExclui)
                     .addComponent(ButtonConsulta)
                     .addComponent(ButtonLimpar))
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
 
         bindingGroup.bind();
 
-        pack();
+        setSize(new java.awt.Dimension(475, 288));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void RadioButtonFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioButtonFuncionarioActionPerformed
@@ -936,7 +950,8 @@ private boolean altera (){
                                 d.StringtoDate(TextFieldDtAdm.getText()),
                                 Double.parseDouble(TextFieldSalario.getText()),
                                 String.copyValueOf(PasswordFieldSenha.getPassword()),
-                                true
+                                true,
+                                Integer.parseInt(TextFieldID.getText())
                                 );
                         System.out.println("Criado Gerente");
                     } catch (ParseException ex) {
@@ -946,6 +961,15 @@ private boolean altera (){
                         valida = false;
                     }
                     // registro de gerente no banco.
+                    System.out.println("Gerando Gerente para alteração."
+                            + g.getNome()+"\n"
+                            + g.getNome()+"\n"
+                            + g.getSenha()+"\n"
+                            + g.getId()+"\n"
+                            + g.isGerente()+"\n"
+                            + g.isTrocasenha()+"\n"
+                            + g.getDataAdmissao()+"\n"
+                            );
                     System.out.println("registrando no banco.");
                     try {
                         valida = funcionario.alterar(g);
@@ -980,13 +1004,24 @@ private boolean altera (){
                                 d.StringtoDate(TextFieldDtAdm.getText()),
                                 Double.parseDouble(TextFieldSalario.getText()),
                                 String.copyValueOf(PasswordFieldSenha.getPassword()),
-                                true);
+                                true,
+                                Integer.parseInt(TextFieldID.getText())
+                                );
                     } catch (ParseException ex) {
                         Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this,"Problema de conversão de data\nData errada"+ ex,"Data inválida",JOptionPane.ERROR_MESSAGE);
                                 valida = false;
                     }
                     // Cadastro de funcionário no sistema.
+                    System.out.println("Gerando Atendente para alteração."
+                            + a.getNome()+"\n"
+                            + a.getNome()+"\n"
+                            + a.getSenha()+"\n"
+                            + a.getId()+"\n"
+                            + a.isGerente()+"\n"
+                            + a.isTrocasenha()+"\n"
+                            + a.getDataAdmissao()+"\n"
+                            );
                     System.out.println("registrando no banco.");
                     try {
                         valida = funcionario.alterar(a);
@@ -1010,14 +1045,7 @@ private boolean altera (){
 //                            +"\n"+ex.getStackTrace()
 //                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
 //                    valida = false;
-        
-//                    }catch (NullPointerException ex){
-//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
-//                            + ex.getClass()
-//                            +"\n"+ex.getCause()
-//                            +"\n"+ex.getStackTrace()
-//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
-//                    valida = false;
+
                     }
                 return valida;
                 }

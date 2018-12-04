@@ -71,13 +71,14 @@ public class FuncionarioDAO implements DAO<Funcionario>{
             throws SQLException, ClassNotFoundException {
         String sql;
         
-        sql = "UPDATE funcionarios SET \n"
+        sql = "UPDATE funcionarios SET\n"
                 + "nome = ?,"
                 + "senha = ?,"
                 + "dtadm = ?,"
                 + "salario = ?,"
                 + "nomeuser = ?,"
-                + "trocasenha = ?"
+                + "trocasenha = ?,"
+                + "gerente = ? "
                 + "\nWHERE id = ?;";
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
@@ -89,7 +90,9 @@ public class FuncionarioDAO implements DAO<Funcionario>{
         pst.setDouble(4, obj.getSalario());
         pst.setString(5, obj.getNomeUsuario());
         pst.setString(6,t.BooleanToString(obj.isTrocasenha()));
-        pst.setInt(7, obj.getId());
+        pst.setString(7, t.BooleanToString(obj.isGerente()));
+        pst.setInt(8, obj.getId());
+
         
         if(pst.executeUpdate() > 0){
             Banco.fechar();
