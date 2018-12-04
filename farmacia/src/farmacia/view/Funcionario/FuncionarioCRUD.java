@@ -42,6 +42,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         PasswordFieldSenha.setText("654321654321");
         RadioButtonGerente.setSelected(false);
         RadioButtonFuncionario.setSelected(true);
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
     }
     DateValidator d = new DateValidator();
     FuncionarioDAO funcionario = new FuncionarioDAO();
@@ -936,7 +938,8 @@ private boolean altera (){
                                 d.StringtoDate(TextFieldDtAdm.getText()),
                                 Double.parseDouble(TextFieldSalario.getText()),
                                 String.copyValueOf(PasswordFieldSenha.getPassword()),
-                                true
+                                true,
+                                Integer.parseInt(TextFieldID.getText())
                                 );
                         System.out.println("Criado Gerente");
                     } catch (ParseException ex) {
@@ -946,6 +949,15 @@ private boolean altera (){
                         valida = false;
                     }
                     // registro de gerente no banco.
+                    System.out.println("Gerando Gerente para alteração."
+                            + g.getNome()+"\n"
+                            + g.getNome()+"\n"
+                            + g.getSenha()+"\n"
+                            + g.getId()+"\n"
+                            + g.isGerente()+"\n"
+                            + g.isTrocasenha()+"\n"
+                            + g.getDataAdmissao()+"\n"
+                            );
                     System.out.println("registrando no banco.");
                     try {
                         valida = funcionario.alterar(g);
@@ -980,13 +992,24 @@ private boolean altera (){
                                 d.StringtoDate(TextFieldDtAdm.getText()),
                                 Double.parseDouble(TextFieldSalario.getText()),
                                 String.copyValueOf(PasswordFieldSenha.getPassword()),
-                                true);
+                                true,
+                                Integer.parseInt(TextFieldID.getText())
+                                );
                     } catch (ParseException ex) {
                         Logger.getLogger(FuncionarioCRUD.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this,"Problema de conversão de data\nData errada"+ ex,"Data inválida",JOptionPane.ERROR_MESSAGE);
                                 valida = false;
                     }
                     // Cadastro de funcionário no sistema.
+                    System.out.println("Gerando Atendente para alteração."
+                            + a.getNome()+"\n"
+                            + a.getNome()+"\n"
+                            + a.getSenha()+"\n"
+                            + a.getId()+"\n"
+                            + a.isGerente()+"\n"
+                            + a.isTrocasenha()+"\n"
+                            + a.getDataAdmissao()+"\n"
+                            );
                     System.out.println("registrando no banco.");
                     try {
                         valida = funcionario.alterar(a);
@@ -1010,14 +1033,7 @@ private boolean altera (){
 //                            +"\n"+ex.getStackTrace()
 //                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
 //                    valida = false;
-        
-//                    }catch (NullPointerException ex){
-//                    JOptionPane.showMessageDialog(this,"erro desconhecido.\n"
-//                            + ex.getClass()
-//                            +"\n"+ex.getCause()
-//                            +"\n"+ex.getStackTrace()
-//                            +"\n"+ex.getSuppressed(),"ERRO",JOptionPane.ERROR_MESSAGE);
-//                    valida = false;
+
                     }
                 return valida;
                 }
