@@ -5,22 +5,44 @@
  */
 package farmacia.view.Produtos;
 
+import Verifica.DateValidator;
+import farmacia.DAO.ProdutosDAO;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Produtos;
 
 /**
  *
- * @author aluno
+ * @author Alvaro Pereira do Nascimento.
  */
 public class ProdutosCRUD extends javax.swing.JFrame {
 
     /**
      * Creates new form ProdutosdCRUD
      */
+    DateValidator d = new DateValidator();
+    ProdutosDAO produto = new  ProdutosDAO();
+    Produtos p ;
+    
     public ProdutosCRUD() {
-        initComponents();
-        TextAreaDescricao.setLineWrap(true);
+        try {
+            initComponents();
+            TextAreaDescricao.setLineWrap(true);
+            geracombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +66,8 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         ButtonLimpa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextAreaDescricao = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        TextFieldValidade = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de produtos");
@@ -60,6 +84,7 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         LabelID.setText("ID:");
 
         TextFieldID.setEditable(false);
+        TextFieldID.setBackground(new java.awt.Color(102, 102, 102));
 
         TextFieldValor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -79,6 +104,11 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         });
 
         ButtonCadastra.setText("Cadastra");
+        ButtonCadastra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCadastraActionPerformed(evt);
+            }
+        });
 
         ButtonAltera.setText("Altera");
 
@@ -97,39 +127,49 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TextAreaDescricao);
 
+        jLabel1.setText("Validade:");
+
+        TextFieldValidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TextFieldValidadeFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LabelID)
-                            .addComponent(LabelNome)
-                            .addComponent(LabelDescricao)
-                            .addComponent(LabelValor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(ComboBoxProdutos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(ButtonCadastra)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
+                .addComponent(ButtonCadastra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ComboBoxProdutos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonAltera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ButtonExclui)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ButtonLimpa)))
-                .addGap(21, 21, 21))
+                        .addComponent(ButtonLimpa)
+                        .addGap(21, 21, 21))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(LabelID)
+                    .addComponent(LabelNome)
+                    .addComponent(LabelDescricao)
+                    .addComponent(LabelValor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextFieldValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,8 +191,12 @@ public class ProdutosCRUD extends javax.swing.JFrame {
                     .addComponent(LabelValor)
                     .addComponent(TextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(TextFieldValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(ComboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonCadastra)
                     .addComponent(ButtonAltera)
@@ -163,10 +207,6 @@ public class ProdutosCRUD extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ComboBoxProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxProdutosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxProdutosActionPerformed
 
     private void TextFieldValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldValorFocusLost
         // TODO add your handling code here:
@@ -221,6 +261,134 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_TextAreaDescricaoFocusLost
 
+    private void ComboBoxProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxProdutosActionPerformed
+        try {
+            // TODO add your handling code here:
+            p = (Produtos) ComboBoxProdutos.getSelectedItem();
+            mostra(p);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this.ComboBoxProdutos, "problema de incrmento na combo.","Descrição vazia", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ComboBoxProdutosActionPerformed
+
+    private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
+        boolean cadastrou = false;
+        try {
+            // TODO add your handling code here:
+            p = new Produtos(
+                    Double.parseDouble(TextFieldValor.getText()),
+                    TextFieldNome.getText(),
+                    TextAreaDescricao.getText(),
+                    d.StringtoDate(TextFieldValidade.getText())
+            );
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            cadastrou = produto.inserir(p);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+            cadastrou = false;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+            cadastrou = false;
+            if (cadastrou)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_ButtonCadastraActionPerformed
+
+    private void TextFieldValidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldValidadeFocusLost
+        // TODO add your handling code here:
+        if (TextFieldValidade.isEditable()){
+            int date=0;
+            if(TextFieldValor.getText().length() != 0){
+                   if (TextFieldValidade.getText().length()> 3 || TextFieldValidade.getText().length()< 11){
+                    if(TextFieldValidade.getText().length()== 8){
+                        try {
+                          date = Integer.parseInt(TextFieldValidade.getText());
+                            int ano = date%10000;
+                            int dia = date/1000000;
+                            date /= 10000;
+                            int mes = date%100;
+                            if (mes <10){
+                              TextFieldValidade.setText(dia+"/0"+mes+"/"+ano);  
+                            }
+                           else TextFieldValidade.setText(dia+"/"+mes+"/"+ano);
+                        }catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldValidade.requestFocus();
+                           TextFieldValidade.setText("dd/mm/aaaa");
+                           TextFieldValidade.setText("dia/mes/ano");
+                           TextFieldValidade.selectAll();
+                        }
+                    }else if (TextFieldValidade.getText().length()== 10){
+                            if(!d.data(TextFieldValidade.getText())){
+                               JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                               TextFieldValidade.requestFocus();
+                               TextFieldValidade.setText("dd/mm/aaaa");
+                               TextFieldValidade.setText("dia/mes/ano");
+                               TextFieldValidade.selectAll();
+                            }
+                    }else if (TextFieldValidade.getText().length()== 6){
+                        try {
+                            date = Integer.parseInt(TextFieldValidade.getText());
+                            int ano = date%100;
+                            int dia = date/10000;
+                            date /= 100;
+                            int mes = date%100;
+                            if (ano < 100 && ano > 60 ) ano+=1900;
+                            else ano += 2000;
+                            TextFieldValidade.setText(dia+"/0"+mes+"/"+ano);
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldValidade.requestFocus();
+                           TextFieldValidade.setText("dd/mm/aaaa");
+                           TextFieldValidade.setText("dia/mes/ano");
+                           TextFieldValidade.selectAll();
+                        }
+                    }else if (TextFieldValidade.getText().length()== 4){
+                        try {
+                            date = Integer.parseInt(TextFieldValidade.getText());
+                            int ano = date%100;
+                            int dia = date/1000;
+                            date /= 100;
+                            int mes = date%10;
+                            if (mes <10 && dia < 10&& (ano < 100 && ano > 60 )){
+                                    ano+=1900;
+                                    TextFieldValidade.setText("0"+dia+"/0"+mes+"/"+ano);  
+                                }
+                        } catch (NumberFormatException e) {
+                           JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                           TextFieldValidade.requestFocus();
+                           TextFieldValidade.setText("dd/mm/aaaa");
+                           TextFieldValidade.setText("dia/mes/ano");
+                           TextFieldValidade.selectAll();
+                        }
+
+                    }else if (TextFieldValidade.getText().length()== 5){
+                       JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                       TextFieldValidade.requestFocus();
+                       TextFieldValidade.setText("dd/mm/aaaa");
+                       TextFieldValidade.setText("dia/mes/ano");
+                       TextFieldValidade.selectAll();
+                    }else {
+                        JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                        TextFieldValidade.requestFocus();
+                        TextFieldValidade.setText("dia/mes/ano");
+                        TextFieldValidade.selectAll();
+                    }   
+                    }else {
+                    JOptionPane.showMessageDialog(this.TextFieldValidade, "Campo data de Validade  com formato inválido.","Data de Validade ", JOptionPane.ERROR_MESSAGE);
+                    TextFieldValidade.requestFocus();
+                     } 
+                }else TextFieldValor.requestDefaultFocus();
+            }
+    }//GEN-LAST:event_TextFieldValidadeFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -263,7 +431,7 @@ public class ProdutosCRUD extends javax.swing.JFrame {
     private javax.swing.JButton ButtonCadastra;
     private javax.swing.JButton ButtonExclui;
     private javax.swing.JButton ButtonLimpa;
-    private javax.swing.JComboBox<String> ComboBoxProdutos;
+    private javax.swing.JComboBox<Object> ComboBoxProdutos;
     private javax.swing.JLabel LabelDescricao;
     private javax.swing.JLabel LabelID;
     private javax.swing.JLabel LabelNome;
@@ -271,9 +439,12 @@ public class ProdutosCRUD extends javax.swing.JFrame {
     private javax.swing.JTextArea TextAreaDescricao;
     private javax.swing.JTextField TextFieldID;
     private javax.swing.JTextField TextFieldNome;
+    private javax.swing.JTextField TextFieldValidade;
     private javax.swing.JTextField TextFieldValor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
     public double ConverteVirgula(String valor){
         String replace = valor.replace(",",".");
         try{
@@ -289,6 +460,47 @@ public class ProdutosCRUD extends javax.swing.JFrame {
     public boolean matchesOnlyText(String text) {
         return text.matches("[A-Z_a-z_À-ú\\s\\p{L}]+");
     }
+    public void geracombo() throws SQLException, ClassNotFoundException{
+        ArrayList<Produtos> produtos = (ArrayList<Produtos>) produto.listarcombo();
+        Produtos p = null;
+        for(int i = 0;i<produtos.size(); i++ ){  
+            p =  produtos.get(i);  
+           ComboBoxProdutos.addItem(p.toString());  
+        }
+    }
     
+    public void Editavel(){
+        if (!(TextFieldID.isEditable())){
+            TextFieldID.setBackground(Color.white);
+            TextFieldID.setEditable(true);
+            TextFieldNome.setBackground(Color.white);  
+            TextFieldNome.setEditable(true);
+            TextFieldValor.setBackground(Color.gray);  
+            TextFieldValor.setEditable(false);
+            TextAreaDescricao.setBackground(Color.gray);  
+            TextAreaDescricao.setEditable(false);
+            TextFieldValidade.setBackground(Color.gray);  
+            TextFieldValidade.setEditable(false);
 
+        }else {
+            TextFieldID.setBackground(Color.gray);
+            TextFieldID.setEditable(false);
+            TextFieldNome.setBackground(Color.white);  
+            TextFieldNome.setEditable(true);
+            TextFieldValor.setBackground(Color.white);  
+            TextFieldValor.setEditable(true);
+            TextAreaDescricao.setBackground(Color.white);  
+            TextAreaDescricao.setEditable(true);
+            TextFieldValidade.setBackground(Color.white);  
+            TextFieldValidade.setEditable(true);
+        }
+
+        }
+    public void mostra(Produtos p) throws ParseException{
+        TextFieldID.setText(String.valueOf(p.getId()));
+        TextFieldNome.setText(p.getNome());
+        TextAreaDescricao.setText(p.getDescricao());
+        TextFieldValor.setText(String.valueOf(p.getPreco()));
+        TextFieldValidade.setText(DateValidator.DatetoString(p.getValidade()));
+    }
 }

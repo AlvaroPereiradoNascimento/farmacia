@@ -114,5 +114,10 @@ public class Produtos {
     public void setValidade(Date validade) {
         this.validade = validade;
     }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
     
 }

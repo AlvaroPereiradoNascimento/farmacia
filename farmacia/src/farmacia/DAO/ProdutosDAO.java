@@ -135,8 +135,36 @@ public class ProdutosDAO implements DAO<Produtos> {
         ArrayList<Produtos> produtos = new ArrayList<>();
         Produtos produto = null;
         String sql = new String();
-        if(criterio.length() > 0)sql = "SELECT * FROM funcionarios WHERE   '" + criterio+ "';";
+        if(criterio.length() > 0)sql = "SELECT * FROM produtos WHERE   '" + criterio+ "';";
         else return null;
+        Banco.abrir();
+        pst = Banco.getConexao().prepareStatement(sql);
+        rs = pst.executeQuery();
+        while(rs.next()){
+
+            produto = new Produtos(rs.getInt("id"), rs.getDouble("preco"),rs.getString("nome"), rs.getString("descricao"),rs.getDate("validade"));
+            
+            produtos.add(produto);
+        }
+        rs.close();
+        Banco.fechar();
+        return produtos;
+    }
+    
+    
+    /**
+     *  Listagem de produtos exclusiva para combobox de produtos
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
+    public List<Produtos> listarcombo() throws SQLException, ClassNotFoundException {
+        
+        ArrayList<Produtos> produtos = new ArrayList<>();
+        Produtos produto = null;
+        String sql = new String();
+        sql = "SELECT * FROM produtos ";
+        
         Banco.abrir();
         pst = Banco.getConexao().prepareStatement(sql);
         rs = pst.executeQuery();
