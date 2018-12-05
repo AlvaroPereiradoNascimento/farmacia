@@ -19,5 +19,15 @@ public class IsTrue {
         if (boo) return "true";
         else return "false";
     }
+    
+    public boolean CaixasStringToBoolean (String str){
+        if (str == "Aberto") return true;
+        else return false;
+    }
+    
+    public String CaixasBooleanToString(boolean boo){
+        if (boo) return "Aberto";
+        else return "Fechado";
+    }
    
 }

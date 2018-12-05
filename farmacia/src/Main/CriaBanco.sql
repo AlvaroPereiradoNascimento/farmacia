@@ -46,6 +46,6 @@ foreign key (fk_prod) REFERENCES produtos(id)
 CREATE TABLE caixas(
 id int primary key Not Null auto_increment unique,
 fk_func int,
-aberto varchar (5),
+aberto varchar (5)Not Null,
 foreign key (fk_func ) REFERENCES funcionarios(id)
 );
