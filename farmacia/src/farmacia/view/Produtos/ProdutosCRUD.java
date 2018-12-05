@@ -8,6 +8,7 @@ package farmacia.view.Produtos;
 import Verifica.DateValidator;
 import farmacia.DAO.ProdutosDAO;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,17 +31,8 @@ public class ProdutosCRUD extends javax.swing.JFrame {
     Produtos p ;
     
     public ProdutosCRUD() {
-        try {
-            initComponents();
-            TextAreaDescricao.setLineWrap(true);
-            geracombo();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        initComponents();
+        TextAreaDescricao.setLineWrap(true);
     }
     
     /**
@@ -68,6 +60,7 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         TextAreaDescricao = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         TextFieldValidade = new javax.swing.JTextField();
+        ButtonConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de produtos");
@@ -97,6 +90,11 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         LabelValor.setText("Valor:");
 
         ComboBoxProdutos.setEditable(true);
+        ComboBoxProdutos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ComboBoxProdutosItemStateChanged(evt);
+            }
+        });
         ComboBoxProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxProdutosActionPerformed(evt);
@@ -111,10 +109,25 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         });
 
         ButtonAltera.setText("Altera");
+        ButtonAltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAlteraActionPerformed(evt);
+            }
+        });
 
         ButtonExclui.setText("Exclui");
+        ButtonExclui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonExcluiActionPerformed(evt);
+            }
+        });
 
         ButtonLimpa.setText("Limpar");
+        ButtonLimpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLimpaActionPerformed(evt);
+            }
+        });
 
         TextAreaDescricao.setColumns(20);
         TextAreaDescricao.setRows(5);
@@ -135,6 +148,13 @@ public class ProdutosCRUD extends javax.swing.JFrame {
             }
         });
 
+        ButtonConsulta.setText("Consulta");
+        ButtonConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonConsultaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,8 +172,10 @@ public class ProdutosCRUD extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ButtonExclui)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ButtonConsulta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ButtonLimpa)
-                        .addGap(21, 21, 21))))
+                        .addGap(22, 22, 22))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -164,11 +186,12 @@ public class ProdutosCRUD extends javax.swing.JFrame {
                     .addComponent(LabelValor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(TextFieldValor, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(TextFieldValidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -201,7 +224,8 @@ public class ProdutosCRUD extends javax.swing.JFrame {
                     .addComponent(ButtonCadastra)
                     .addComponent(ButtonAltera)
                     .addComponent(ButtonExclui)
-                    .addComponent(ButtonLimpa))
+                    .addComponent(ButtonLimpa)
+                    .addComponent(ButtonConsulta))
                 .addGap(22, 22, 22))
         );
 
@@ -232,7 +256,7 @@ public class ProdutosCRUD extends javax.swing.JFrame {
 
     private void TextFieldNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TextFieldNomeFocusLost
         // TODO add your handling code here:
-        if (TextFieldNome.isEditable()){
+        if (!TextFieldID.isEditable()){
             if (TextFieldNome.getText().length() != 0){
                 if (matchesOnlyText(TextFieldValor.getText())){
                     JOptionPane.showMessageDialog(this.TextFieldNome, "Campo nome possui dados inválidos.","Nome", JOptionPane.ERROR_MESSAGE);
@@ -263,9 +287,18 @@ public class ProdutosCRUD extends javax.swing.JFrame {
 
     private void ComboBoxProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxProdutosActionPerformed
         try {
+            geracombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+        try {
             // TODO add your handling code here:
-            p = (Produtos) ComboBoxProdutos.getSelectedItem();
-            mostra(p);
+            Produtos pp ;
+            pp = (Produtos) ComboBoxProdutos.getSelectedItem();
+            mostra(pp);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this.ComboBoxProdutos, "problema de incrmento na combo.","Descrição vazia", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -295,9 +328,10 @@ public class ProdutosCRUD extends javax.swing.JFrame {
             Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
             cadastrou = false;
-            if (cadastrou)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
-            else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
+            
         }
+        if (cadastrou)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
         
     }//GEN-LAST:event_ButtonCadastraActionPerformed
 
@@ -389,6 +423,155 @@ public class ProdutosCRUD extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_TextFieldValidadeFocusLost
 
+    private void ComboBoxProdutosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboBoxProdutosItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange() == ItemEvent.SELECTED) {
+            Produtos p = (Produtos)evt.getItem();
+            TextFieldID.setText(Integer.toString(p.getId()));
+        }
+    }//GEN-LAST:event_ComboBoxProdutosItemStateChanged
+
+    private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
+        // TODO add your handling code here:
+        boolean cadastrou = false;
+        if ((TextAreaDescricao.isEditable())&& !TextFieldID.isEditable()&& TextFieldNome.isEditable()){
+            System.out.println("Iniciado cadastro de alterações");
+            try {
+            // TODO add your handling code here:
+            p = new Produtos(
+                    Integer.parseInt(TextFieldID.getText()),
+                    Double.parseDouble(TextFieldValor.getText()),
+                    TextFieldNome.getText(),
+                    TextAreaDescricao.getText(),
+                    d.StringtoDate(TextFieldValidade.getText())
+            );
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         // chamada da dao
+            System.out.println("Alterando no banco.");
+        try {
+            cadastrou = produto.alterar(p);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+            cadastrou = false;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+            cadastrou = false;
+            
+        }
+        if (cadastrou)JOptionPane.showMessageDialog(this,"Alteração efetuada com sucesso ","Alteração  efetuada",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Alteração não efetuada.","Alteração  não efetuada",JOptionPane.ERROR_MESSAGE);
+            
+        }else Editavel();
+    }//GEN-LAST:event_ButtonAlteraActionPerformed
+
+    private void ButtonExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExcluiActionPerformed
+        // TODO add your handling code here:
+        boolean cadastrou = false; 
+        int resposta;
+        if (ButtonExclui.isEnabled()){
+            if (TextFieldID.getText() != null && TextFieldNome.getText() != null){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja excluir cadastro do produto.", "Confirmação de exclusão de produto" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    try {
+                        // TODO add your handling code here:
+                        p = new Produtos(
+                                Integer.parseInt(TextFieldID.getText()),
+                                Double.parseDouble(TextFieldValor.getText()),
+                                TextFieldNome.getText(),
+                                TextAreaDescricao.getText(),
+                                d.StringtoDate(TextFieldValidade.getText())
+                        );
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        cadastrou = produto.excluir(p);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                        cadastrou = false;
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                        cadastrou = false;
+                    }
+                    if (cadastrou)JOptionPane.showMessageDialog(this,"Exclusão efetuada com sucesso ","Exclusão efetuado",JOptionPane.INFORMATION_MESSAGE);
+                    else JOptionPane.showMessageDialog(this,"Exclusão não efetuada.","Exclusão não efetuada",JOptionPane.ERROR_MESSAGE);
+                }else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome do produto estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_ButtonExcluiActionPerformed
+
+    private void ButtonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultaActionPerformed
+        // TODO add your handling code here:
+        int resposta;
+        if ((TextFieldID.isEditable()) && TextFieldNome.isEditable() ){
+            if (TextFieldID.getText()!= null | TextFieldNome.getText() != null){
+                resposta = JOptionPane.showConfirmDialog(this.TextFieldID, "Voçê realmente deseja consultar cadastro do produto.", "Confirmação de Consulta de produto" , JOptionPane.WARNING_MESSAGE);
+                if (resposta == JOptionPane.YES_OPTION){
+                    Produtos buscarprod= null;
+                        try {
+                            if ((TextFieldID.getText().length() != 0) && (TextFieldNome.getText().length() != 0)){
+                             // busca por nome de usuário e id
+                             System.out.println("Busca por nome de usuário e id");
+                             p = new Produtos( Integer.parseInt(TextFieldID.getText()),TextFieldNome.getText());
+                             buscarprod = produto.buscarNomeEID(p);
+                            }else if ((TextFieldID.getText().length() == 0) && (TextFieldNome.getText().length() != 0)){
+                             // busca por nome de usuário 
+                             p = new Produtos(TextFieldNome.getText());
+                             System.out.println("busca por nome de usuário");
+                             buscarprod = produto.buscarNome(p);
+                            }else if ((TextFieldID.getText().length() != 0) && (TextFieldNome.getText().length() == 0)){
+                             // busca por id
+                             p = new Produtos(Integer.parseInt(TextFieldID.getText()));
+                             System.out.println("busca por id");
+                             buscarprod = produto.buscar(p);
+                             }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                            
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                            JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        if (buscarprod != null ) {
+                        try {
+                            mostra(buscarprod);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(ProdutosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                            ButtonCadastra.setEnabled(false);
+                            ButtonConsulta.setEnabled(false);
+                            ButtonAltera.setEnabled(true);
+                            ButtonExclui.setEnabled(true);
+                        }else JOptionPane.showMessageDialog(this.TextFieldID,"Produto não encontrado.","Busca sem sucesso",JOptionPane.ERROR_MESSAGE);
+                
+                } else JOptionPane.showMessageDialog(this.TextFieldID,"Campo ID e/ou Nome Usuário  estão vazios","Busca inválida",JOptionPane.ERROR_MESSAGE);
+            }
+        }else {
+            Editavel();
+            limpar();
+        }
+    }//GEN-LAST:event_ButtonConsultaActionPerformed
+
+    private void ButtonLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLimpaActionPerformed
+        // TODO add your handling code here:
+         if (TextFieldID.isEditable() && TextFieldNome.isEditable() && !TextAreaDescricao.isEditable() ) Editavel();
+        limpar();
+        ButtonCadastra.setEnabled(true);
+        ButtonConsulta.setEnabled(true);
+        ButtonAltera.setEnabled(false);
+        ButtonExclui.setEnabled(false);
+    }//GEN-LAST:event_ButtonLimpaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -429,6 +612,7 @@ public class ProdutosCRUD extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonAltera;
     private javax.swing.JButton ButtonCadastra;
+    private javax.swing.JButton ButtonConsulta;
     private javax.swing.JButton ButtonExclui;
     private javax.swing.JButton ButtonLimpa;
     private javax.swing.JComboBox<Object> ComboBoxProdutos;
@@ -502,5 +686,13 @@ public class ProdutosCRUD extends javax.swing.JFrame {
         TextAreaDescricao.setText(p.getDescricao());
         TextFieldValor.setText(String.valueOf(p.getPreco()));
         TextFieldValidade.setText(DateValidator.DatetoString(p.getValidade()));
+    }
+
+    private void limpar() {
+        TextFieldID.setText(null);
+        TextFieldNome.setText(null);
+        TextFieldValidade.setText(null);
+        TextAreaDescricao.setText(null);
+        TextFieldValor.setText(null);
     }
 }

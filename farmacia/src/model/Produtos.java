@@ -45,6 +45,30 @@ public class Produtos {
         this.validade = validade;
     }
     /**
+     * Construtor exclusivo para busca de produto por ID e nome do produto.
+     * @param id
+     * @param nome 
+     */
+    public Produtos(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    /**
+     * Construtor específico para produto por ID .
+     * @param id 
+     */
+    public Produtos(int id) {
+        this.id = id;
+    }
+    /**
+     * Construtor exclusivo para busca de produto por produto.
+     * @param nome 
+     */
+    public Produtos(String nome) {
+        this.nome = nome;
+    }
+    
+    /**
      * Informa ID do produto
      * @return 
      */

@@ -34,16 +34,6 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
      */
     public FuncionarioCRUD() {
         initComponents();
-        TextFieldID.requestFocus();
-        TextFieldNome.setText("Alvaro Pereira do Nascimento");
-        TextFieldSalario.setText("1450.9");
-        TextFieldDtAdm.setText("14/02/1993");
-        TextFieldNomeUsuario.setText("Alvaro.Nascimento");
-        PasswordFieldSenha.setText("654321654321");
-        RadioButtonGerente.setSelected(false);
-        RadioButtonFuncionario.setSelected(true);
-        ButtonAltera.setEnabled(false);
-        ButtonExclui.setEnabled(false);
     }
     DateValidator d = new DateValidator();
     FuncionarioDAO funcionario = new FuncionarioDAO();

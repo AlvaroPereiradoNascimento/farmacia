@@ -34,13 +34,15 @@
                       <Component id="ComboBoxProdutos" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="ButtonAltera" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ButtonExclui" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ButtonConsulta" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="ButtonLimpa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -55,11 +57,13 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="TextFieldValor" alignment="0" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="TextFieldNome" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
                   <Component id="TextFieldID" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                  <Component id="TextFieldValidade" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" min="-2" pref="196" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="TextFieldValor" alignment="0" max="32767" attributes="0"/>
+                      <Component id="TextFieldValidade" alignment="0" pref="71" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -101,6 +105,7 @@
                   <Component id="ButtonAltera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonExclui" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonLimpa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
@@ -153,6 +158,7 @@
         <Property name="editable" type="boolean" value="true"/>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ComboBoxProdutosItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboBoxProdutosActionPerformed"/>
       </Events>
       <AuxValues>
@@ -171,16 +177,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Altera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAlteraActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonExclui">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exclui"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonExcluiActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonLimpa">
       <Properties>
         <Property name="text" type="java.lang.String" value="Limpar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonLimpaActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -214,6 +229,14 @@
     <Component class="javax.swing.JTextField" name="TextFieldValidade">
       <Events>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TextFieldValidadeFocusLost"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="ButtonConsulta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Consulta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonConsultaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
