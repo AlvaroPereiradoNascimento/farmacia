@@ -8,6 +8,8 @@ package farmacia.view.Funcionario.Caixa;
 import Verifica.DateValidator;
 import Verifica.IsTrue;
 import farmacia.DAO.CaixasDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.Caixas;
 
 /**
@@ -22,8 +24,8 @@ public class CaixaCRUD extends javax.swing.JFrame {
     public CaixaCRUD() {
         initComponents();
     }
-    CaixasDAO cliente = new CaixasDAO();
-    Caixas caixa ;
+    CaixasDAO caixa = new CaixasDAO();
+    Caixas c ;
     private DateValidator d = new DateValidator();
     IsTrue t = new IsTrue();
     
@@ -75,6 +77,11 @@ public class CaixaCRUD extends javax.swing.JFrame {
         });
 
         ButtonAltera.setText("Altera");
+        ButtonAltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAlteraActionPerformed(evt);
+            }
+        });
 
         ButtonConsulta.setText("Consulta");
 
@@ -132,8 +139,32 @@ public class CaixaCRUD extends javax.swing.JFrame {
 
     private void ButtonCadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastraActionPerformed
         // TODO add your handling code here:
-        boolean cadastra = false
+        boolean cadastra = false;
+        if (!TextFieldID.isEnabled()){
+
+                // TODO add your handling code here:
+                c = new Caixas();
+
+            try {
+                cadastra = caixa.inserir(c);
+            } catch (SQLException ex) {
+                
+                JOptionPane.showMessageDialog(this,"Problema de conexão com o banco.\n"+ ex,"erro Banco",JOptionPane.ERROR_MESSAGE);
+                cadastra = false;
+            } catch (ClassNotFoundException ex) {
+                
+                JOptionPane.showMessageDialog(this,"Problema de acesso a classe do banco.\n"+ex,"Erro no acesso a classe banco",JOptionPane.ERROR_MESSAGE);
+                cadastra = false;
+
+            }
+            if (cadastra)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_ButtonCadastraActionPerformed
+
+    private void ButtonAlteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAlteraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ButtonAlteraActionPerformed
 
     /**
      * @param args the command line arguments
