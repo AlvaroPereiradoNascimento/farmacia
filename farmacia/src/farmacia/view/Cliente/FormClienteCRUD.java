@@ -25,6 +25,10 @@ import model.ClienteCpf;
  * @author Alvaro Pereira do Nascimento.
  */
 public class FormClienteCRUD extends javax.swing.JFrame {
+
+    public static FormClienteCRUD getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private ClienteCpf cc;
 
     /**
@@ -298,7 +302,10 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                 TextFieldDtNasc.requestFocus();
             }else{
                 registrado = cadastra();
-               if (registrado)JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+               if (registrado){
+                   JOptionPane.showMessageDialog(this,"Cadastro efetuado com sucesso ","Cadastro efetuado",JOptionPane.INFORMATION_MESSAGE);
+                   limpar();
+               }
                else JOptionPane.showMessageDialog(this,"Cadastro não efetuado.","Cadastro não efetuado",JOptionPane.ERROR_MESSAGE);
                 
             } 

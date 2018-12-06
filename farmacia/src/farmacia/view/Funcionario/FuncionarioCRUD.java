@@ -8,6 +8,7 @@ package farmacia.view.Funcionario;
 import Verifica.DateValidator;
 import Verifica.IsTrue;
 import farmacia.DAO.FuncionarioDAO;
+import farmacia.view.Funcionario.Login.Menu;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -27,6 +28,10 @@ import model.Gerente;
  */
 @SuppressWarnings("serial")
 public class FuncionarioCRUD extends javax.swing.JFrame {
+
+    public static FuncionarioCRUD getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
     /**
@@ -73,6 +78,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         ButtonExclui = new javax.swing.JButton();
         ButtonConsulta = new javax.swing.JButton();
         ButtonLimpar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de funcionários");
@@ -193,6 +199,13 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             }
         });
 
+        btnSair.setText("X");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,7 +236,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(TextFieldNomeUsuario)
                         .addGap(49, 49, 49)))
-                .addGap(100, 100, 100))
+                .addGap(61, 61, 61)
+                .addComponent(btnSair))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,10 +260,15 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelID)
-                    .addComponent(TextFieldID))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LabelID)
+                            .addComponent(TextFieldID)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSair)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNomeUsuario)
@@ -637,6 +656,11 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         
     }//GEN-LAST:event_TextFieldDtAdmFocusGained
 
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+         //new Menu().setVisible(true);//que quer abrir
+     dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -692,6 +716,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldNomeUsuario;
     private javax.swing.JTextField TextFieldSalario;
+    private javax.swing.JButton btnSair;
     private javax.swing.ButtonGroup buttonGroupFuncionario;
     private javax.swing.ButtonGroup buttonGroupGerente;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

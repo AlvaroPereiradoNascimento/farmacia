@@ -12,6 +12,8 @@ rg varchar(255) ,
 cpf bigint(14) unique
 );
 
+
+
 CREATE TABLE funcionarios(
 id integer primary key auto_increment  not null unique,
 nomeuser varchar(255)  unique,
@@ -49,3 +51,5 @@ fk_func int,
 aberto varchar (5)Not Null,
 foreign key (fk_func ) REFERENCES funcionarios(id)
 );
+
+insert into 
