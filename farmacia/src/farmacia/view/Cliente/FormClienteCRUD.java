@@ -72,6 +72,7 @@ public class FormClienteCRUD extends javax.swing.JFrame {
         TextFieldCPF = new javax.swing.JTextField();
         LabelCelular = new javax.swing.JLabel();
         TextFieldCelular = new javax.swing.JTextField();
+        btn_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Cadastro de Clientes");
@@ -173,6 +174,13 @@ public class FormClienteCRUD extends javax.swing.JFrame {
             }
         });
 
+        btn_sair.setText("Voltar");
+        btn_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -228,11 +236,15 @@ public class FormClienteCRUD extends javax.swing.JFrame {
                         .addComponent(ButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(1, 1, 1)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addComponent(btn_sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextFieldID)
                     .addComponent(LabelID))
@@ -683,6 +695,11 @@ public class FormClienteCRUD extends javax.swing.JFrame {
             }
         }else Editavel();
     }//GEN-LAST:event_ButtonAlteraActionPerformed
+
+    private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
+
+        dispose();
+    }//GEN-LAST:event_btn_sairActionPerformed
     
     /**
      * @param args the command line arguments
@@ -740,6 +757,7 @@ public static void main(String args[]) {
     private javax.swing.JTextField TextFieldNome;
     private javax.swing.JTextField TextFieldRG;
     private javax.swing.JTextField TextFieldTelefone;
+    private javax.swing.JButton btn_sair;
     // End of variables declaration//GEN-END:variables
 
     /**

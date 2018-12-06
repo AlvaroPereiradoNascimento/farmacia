@@ -87,6 +87,11 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(470, 350));
         setName("Funcionarios"); // NOI18N
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         LabelID.setText("ID:");
 
@@ -199,7 +204,7 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
             }
         });
 
-        btnSair.setText("X");
+        btnSair.setText("Voltar");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -236,8 +241,8 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(TextFieldNomeUsuario)
                         .addGap(49, 49, 49)))
-                .addGap(61, 61, 61)
-                .addComponent(btnSair))
+                .addGap(27, 27, 27)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ButtonCadastra, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -660,6 +665,10 @@ public class FuncionarioCRUD extends javax.swing.JFrame {
          //new Menu().setVisible(true);//que quer abrir
      dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

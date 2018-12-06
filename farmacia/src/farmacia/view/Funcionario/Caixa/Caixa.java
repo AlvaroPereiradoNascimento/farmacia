@@ -6,17 +6,31 @@
 
 package farmacia.view.Funcionario.Caixa;
 
+import farmacia.DAO.ProdutosDAO;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Produtos;
+
 /**
  *
  * @author aluno
  */
 public class Caixa extends javax.swing.JFrame {
 
+    
+    DefaultTableModel modeloTabela;
+    ProdutosDAO produto = new ProdutosDAO();
     /**
      * Creates new form Caixa
      */
     public Caixa() {
         initComponents();
+        
     }
 
     /**
@@ -33,20 +47,24 @@ public class Caixa extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         LabelCaixa = new javax.swing.JLabel();
         LabelNumero = new javax.swing.JLabel();
-        ButtonCancelarVenda = new javax.swing.JButton();
+        btn_limpar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         TextFieldProduto = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         ButtonConsutaPoduto = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableProdutosAcumulados = new javax.swing.JTable();
+        tbFilmes = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         TextFieldCliente = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
-        ButtonPagamento = new javax.swing.JButton();
+        ButtonPagamento1 = new javax.swing.JButton();
+        ButtonPagamento2 = new javax.swing.JButton();
+        cmb_tiposPag = new javax.swing.JComboBox<>();
+        txt_desconto = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -60,15 +78,20 @@ public class Caixa extends javax.swing.JFrame {
 
         LabelNumero.setText("Número:");
 
-        ButtonCancelarVenda.setText("Cancelar");
+        btn_limpar.setText("Limpar");
 
         jLabel1.setText("Código do produto:");
 
         jButton2.setText("Acumular");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         ButtonConsutaPoduto.setText("Consultar");
 
-        jTableProdutosAcumulados.setModel(new javax.swing.table.DefaultTableModel(
+        tbFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -79,7 +102,7 @@ public class Caixa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTableProdutosAcumulados);
+        jScrollPane3.setViewportView(tbFilmes);
 
         jLabel2.setText("Código do cliente:");
 
@@ -87,7 +110,23 @@ public class Caixa extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jTextPane2);
 
-        ButtonPagamento.setText("Pagamento");
+        ButtonPagamento1.setText("ABRIR CAIXA");
+        ButtonPagamento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonPagamento1ActionPerformed(evt);
+            }
+        });
+
+        ButtonPagamento2.setText("Voltar");
+        ButtonPagamento2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonPagamento2ActionPerformed(evt);
+            }
+        });
+
+        cmb_tiposPag.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão de Credito", "Cartão de Debito", "Cheque" }));
+
+        jLabel3.setText("Desconto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,7 +135,31 @@ public class Caixa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextFieldProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmb_tiposPag, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ButtonConsutaPoduto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LabelNumero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -104,63 +167,82 @@ public class Caixa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LabelCaixa)
                         .addGap(3, 3, 3)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextFieldProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ButtonCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ButtonPagamento)
-                    .addComponent(ButtonConsutaPoduto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 28, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ButtonPagamento1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ButtonPagamento2)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(LabelCaixa)
+                                .addComponent(LabelNumero))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(LabelCaixa)
-                        .addComponent(LabelNumero))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(ButtonPagamento1)
+                        .addComponent(ButtonPagamento2)))
+                .addGap(18, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(TextFieldProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ButtonConsutaPoduto))
+                            .addComponent(cmb_tiposPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(TextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ButtonPagamento))
-                            .addComponent(jLabel2)))
+                                .addComponent(txt_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ButtonCancelarVenda)))
-                .addGap(22, 22, 22))
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ButtonConsutaPoduto)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btn_limpar)
+                                    .addComponent(jButton2))))))
+                .addContainerGap())
         );
+
+        ButtonPagamento1.getAccessibleContext().setAccessibleName("ABRIR CAIXA");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ButtonPagamento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPagamento1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ButtonPagamento1ActionPerformed
+
+    private void ButtonPagamento2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPagamento2ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_ButtonPagamento2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            preencherTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Problema de conxão com o banco.\n"+ex,"Erro no acesso ao banco",JOptionPane.ERROR_MESSAGE);
+                    
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this,"Email cadastrado errado","Email inválido",JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,26 +278,68 @@ public class Caixa extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void preencherTabela() throws SQLException, ClassNotFoundException {
+        //criar lista de dados
+        List<Produtos> dados = produto.listar(TextFieldProduto.getText());
+        //Vetor de colunas
+        Vector<String> header = new Vector<>(3);
+        header.add("Nome");
+        header.add("Preço");
+        header.add("Desconto");
+        header.add("valor com deconto");
+        Vector linhas = new Vector();
+        Vector registro;
+        
+        double desc = Double.parseDouble(txt_desconto.getText()) / 100;
+        //Varrer todo o List de Dados do banco
+        for(Produtos f : dados) {
+            registro = new Vector(3);
+            registro.add(f.getNome());
+            registro.add(f.getPreco());
+            registro.add(txt_desconto.getText() + "%");
+            registro.add(f.getPreco()-(f.getPreco()*desc));
+            //adicionar o registro dentro das linhas da tabela
+            linhas.add(registro);
+        }
+        //coloca os vetores no modelo da tabela
+        modeloTabela = new DefaultTableModel(linhas, header);
+        //jogar o modelo dentro do jtable
+        tbFilmes.setModel(modeloTabela);
+        //ajustar tamanhos das colunas
+        tbFilmes.getColumnModel().getColumn(0)
+                .setPreferredWidth(70);
+        tbFilmes.getColumnModel().getColumn(1)
+                .setPreferredWidth(30);
+        tbFilmes.getColumnModel().getColumn(2)
+                .setPreferredWidth(30);
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonCancelarVenda;
     private javax.swing.JButton ButtonConsutaPoduto;
-    private javax.swing.JButton ButtonPagamento;
+    private javax.swing.JButton ButtonPagamento1;
+    private javax.swing.JButton ButtonPagamento2;
     private javax.swing.JLabel LabelCaixa;
     private javax.swing.JLabel LabelNumero;
     private javax.swing.JTextField TextFieldCliente;
     private javax.swing.JTextField TextFieldProduto;
+    private javax.swing.JButton btn_limpar;
+    private javax.swing.JComboBox<String> cmb_tiposPag;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTableProdutosAcumulados;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JTable tbFilmes;
+    private javax.swing.JTextField txt_desconto;
     // End of variables declaration//GEN-END:variables
 }
